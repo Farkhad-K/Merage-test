@@ -11,7 +11,8 @@
 @import "./pages/conciergeServices/curatedDay/styles/globals.css";
 
 /* Services */
-@import "./pages/Services/mtFujiEscape/styles/globals.css";
+@import "./pages/Services/airportTransfers/styles/globals.css";
 @import "./pages/Services/signatureMultiDayTours/styles/globals.css";
+@import "./pages/Services/mtFujiEscape/styles/globals.css";
 @import "./pages/Services/kamakuraHeritageDayTrip/styles/globals.css";
 @import "./pages/Services/tokyo/styles/globals.css";

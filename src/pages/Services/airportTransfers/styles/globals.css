@@ -1,0 +1,1060 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #000000;
+  --foreground: #F8F6F0;
+  --card: #F8F6F0;
+  --card-foreground: #000000;
+  --popover: #F8F6F0;
+  --popover-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #F8F6F0;
+  --secondary: #D4AF37;
+  --secondary-foreground: #000000;
+  --muted: #FAF9F5;
+  --muted-foreground: #6B6B6B;
+  --accent: #D4AF37;
+  --accent-foreground: #000000;
+  --destructive: #d4183d;
+  --destructive-foreground: #F8F6F0;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: transparent;
+  --input-background: #FAF9F5;
+  --switch-background: #F0F0F0;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #D4AF37;
+
+  /* Nippon Imperial Brand Colors - Black, Gold & Warm White (60-30-10) */
+  /* Black (60% - Dominant) */
+  --nippon-black: #000000;
+  --nippon-black-light: #1A1A1A;
+  --nippon-black-dark: #000000;
+  --nippon-black-muted: #2D2D2D;
+  --nippon-charcoal: #333333;
+  
+  /* Warm White/Beige (30% - Secondary) */
+  --nippon-warm-white: #F8F6F0;
+  --nippon-warm-white-light: #FEFDFB;
+  --nippon-warm-white-dark: #F5F3ED;
+  --nippon-beige: #FAF9F5;
+  --nippon-beige-light: #FCFBF8;
+  --nippon-cream: #F7F5F1;
+  --nippon-ivory: #FFF9F0;
+  
+  /* Gold (10% - Accent) */
+  --nippon-gold: #D4AF37;
+  --nippon-gold-light: #E6C757;
+  --nippon-gold-dark: #B8941F;
+  --nippon-gold-muted: #C9A96E;
+  --nippon-gold-bright: #FFD700;
+  --nippon-champagne: #F7E7CE;
+  --nippon-bronze: #CD7F32;
+  
+  /* Supporting Colors */
+  --nippon-white: #FFFFFF;
+  --nippon-pearl: #FEFEFE;
+  --nippon-gray: #6B6B6B;
+  --nippon-gray-light: #9B9B9B;
+  --nippon-gray-dark: #4A4A4A;
+  --nippon-charcoal-rich: #1C1C1E;
+  --nippon-border: #E8E6E0;
+  --nippon-shadow: rgba(0, 0, 0, 0.15);
+
+  /* Typography Variables */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Typography Scale */
+  --text-xs: 0.875rem;    
+  --text-sm: 0.9375rem;   
+  --text-base: 1rem;      
+  --text-lg: 1.125rem;    
+  --text-xl: 1.25rem;     
+  --text-2xl: 1.5rem;     
+  --text-3xl: 1.875rem;   
+  --text-4xl: 2.25rem;    
+  --text-5xl: 3rem;       
+  --text-6xl: 3.75rem;    
+  --text-7xl: 4.5rem;     
+  --text-8xl: 6rem;       
+  --text-9xl: 8rem;       
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #F8F6F0;
+  --card: #1A1A1A;
+  --card-foreground: #F8F6F0;
+  --popover: #1A1A1A;
+  --popover-foreground: #F8F6F0;
+  --primary: #F8F6F0;
+  --primary-foreground: #000000;
+  --secondary: #D4AF37;
+  --secondary-foreground: #000000;
+  --muted: #2D2D2D;
+  --muted-foreground: #9B9B9B;
+  --accent: #D4AF37;
+  --accent-foreground: #000000;
+  --destructive: #d4183d;
+  --destructive-foreground: #F8F6F0;
+  --border: rgba(248, 246, 240, 0.08);
+  --input: #2D2D2D;
+  --ring: #D4AF37;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  
+  /* Nippon Imperial Brand Colors for Tailwind */
+  --color-nippon-black: var(--nippon-black);
+  --color-nippon-black-light: var(--nippon-black-light);
+  --color-nippon-black-dark: var(--nippon-black-dark);
+  --color-nippon-black-muted: var(--nippon-black-muted);
+  --color-nippon-charcoal: var(--nippon-charcoal);
+  --color-nippon-warm-white: var(--nippon-warm-white);
+  --color-nippon-warm-white-light: var(--nippon-warm-white-light);
+  --color-nippon-warm-white-dark: var(--nippon-warm-white-dark);
+  --color-nippon-beige: var(--nippon-beige);
+  --color-nippon-beige-light: var(--nippon-beige-light);
+  --color-nippon-cream: var(--nippon-cream);
+  --color-nippon-ivory: var(--nippon-ivory);
+  --color-nippon-gold: var(--nippon-gold);
+  --color-nippon-gold-light: var(--nippon-gold-light);
+  --color-nippon-gold-dark: var(--nippon-gold-dark);
+  --color-nippon-gold-muted: var(--nippon-gold-muted);
+  --color-nippon-gold-bright: var(--nippon-gold-bright);
+  --color-nippon-champagne: var(--nippon-champagne);
+  --color-nippon-bronze: var(--nippon-bronze);
+  --color-nippon-white: var(--nippon-white);
+  --color-nippon-pearl: var(--nippon-pearl);
+  --color-nippon-gray: var(--nippon-gray);
+  --color-nippon-gray-light: var(--nippon-gray-light);
+  --color-nippon-gray-dark: var(--nippon-gray-dark);
+  --color-nippon-charcoal-rich: var(--nippon-charcoal-rich);
+  --color-nippon-border: var(--nippon-border);
+  --color-nippon-shadow: var(--nippon-shadow);
+  
+  /* Premium Material Gradients */
+  --gradient-imperial: linear-gradient(135deg, var(--nippon-black) 0%, var(--nippon-charcoal-rich) 50%, var(--nippon-gold-dark) 100%);
+  --gradient-champagne: linear-gradient(135deg, var(--nippon-champagne) 0%, var(--nippon-warm-white) 100%);
+  --gradient-tokyo-night: linear-gradient(180deg, var(--nippon-black) 0%, var(--nippon-black-light) 70%, rgba(212, 175, 55, 0.1) 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-nippon-black text-nippon-warm-white;
+    font-family: var(--font-sans);
+    font-size: var(--font-size);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    @apply bg-nippon-black;
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced scrollbar styling for black gold luxury */
+  body::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: var(--nippon-gold);
+    border-radius: 2px;
+  }
+  
+  body::-webkit-scrollbar-thumb:hover {
+    background: var(--nippon-gold-dark);
+  }
+
+  /* Ensure smooth scrolling on all platforms */
+  @supports (scroll-behavior: smooth) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+/**
+ * Black, Gold & Warm White Luxury Typography System (60-30-10)
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-family: var(--font-serif);
+      font-size: var(--text-5xl);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--nippon-warm-white);
+      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: var(--text-4xl);
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--nippon-warm-white);
+      letter-spacing: 0.015em;
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-family: var(--font-serif);
+      font-size: var(--text-3xl);
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--nippon-warm-white);
+      letter-spacing: 0.01em;
+      margin-bottom: 1rem;
+    }
+
+    h4 {
+      font-family: var(--font-sans);
+      font-size: var(--text-xl);
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--nippon-warm-white);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--nippon-gray-light);
+      letter-spacing: 0.005em;
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      font-size: var(--text-xl);
+      line-height: 1.6;
+      color: var(--nippon-warm-white);
+      font-weight: 300;
+    }
+
+    label {
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--nippon-black);
+      letter-spacing: 0.01em;
+    }
+
+    button {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.025em;
+    }
+
+    input, textarea, select {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--nippon-black);
+    }
+  }
+}
+
+/* Nippon Imperial Utility Classes - Black, Gold & Warm White (60-30-10) */
+@layer utilities {
+  /* Black Colors (60% - Dominant) */
+  .bg-nippon-black {
+    background-color: var(--nippon-black);
+  }
+  
+  .bg-nippon-black-light {
+    background-color: var(--nippon-black-light);
+  }
+  
+  .bg-nippon-black-dark {
+    background-color: var(--nippon-black-dark);
+  }
+  
+  .bg-nippon-black-muted {
+    background-color: var(--nippon-black-muted);
+  }
+  
+  .bg-nippon-charcoal {
+    background-color: var(--nippon-charcoal);
+  }
+  
+  .text-nippon-black {
+    color: var(--nippon-black);
+  }
+  
+  .text-nippon-black-light {
+    color: var(--nippon-black-light);
+  }
+  
+  .text-nippon-black-dark {
+    color: var(--nippon-black-dark);
+  }
+  
+  .text-nippon-black-muted {
+    color: var(--nippon-black-muted);
+  }
+  
+  .text-nippon-charcoal {
+    color: var(--nippon-charcoal);
+  }
+  
+  /* Warm White/Beige Colors (30% - Secondary) */
+  .bg-nippon-warm-white {
+    background-color: var(--nippon-warm-white);
+  }
+  
+  .bg-nippon-warm-white-light {
+    background-color: var(--nippon-warm-white-light);
+  }
+  
+  .bg-nippon-warm-white-dark {
+    background-color: var(--nippon-warm-white-dark);
+  }
+  
+  .bg-nippon-beige {
+    background-color: var(--nippon-beige);
+  }
+  
+  .bg-nippon-beige-light {
+    background-color: var(--nippon-beige-light);
+  }
+  
+  .bg-nippon-cream {
+    background-color: var(--nippon-cream);
+  }
+  
+  .bg-nippon-ivory {
+    background-color: var(--nippon-ivory);
+  }
+  
+  .text-nippon-warm-white {
+    color: var(--nippon-warm-white);
+  }
+  
+  .text-nippon-warm-white-light {
+    color: var(--nippon-warm-white-light);
+  }
+  
+  .text-nippon-warm-white-dark {
+    color: var(--nippon-warm-white-dark);
+  }
+  
+  .text-nippon-beige {
+    color: var(--nippon-beige);
+  }
+  
+  .text-nippon-beige-light {
+    color: var(--nippon-beige-light);
+  }
+  
+  .text-nippon-cream {
+    color: var(--nippon-cream);
+  }
+  
+  .text-nippon-ivory {
+    color: var(--nippon-ivory);
+  }
+  
+  /* Gold Colors (10% - Accent) */
+  .bg-nippon-gold {
+    background-color: var(--nippon-gold);
+  }
+  
+  .bg-nippon-gold-light {
+    background-color: var(--nippon-gold-light);
+  }
+  
+  .bg-nippon-gold-dark {
+    background-color: var(--nippon-gold-dark);
+  }
+  
+  .bg-nippon-gold-muted {
+    background-color: var(--nippon-gold-muted);
+  }
+  
+  .bg-nippon-gold-bright {
+    background-color: var(--nippon-gold-bright);
+  }
+  
+  .bg-nippon-champagne {
+    background-color: var(--nippon-champagne);
+  }
+  
+  .bg-nippon-bronze {
+    background-color: var(--nippon-bronze);
+  }
+  
+  .text-nippon-gold {
+    color: var(--nippon-gold);
+  }
+  
+  .text-nippon-gold-light {
+    color: var(--nippon-gold-light);
+  }
+  
+  .text-nippon-gold-dark {
+    color: var(--nippon-gold-dark);
+  }
+  
+  .text-nippon-gold-muted {
+    color: var(--nippon-gold-muted);
+  }
+  
+  .text-nippon-gold-bright {
+    color: var(--nippon-gold-bright);
+  }
+  
+  .text-nippon-champagne {
+    color: var(--nippon-champagne);
+  }
+  
+  .text-nippon-bronze {
+    color: var(--nippon-bronze);
+  }
+  
+  /* Supporting Colors */
+  .bg-nippon-white {
+    background-color: var(--nippon-white);
+  }
+  
+  .bg-nippon-pearl {
+    background-color: var(--nippon-pearl);
+  }
+  
+  .text-nippon-white {
+    color: var(--nippon-white);
+  }
+  
+  .text-nippon-pearl {
+    color: var(--nippon-pearl);
+  }
+  
+  .text-nippon-gray {
+    color: var(--nippon-gray);
+  }
+  
+  .text-nippon-gray-light {
+    color: var(--nippon-gray-light);
+  }
+  
+  .text-nippon-gray-dark {
+    color: var(--nippon-gray-dark);
+  }
+  
+  .text-nippon-charcoal-rich {
+    color: var(--nippon-charcoal-rich);
+  }
+  
+  /* Border Colors */
+  .border-nippon-black {
+    border-color: var(--nippon-black);
+  }
+  
+  .border-nippon-warm-white {
+    border-color: var(--nippon-warm-white);
+  }
+  
+  .border-nippon-gold {
+    border-color: var(--nippon-gold);
+  }
+  
+  .border-nippon-border {
+    border-color: var(--nippon-border);
+  }
+  
+  /* Hover States */
+  .hover\:bg-nippon-gold:hover {
+    background-color: var(--nippon-gold);
+  }
+  
+  .hover\:bg-nippon-gold-dark:hover {
+    background-color: var(--nippon-gold-dark);
+  }
+  
+  .hover\:bg-nippon-black:hover {
+    background-color: var(--nippon-black);
+  }
+  
+  .hover\:bg-nippon-warm-white:hover {
+    background-color: var(--nippon-warm-white);
+  }
+  
+  .hover\:text-nippon-gold:hover {
+    color: var(--nippon-gold);
+  }
+  
+  .hover\:text-nippon-black:hover {
+    color: var(--nippon-black);
+  }
+  
+  .hover\:text-nippon-warm-white:hover {
+    color: var(--nippon-warm-white);
+  }
+  
+  /* Typography utilities */
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  
+  /* Text sizes */
+  .text-luxury-xs { font-size: var(--text-xs); }
+  .text-luxury-sm { font-size: var(--text-sm); }
+  .text-luxury-base { font-size: var(--text-base); }
+  .text-luxury-lg { font-size: var(--text-lg); }
+  .text-luxury-xl { font-size: var(--text-xl); }
+  .text-luxury-2xl { font-size: var(--text-2xl); }
+  .text-luxury-3xl { font-size: var(--text-3xl); }
+  .text-luxury-4xl { font-size: var(--text-4xl); }
+  .text-luxury-5xl { font-size: var(--text-5xl); }
+  .text-luxury-6xl { font-size: var(--text-6xl); }
+  .text-luxury-7xl { font-size: var(--text-7xl); }
+  .text-luxury-8xl { font-size: var(--text-8xl); }
+  .text-luxury-9xl { font-size: var(--text-9xl); }
+  
+  /* Black gold warm white luxury text effects */
+  .text-with-shadow {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  
+  .text-with-strong-shadow {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+  
+  .text-with-gold-glow {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+  
+  .text-with-black-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-with-elegant-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Black gold warm white luxury overlay utilities */
+  .bg-radial-gradient {
+    background: radial-gradient(circle at center, var(--tw-gradient-stops));
+  }
+  
+  .luxury-overlay {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 26, 0.9) 100%);
+  }
+  
+  .warm-white-overlay {
+    background: linear-gradient(135deg, rgba(248, 246, 240, 0.98) 0%, rgba(250, 249, 245, 0.95) 100%);
+  }
+  
+  .black-gradient {
+    background: linear-gradient(135deg, var(--nippon-black) 0%, var(--nippon-black-light) 100%);
+  }
+  
+  .warm-white-gradient {
+    background: linear-gradient(135deg, var(--nippon-warm-white-light) 0%, var(--nippon-warm-white) 100%);
+  }
+  
+  .cinematic-gradient {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.98) 0%, rgba(26, 26, 26, 0.95) 50%, rgba(45, 45, 45, 0.9) 100%);
+  }
+  
+  .text-overlay-gradient {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(26, 26, 26, 0.85) 40%, transparent 100%);
+  }
+  
+  .gold-divider {
+    background: linear-gradient(90deg, transparent 0%, var(--nippon-gold) 50%, transparent 100%);
+  }
+  
+  .luxury-divider {
+    background: linear-gradient(90deg, transparent 0%, var(--nippon-warm-white) 30%, var(--nippon-gold) 50%, var(--nippon-warm-white) 70%, transparent 100%);
+  }
+  
+  .black-gold-divider {
+    background: linear-gradient(90deg, transparent 0%, var(--nippon-black-light) 20%, var(--nippon-gold) 50%, var(--nippon-black-light) 80%, transparent 100%);
+  }
+  
+  /* 60-30-10 Card Styles */
+  .black-card-dominant {
+    background: var(--nippon-black);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    color: var(--nippon-warm-white);
+  }
+  
+  .warm-white-card-secondary {
+    background: linear-gradient(135deg, var(--nippon-warm-white) 0%, var(--nippon-warm-white-light) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    color: var(--nippon-black);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gold-accent-minimal {
+    background: transparent;
+    border: 2px solid var(--nippon-gold);
+    color: var(--nippon-gold);
+  }
+  
+  /* Spacing utilities */
+  .section-padding {
+    padding: 5rem 0;
+  }
+  
+  .section-padding-sm {
+    padding: 3rem 0;
+  }
+  
+  .content-padding {
+    padding: 0 1.5rem;
+  }
+  
+  /* Black gold warm white luxury shadow utilities */
+  .shadow-gold {
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+  }
+  
+  .shadow-gold-hover {
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+  }
+  
+  .shadow-black {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .shadow-black-hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+  
+  .shadow-luxury {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .shadow-luxury-hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  
+  .shadow-elegant {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  
+  .shadow-elegant-hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .shadow-warm-white {
+    box-shadow: 0 2px 8px rgba(248, 246, 240, 0.1);
+  }
+  
+  .shadow-warm-white-hover {
+    box-shadow: 0 6px 20px rgba(248, 246, 240, 0.15);
+  }
+}
+
+/* Enhanced Scroll & Animation System */
+@layer components {
+  .smooth-scroll-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Enhanced scroll reveal animations */
+  [data-scroll-reveal] {
+    opacity: 0;
+    transform: translateY(30px) scale(0.99);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  
+  [data-scroll-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  
+  /* Parallax elements */
+  [data-scroll-parallax] {
+    will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+
+  /* Black gold warm white luxury animations */
+  @keyframes cinematic-entrance {
+    0% {
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  @keyframes luxury-fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes gold-glow {
+    0%, 100% {
+      box-shadow: 0 2px 12px rgba(212, 175, 55, 0.25);
+    }
+    50% {
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.4);
+    }
+  }
+  
+  @keyframes black-glow {
+    0%, 100% {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    }
+  }
+  
+  @keyframes form-focus-glow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+  }
+
+  @keyframes cinematicZoom {
+    0% {
+      transform: scale(1.0);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes cinematicFloat {
+    0% {
+      transform: scale(1.02) translate(0px, 0px);
+    }
+    100% {
+      transform: scale(1.08) translate(10px, -5px);
+    }
+  }
+  
+  @keyframes gradientMove {
+    0% {
+      background: radial-gradient(circle at 40% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    }
+    33% {
+      background: radial-gradient(circle at 60% 60%, rgba(212, 175, 55, 0.15) 0%, transparent 50%);
+    }
+    66% {
+      background: radial-gradient(circle at 20% 70%, rgba(212, 175, 55, 0.12) 0%, transparent 50%);
+    }
+    100% {
+      background: radial-gradient(circle at 40% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    }
+  }
+
+  @keyframes cityLightStreaks {
+    0% {
+      background: linear-gradient(45deg, transparent 20%, rgba(212, 175, 55, 0.08) 40%, transparent 60%);
+      transform: translateX(-100px);
+    }
+    50% {
+      background: linear-gradient(45deg, transparent 30%, rgba(212, 175, 55, 0.12) 50%, transparent 70%);
+      transform: translateX(0px);
+    }
+    100% {
+      background: linear-gradient(45deg, transparent 40%, rgba(212, 175, 55, 0.06) 60%, transparent 80%);
+      transform: translateX(100px);
+    }
+  }
+  
+  @keyframes luxuryPulse {
+    0%, 100% {
+      opacity: 0.8;
+      transform: scale(1.0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+  }
+  
+  /* Animation classes */
+  .cinematic-entrance {
+    animation: cinematic-entrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .luxury-fade-up {
+    animation: luxury-fade-up 0.6s ease-out forwards;
+  }
+  
+  .gold-glow {
+    animation: gold-glow 4s ease-in-out infinite;
+  }
+  
+  .black-glow {
+    animation: black-glow 4s ease-in-out infinite;
+  }
+  
+  /* Enhanced form styling */
+  .form-input-focus {
+    animation: form-focus-glow 0.6s ease-out;
+  }
+  
+  /* 60-30-10 Luxury button styling */
+  .luxury-button-gold {
+    padding: 0.875rem 2.5rem;
+    border: 2px solid var(--nippon-gold);
+    background: transparent;
+    color: var(--nippon-gold);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .luxury-button-gold::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transition: left 0.5s;
+  }
+  
+  .luxury-button-gold:hover::before {
+    left: 100%;
+  }
+  
+  .luxury-button-gold:hover {
+    background: var(--nippon-gold);
+    color: var(--nippon-black);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+  }
+  
+  /* Enhanced form field styling - 60-30-10 */
+  .luxury-input {
+    background: rgba(250, 249, 245, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: var(--nippon-black);
+    padding: 0.875rem 1rem;
+    border-radius: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .luxury-input:focus {
+    border-color: var(--nippon-gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    background: var(--nippon-warm-white-light);
+    outline: none;
+  }
+  
+  .luxury-input::placeholder {
+    color: var(--nippon-gray);
+  }
+  
+  /* Enhanced checkbox styling - 60-30-10 */
+  .luxury-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid var(--nippon-gray);
+    border-radius: 0;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .luxury-checkbox:checked {
+    background: var(--nippon-gold);
+    border-color: var(--nippon-gold);
+  }
+  
+  .luxury-checkbox:focus {
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+  }
+  
+  /* Performance optimizations */
+  img, video {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Luxury video background styling */
+  video {
+    will-change: transform;
+    transform-style: preserve-3d;
+  }
+  
+  /* Video fallback and loading optimization */
+  video::-webkit-media-controls {
+    display: none !important;
+  }
+  
+  video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+  
+  /* Luxury video overlay effects */
+  .video-overlay-cinematic {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(28, 28, 30, 0.4) 30%,
+      transparent 50%,
+      rgba(212, 175, 55, 0.1) 70%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  }
+  
+  /* Enhanced video performance */
+  @media (prefers-reduced-motion: reduce) {
+    video {
+      display: none;
+    }
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  [data-scroll-reveal] {
+    transform: translateY(20px);
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+  
+  /* Mobile form adjustments */
+  .luxury-input {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Responsive typography adjustments */
+  h1 {
+    font-size: var(--text-4xl) !important;
+  }
+  
+  h2 {
+    font-size: var(--text-3xl) !important;
+  }
+  
+  h3 {
+    font-size: var(--text-2xl) !important;
+  }
+}
+
+/* Enhanced mobile experience */
+@media (max-width: 640px) {
+  .text-luxury-6xl,
+  .text-luxury-7xl,
+  .text-luxury-8xl {
+    font-size: var(--text-4xl) !important;
+  }
+  
+  .text-luxury-5xl {
+    font-size: var(--text-3xl) !important;
+  }
+  
+  .text-luxury-4xl {
+    font-size: var(--text-2xl) !important;
+  }
+  
+  .text-luxury-3xl {
+    font-size: var(--text-xl) !important;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal], [data-scroll-parallax], [data-scroll-fade], [data-scroll-scale], [data-scroll-rotate] {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-nippon-gray-light {
+    color: var(--nippon-warm-white);
+  }
+  
+  .luxury-input {
+    border-width: 2px;
+  }
+  
+  .luxury-button-gold {
+    border-width: 2px;
+  }
+}
