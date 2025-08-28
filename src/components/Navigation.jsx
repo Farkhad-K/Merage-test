@@ -89,7 +89,7 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <button onClick={() => navigate("/")} className="group">
-              <div className="flex flex-col">
+              <div className="flex flex-col relative">
                 <span className="text-nippon-warm-white font-serif text-luxury-2xl font-medium tracking-wide group-hover:text-nippon-gold transition-colors duration-300">
                   Nippon Imperial
                 </span>
@@ -101,18 +101,20 @@ export default function Navigation() {
             <div className="hidden lg:flex items-center space-x-12 relative">
               <button
                 onClick={() => navigate("/imperial-story")}
-                className="text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-base font-medium tracking-wide transition-colors duration-300"
+                className="group relative font-sans text-luxury-base font-medium tracking-wide text-nippon-warm-white transition-colors duration-300 hover:text-nippon-gold"
               >
                 Imperial Story
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
 
               {/* Concierge with dropdown */}
               <div className="relative group">
                 <button
                   onClick={() => navigate("/concierge")}
-                  className="text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-base font-medium tracking-wide transition-colors duration-300"
+                  className="group relative font-sans text-luxury-base font-medium tracking-wide text-nippon-warm-white transition-colors duration-300 hover:text-nippon-gold"
                 >
                   Concierge
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </button>
                 <div className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform -translate-y-3 group-hover:translate-y-0">
                   <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
@@ -120,7 +122,7 @@ export default function Navigation() {
                       <li
                         key={idx}
                         onClick={() => navigate(service.path)}
-                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-white/10 hover:text-nippon-gold transform hover:translate-x-2"
+                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
                       >
                         {service.name}
                       </li>
@@ -133,9 +135,10 @@ export default function Navigation() {
               <div className="relative group">
                 <button
                   onClick={() => navigate("/services")}
-                  className="text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-base font-medium tracking-wide transition-colors duration-300"
+                  className="group relative font-sans text-luxury-base font-medium tracking-wide text-nippon-warm-white transition-colors duration-300 hover:text-nippon-gold"
                 >
                   Services
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </button>
                 <div className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform -translate-y-3 group-hover:translate-y-0">
                   <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
@@ -143,7 +146,7 @@ export default function Navigation() {
                       <li
                         key={idx}
                         onClick={() => navigate(service.path)}
-                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-white/10 hover:text-nippon-gold transform hover:translate-x-2"
+                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
                       >
                         {service.name}
                       </li>
@@ -154,9 +157,10 @@ export default function Navigation() {
 
               <button
                 onClick={() => navigate("/partnership")}
-                className="text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-base font-medium tracking-wide transition-colors duration-300"
+                className="group relative font-sans text-luxury-base font-medium tracking-wide text-nippon-warm-white transition-colors duration-300 hover:text-nippon-gold"
               >
                 Partnership
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
             </div>
 
@@ -164,18 +168,20 @@ export default function Navigation() {
             <div className="hidden lg:flex items-center space-x-6">
               <a
                 href="tel:+81-3-XXXX-XXXX"
-                className="flex items-center space-x-2 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
+                className="group relative flex items-center space-x-2 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
               >
                 <Phone className="w-4 h-4" />
                 <span className="font-sans text-luxury-sm font-medium">
                   +81 3 XXXX XXXX
                 </span>
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </a>
               <Button
                 onClick={() => scrollToSection("contact-form")}
-                className="luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-8 py-3 font-sans text-luxury-sm font-medium tracking-wide"
+                className="luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-8 py-3 font-sans text-luxury-sm font-medium tracking-wide relative group"
               >
                 Begin Journey
+                <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </Button>
             </div>
 
@@ -199,44 +205,50 @@ export default function Navigation() {
             <div className="px-8 py-8 space-y-6">
               <button
                 onClick={() => scrollToSection("services")}
-                className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
+                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
               >
                 Services
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
               <button
                 onClick={() => scrollToSection("essence")}
-                className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
+                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
               >
                 Experience
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
               <button
                 onClick={() => scrollToSection("difference")}
-                className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
+                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
               >
                 Excellence
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
               <button
                 onClick={() => scrollToSection("how-it-works")}
-                className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
+                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
               >
                 Process
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </button>
 
               <div className="pt-6 border-t border-nippon-gold/20">
                 <a
                   href="tel:+81-3-XXXX-XXXX"
-                  className="flex items-center space-x-3 mb-6 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
+                  className="group relative flex items-center space-x-3 mb-6 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
                 >
                   <Phone className="w-5 h-5" />
                   <span className="font-sans text-luxury-base font-medium">
                     +81 3 XXXX XXXX
                   </span>
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </a>
                 <Button
                   onClick={() => scrollToSection("contact-form")}
-                  className="w-full luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black py-4 font-sans text-luxury-base font-medium tracking-wide"
+                  className="w-full luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black py-4 font-sans text-luxury-base font-medium tracking-wide relative group"
                 >
                   Begin Your Journey
+                  <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </Button>
               </div>
             </div>

@@ -73,7 +73,7 @@ export default function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-8 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-8 pt-[70px] text-center">
         {/* Enhanced hero typography */}
         <div className="space-y-6 mb-12" data-scroll-reveal>
           {/* Japanese characters accent */}

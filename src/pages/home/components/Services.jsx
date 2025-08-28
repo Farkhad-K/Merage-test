@@ -1,4 +1,4 @@
-import { Car, Crown, MapPin, Users, Calendar, Shield, ArrowRight } from 'lucide-react';
+import { Car, Crown, MapPin, ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
 
 const mercedesImage = "https://i.postimg.cc/CxJMSkYZ/c13215d9-8d12-4e94-8268-50b98fa2c3c6-1030x1287.jpg";
@@ -37,7 +37,6 @@ export default function Services() {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // TypeScript tipini olib tashladik
   const handleLearnMore = (serviceTitle) => {
     scrollToContact();
   };
@@ -73,10 +72,11 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-nippon-white shadow-luxury hover:shadow-luxury-hover transition-all duration-500 overflow-hidden"
+              className="group relative bg-nippon-white shadow-luxury hover:shadow-luxury-hover transition-all duration-500 overflow-hidden flex flex-col"
               data-scroll-reveal
               style={{ animationDelay: `${index * 200}ms` }}
             >
+              {/* Rasm va icon */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={service.image}
@@ -91,7 +91,8 @@ export default function Services() {
                 </div>
               </div>
 
-              <div className="p-8 space-y-5">
+              {/* Kontent */}
+              <div className="p-8 flex flex-col h-full">
                 <div className="space-y-2">
                   <h3 className="text-luxury-2xl text-nippon-black font-serif">
                     {service.title}
@@ -100,10 +101,12 @@ export default function Services() {
                     {service.subtitle}
                   </p>
                 </div>
-                <p className="text-luxury-sm text-nippon-gray leading-relaxed font-sans">
+
+                <p className="text-luxury-sm text-nippon-gray leading-relaxed font-sans mt-3">
                   {service.description}
                 </p>
-                <ul className="space-y-3">
+
+                <ul className="space-y-3 mt-4">
                   {service.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start space-x-3">
                       <div className="w-1.5 h-1.5 bg-nippon-gold rounded-full mt-2 flex-shrink-0"></div>
@@ -111,7 +114,9 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-                <div className="pt-6">
+
+                {/* Button doim pastda */}
+                <div className="pt-6 mt-auto">
                   <Button
                     onClick={() => handleLearnMore(service.title)}
                     className="group/btn relative overflow-hidden w-full bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-sans text-luxury-sm px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
@@ -128,6 +133,7 @@ export default function Services() {
           ))}
         </div>
 
+        {/* Pastki CTA */}
         <div className="text-center mt-16" data-scroll-reveal>
           <div className="max-w-3xl mx-auto space-y-8">
             <h3 className="text-luxury-3xl text-nippon-obsidian font-serif">
