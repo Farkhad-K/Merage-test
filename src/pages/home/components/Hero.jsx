@@ -84,7 +84,7 @@ export default function Hero() {
           <h1 className="text-nippon-pearl font-serif text-luxury-7xl lg:text-luxury-8xl leading-none tracking-tight text-with-elegant-shadow">
             Nippon
             <br />
-            <span className="text-nippon-gold">Imperial Tours</span>
+            <span className="text-nippon-gold">Imperial</span>
           </h1>
 
           <div className="flex items-center justify-center space-x-8 my-8">
