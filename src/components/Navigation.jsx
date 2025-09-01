@@ -13,7 +13,7 @@ const conciergeServices = [
   },
   {
     name: "Restaurant Bookings",
-    path: "/concierge/restaurant-bookings",
+    path: "/concierge/restaurant",
   },
   {
     name: "Luxury Transport",

@@ -1,3 +1,4 @@
+// Libraries
 import {
   Car,
   Crown,
@@ -14,14 +15,20 @@ import {
   Leaf,
   Heart,
 } from "lucide-react";
+import { useNavigate } from "react-router";
+
+// Router
+import ROUTES from "../../../router/routes";
+
+// Components
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Images
 import consultationImage from "../assets/Hotel.png";
 import guideImage from "../assets/User.png";
 import luxuryCarImage from "../assets/car.png";
 import conciergeWelcomeImage from "../assets/Concierge Services Leviticus Lifestyle.jpg";
-import { useNavigate } from "react-router";
-import ROUTES from "../../../router/routes";
 
 export default function Concierge() {
   const navigate = useNavigate();
@@ -49,7 +56,7 @@ export default function Concierge() {
         "https://images.unsplash.com/photo-1678129456271-f37da2c63e56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBKYXBhbmVzZSUyMHNha2UlMjB0YXN0aW5nJTIwcHJpdmF0ZXxlbnwxfHx8fDE3NTUyNDg0MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       cta: "Reserve Your Table",
       culturalNote: "Seasonal omakase experiences",
-      route: null,
+      route: `${ROUTES.RESTAURANT}`,
     },
     {
       icon: Car,

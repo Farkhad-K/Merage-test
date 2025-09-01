@@ -10,6 +10,7 @@
 @import "./pages/conciergeServices/ExclusiveExperience/styles/globals.css";
 @import "./pages/conciergeServices/curatedDay/styles/globals.css";
 @import "./pages/conciergeServices/travelConsultation/styles/globals.css";
+@import "./pages/conciergeServices/restaurantBookings/styles/globals.css";
 
 /* Services */
 @import "./pages/Services/airportTransfers/styles/globals.css";

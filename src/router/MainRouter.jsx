@@ -12,9 +12,11 @@ import PartnershipPage from "../pages/partnership/PartnershipPage";
 
 // Concierge Services
 import AccommodationReservationsPage from "../pages/conciergeServices/accommodationReservations/AccommodationReservationsPage";
+import RestaurantPage from "../pages/conciergeServices/restaurantBookings/RestaurantPage";
 import LuxuryTransportPage from "../pages/conciergeServices/luxuryTransport/LuxuryTransportPage";
 import ExclusivePage from "../pages/conciergeServices/ExclusiveExperience/ExclusivePage";
 import CuratedDay from "../pages/conciergeServices/curatedDay/CuratedDay";
+import TravelConsultationPage from "../pages/conciergeServices/travelConsultation/TravelConsultationPage";
 
 // Services
 import AirportTransfersPage from "../pages/Services/airportTransfers/AirportTransfersPage";
@@ -23,7 +25,6 @@ import SignatureMultiDayToursPage from "../pages/Services/signatureMultiDayTours
 import KamakuraHeritageTripPage from "../pages/Services/kamakuraHeritageDayTrip/KamakuraHeritageTripPage";
 import TokyoCity from "../pages/Services/tokyo/TokyoCity";
 import NikkoPage from "../pages/Services/nikko/NikkoPage";
-import TravelConsultationPage from "../pages/conciergeServices/travelConsultation/TravelConsultationPage";
 
 // // Payments
 // import PaymentIntent from "../pages/auth/PaymentIntent";
@@ -44,6 +45,7 @@ const MainRouter = () => {
         path={ROUTES.ACCOMMODATION}
         element={<AccommodationReservationsPage />}
       />
+      <Route path={ROUTES.RESTAURANT} element={<RestaurantPage />} />
       <Route path={ROUTES.LUXURY} element={<LuxuryTransportPage />} />
       <Route path={ROUTES.CURATED} element={<CuratedDay />} />
       <Route path={ROUTES.EXCLUSIVE} element={<ExclusivePage />} />

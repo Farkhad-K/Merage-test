@@ -26,9 +26,9 @@ const PAYMENTS_API_PREFIX = "/api";
 
 // Concierge section
 const ACCOMMODATION_API_PREFIX = "/api/concierge/accommodation";
-const CURATED_DAY_API_PREFIX = "/api/concierge/curated-day";
-const LUXURY_TRANSPORT_API_PREFIX = "/api/concierge/luxury-transport";
 const RESTAURANT_API_PREFIX = "/api/concierge/restaurant";
+const LUXURY_TRANSPORT_API_PREFIX = "/api/concierge/luxury-transport";
+const CURATED_DAY_API_PREFIX = "/api/concierge/curated-day";
 
 // ===== Payments API =====
 export const paymentsApi = {
@@ -52,16 +52,6 @@ export const accommodationApi = {
     axios.put(`${ACCOMMODATION_API_PREFIX}/${requestId}/quote`),
 };
 
-// ===== Curated Day Api =====
-export const curatedDayApi = {
-  getCuratedDayList: () => axios.get(`${CURATED_DAY_API_PREFIX}`),
-  postCuratedDay: (data) => axios.post(`${CURATED_DAY_API_PREFIX}`, data),
-  getCuratedDayById: (requestId) =>
-    axios.get(`${CURATED_DAY_API_PREFIX}/${requestId}`),
-  putCuratedDay: (requestId) =>
-    axios.put(`${CURATED_DAY_API_PREFIX}/${requestId}/quote`),
-};
-
 // ===== Restaurant Api =====
 export const restaurantApi = {
   getRestaurantList: () => axios.get(`${RESTAURANT_API_PREFIX}`),
@@ -70,4 +60,25 @@ export const restaurantApi = {
     axios.get(`${RESTAURANT_API_PREFIX}/${requestId}`),
   putRestaurant: (requestId) =>
     axios.put(`${RESTAURANT_API_PREFIX}/${requestId}/quote`),
+};
+
+// ===== Luxury Transport Api =====
+export const luxuryTransportApi = {
+  getLuxuryTransportList: () => axios.get(`${LUXURY_TRANSPORT_API_PREFIX}`),
+  postLuxuryTransport: (data) =>
+    axios.post(`${LUXURY_TRANSPORT_API_PREFIX}`, data),
+  getLuxuryTransportById: (requestId) =>
+    axios.get(`${LUXURY_TRANSPORT_API_PREFIX}/${requestId}`),
+  putLuxuryTransport: (requestId) =>
+    axios.put(`${LUXURY_TRANSPORT_API_PREFIX}/${requestId}/quote`),
+};
+
+// ===== Curated Day Api =====
+export const curatedDayApi = {
+  getCuratedDayList: () => axios.get(`${CURATED_DAY_API_PREFIX}`),
+  postCuratedDay: (data) => axios.post(`${CURATED_DAY_API_PREFIX}`, data),
+  getCuratedDayById: (requestId) =>
+    axios.get(`${CURATED_DAY_API_PREFIX}/${requestId}`),
+  putCuratedDay: (requestId) =>
+    axios.put(`${CURATED_DAY_API_PREFIX}/${requestId}/quote`),
 };
