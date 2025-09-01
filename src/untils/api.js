@@ -25,10 +25,10 @@ axios.interceptors.request.use(
 const PAYMENTS_API_PREFIX = "/api";
 
 // Concierge section
-const ACCOMMODATION_API_PREFIX = "/api/accomodation";
-const CURATED_DAY_API_PREFIX = "/api/CuratedDay";
-const LUXURY_TRANSPORT_API_PREFIX = "/api/luxury-transport";
-const RESTAURANT_API_PREFIX = "/api/restaurant";
+const ACCOMMODATION_API_PREFIX = "/api/concierge/accommodation";
+const CURATED_DAY_API_PREFIX = "/api/concierge/curated-day";
+const LUXURY_TRANSPORT_API_PREFIX = "/api/concierge/luxury-transport";
+const RESTAURANT_API_PREFIX = "/api/concierge/restaurant";
 
 // ===== Payments API =====
 export const paymentsApi = {
@@ -63,7 +63,7 @@ export const curatedDayApi = {
 };
 
 // ===== Restaurant Api =====
-export const curatedDayApi = {
+export const restaurantApi = {
   getRestaurantList: () => axios.get(`${RESTAURANT_API_PREFIX}`),
   postRestaurant: (data) => axios.post(`${RESTAURANT_API_PREFIX}`, data),
   getRestaurantById: (requestId) =>

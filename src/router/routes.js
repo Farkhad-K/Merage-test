@@ -10,12 +10,14 @@ const ROUTES = {
   LUXURY: "/concierge/luxury-transportation",
   CURATED: "/concierge/curated-day",
   EXCLUSIVE: "/concierge/exclusive-experience",
+  TRAVEL: "/concierge/travel-consultation",
 
   // Services
   AIRPORT_TRANSFERS: "/services/airport-transfers",
   SIGNATURE_TOURS: "/services/signature-multi-day-tours",
   ESCAPE: "/services/mt-fuji-escape",
   KAMAKURA: "/services/kamakura-heritage-trip",
+  NIKKO: "/services/nikko",
   TOKYO: "/services/tokyo",
   // PAYMENT_INTENT: "/payment-intent/:requestId",
   // PAYMENT_CANCELED: "/payment-canceled",

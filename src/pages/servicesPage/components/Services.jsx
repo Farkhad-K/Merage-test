@@ -1,7 +1,15 @@
-import React from 'react';
-import { Car, MapPin, Plane, Calendar, Star, ArrowRight, Users } from 'lucide-react';
-import { Button } from './ui/button';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import React from "react";
+import {
+  Car,
+  MapPin,
+  Plane,
+  Calendar,
+  Star,
+  ArrowRight,
+  Users,
+} from "lucide-react";
+import { Button } from "./ui/button";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 import airportTransferImage from "../assets/image.png";
 import luxuryChauffeurHeroImage from "../assets/home.png";
 import privateChauffeurImage from "../assets/card1.png";
@@ -9,7 +17,7 @@ import privateChauffeurImage from "../assets/card1.png";
 export default function Services({ onNavigateToService }) {
   const coreServices = [
     {
-      key: 'private-chauffeur',
+      key: "private-chauffeur",
       icon: Car,
       title: "Private Chauffeur Services",
       description:
@@ -18,7 +26,7 @@ export default function Services({ onNavigateToService }) {
       culturalNote: "Tokyo to Kyoto in elegance",
     },
     {
-      key: 'airport-transfers',
+      key: "airport-transfers",
       icon: Plane,
       title: "Airport Transfers",
       description:
@@ -27,7 +35,7 @@ export default function Services({ onNavigateToService }) {
       culturalNote: "Arrival perfected",
     },
     {
-      key: 'day-escapes',
+      key: "day-escapes",
       icon: MapPin,
       title: "Signature Day Escapes",
       description:
@@ -37,7 +45,7 @@ export default function Services({ onNavigateToService }) {
       culturalNote: "Cultural immersion awaits",
     },
     {
-      key: 'multi-day-tours',
+      key: "multi-day-tours",
       icon: Calendar,
       title: "Signature Multi-Day Tours",
       description:
@@ -58,12 +66,16 @@ export default function Services({ onNavigateToService }) {
     if (serviceKey === "private-chauffeur" && onNavigateToService) {
       onNavigateToService(serviceKey);
     } else {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      document
+        .getElementById("contact")
+        ?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const scrollToServices = () => {
-    document.getElementById("core-services")?.scrollIntoView({ behavior: "smooth" });
+    document
+      .getElementById("core-services")
+      ?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleConciergeContact = () => {
@@ -90,7 +102,8 @@ export default function Services({ onNavigateToService }) {
             style={{
               backgroundImage: `url(${privateChauffeurImage})`,
               filter: "brightness(0.4) blur(1px)",
-              animation: "cinematicFloat 28s ease-in-out infinite alternate-reverse",
+              animation:
+                "cinematicFloat 28s ease-in-out infinite alternate-reverse",
             }}
           ></div>
 
@@ -163,27 +176,32 @@ export default function Services({ onNavigateToService }) {
           </h2>
           <div className="space-y-8 text-luxury-lg text-nippon-gray leading-relaxed font-sans max-w-3xl mx-auto">
             <p>
-              From the moment you arrive until your final farewell, every offering
-              is shaped around your rhythm and desires.
+              From the moment you arrive until your final farewell, every
+              offering is shaped around your rhythm and desires.
             </p>
             <p>
               Whether you need an elegant airport transfer, a cultural day tour,
-              or a multi-day itinerary across Japan's iconic regions, each service
-              is designed to deliver comfort, precision, and authenticity.
+              or a multi-day itinerary across Japan's iconic regions, each
+              service is designed to deliver comfort, precision, and
+              authenticity.
             </p>
           </div>
         </div>
       </section>
 
       {/* Core Services Grid */}
-      <section id="core-services" className="relative bg-nippon-black section-padding overflow-hidden">
+      <section
+        id="core-services"
+        className="relative bg-nippon-black section-padding overflow-hidden"
+      >
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center space-y-8 mb-16">
             <h2 className="text-luxury-5xl text-nippon-warm-white font-serif leading-tight">
               Four Essential Services
             </h2>
             <p className="text-luxury-xl text-nippon-gray-light">
-              Each crafted to seamlessly integrate into your Japanese experience.
+              Each crafted to seamlessly integrate into your Japanese
+              experience.
             </p>
           </div>
 
@@ -225,9 +243,8 @@ export default function Services({ onNavigateToService }) {
                     onClick={() =>
                       handleServiceInquiry(service.key, service.title)
                     }
-                    className="group relative overflow-hidden bg-transparent border border-nippon-gold text-nippon-gold hover:text-nippon-black px-6 py-4 transition-all"
+                    className="group relative overflow-hidden bg-transparent border border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-6 py-4 transition-all duration-500 transform hover:-translate-y-1 hover:shadow-md"
                   >
-                    <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                     <span className="relative flex items-center justify-center">
                       {service.key === "private-chauffeur"
                         ? "View Details"
@@ -269,8 +286,8 @@ export default function Services({ onNavigateToService }) {
             </div>
           </div>
           <p className="text-luxury-lg text-nippon-gray italic">
-            Every detail, every guest, every journey — handled with precision and
-            care.
+            Every detail, every guest, every journey — handled with precision
+            and care.
           </p>
         </div>
       </section>
@@ -287,9 +304,8 @@ export default function Services({ onNavigateToService }) {
           </p>
           <Button
             onClick={handleConciergeContact}
-            className="group relative overflow-hidden mt-8 bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black px-8 py-5"
+            className="group relative overflow-hidden mt-8 bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-8 py-5 transition-all duration-500 transform hover:-translate-y-1 hover:shadow-lg"
           >
-            <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
             <span className="relative flex items-center justify-center">
               <Users className="w-5 h-5 mr-2" />
               Speak with Our Concierge

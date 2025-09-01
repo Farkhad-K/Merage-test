@@ -25,7 +25,7 @@ import ROUTES from "../../../router/routes";
 
 export default function Concierge() {
   const navigate = useNavigate();
-  
+
   const services = [
     {
       icon: MapPin,
@@ -69,8 +69,8 @@ export default function Concierge() {
       description:
         "Thoughtfully designed day tours and seasonal experiences, from cherry blossom ceremonies to private temple visits, timed to Japan's natural rhythms.",
       image:
-        "https://images.unsplash.com/photo-1705990775020-ec23afbba2e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbmVzZSUyMGdhcmRlbiUyMHplbiUyMHRlbXBsZSUyMGx1eHVyeXxlbnwxfHx8fDE3NTUyNDg0MDl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      cta: "Plan Your Experience",
+        "https://images.unsplash.com/photo-1705990775020-ec23afbba2e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbmVzZSUyMGdhcmRlbiUyMHRlbXBsZSUyMGx1eHVyeXxlbnwxfHx8fDE3NTUyNDg0MDl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      cta: "Meet Your Guide",
       culturalNote: "Seasonal beauty & traditions",
       route: `${ROUTES.CURATED}`,
     },
@@ -95,7 +95,7 @@ export default function Concierge() {
       image: guideImage,
       cta: "Meet Your Guide",
       culturalNote: "Cultural fluency guaranteed",
-      route: null,
+      route: `${ROUTES.TRAVEL}`,
     },
   ];
 
@@ -331,30 +331,34 @@ export default function Concierge() {
                 </div>
 
                 {/* Enhanced Card Content */}
-                <div className="p-8 space-y-6">
-                  {/* Subtitle */}
-                  <div className="text-nippon-gold font-sans text-luxury-sm uppercase tracking-wider font-medium">
-                    {service.subtitle}
+                <div className="p-8 flex flex-col min-h-[380px]">
+                  {/* Upper part */}
+                  <div>
+                    <div className="text-nippon-gold font-sans text-luxury-sm uppercase tracking-wider font-medium">
+                      {service.subtitle}
+                    </div>
+
+                    <h3 className="text-luxury-2xl text-nippon-black font-serif leading-tight mb-4">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-luxury-base text-nippon-gray leading-relaxed font-sans">
+                      {service.description}
+                    </p>
+
+                    <div className="h-px bg-gradient-to-r from-transparent via-nippon-gold/30 to-transparent my-6"></div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-luxury-2xl text-nippon-black font-serif leading-tight mb-4">
-                    {service.title}
-                  </h3>
-
-                  {/* Enhanced Description */}
-                  <p className="text-luxury-base text-nippon-gray leading-relaxed font-sans">
-                    {service.description}
-                  </p>
-
-                  {/* Elegant divider */}
-                  <div className="h-px bg-gradient-to-r from-transparent via-nippon-gold/30 to-transparent my-6"></div>
-
-                  {/* Enhanced CTA Button */}
-                  <div className="pt-4">
+                  {/* CTA Button */}
+                  <div className="mt-auto mb-4">
                     <Button
                       onClick={() => handleServiceDiscover(service)}
-                      className="group/btn relative overflow-hidden w-full bg-transparent border border-nippon-gold text-nippon-gold hover:text-nippon-black font-sans text-luxury-sm px-6 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                      className="group/btn relative overflow-hidden w-full 
+                 bg-transparent border border-nippon-gold text-nippon-gold 
+                 hover:text-nippon-black font-sans text-luxury-sm px-6 py-4 
+                 transition-all duration-500 shadow-gold hover:shadow-gold-hover 
+                 transform hover:-translate-y-2 hover:bg-nippon-gold 
+                 luxury-button-gold flex items-center justify-center"
                     >
                       <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left"></span>
                       <span className="relative flex items-center justify-center space-x-2">

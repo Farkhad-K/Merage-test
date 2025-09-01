@@ -1,3 +1,4 @@
+// Libraries
 import {
   MapPin,
   CheckCircle,
@@ -10,77 +11,130 @@ import {
   Building,
   Users,
 } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+
+// Components
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Images
 import luxuryPenthouseImage from "../assets/house.png";
 import ryokanImage from "../assets/Ryokan.png";
 import cityHotelImage from "../assets/cityHotel.png";
 import vipServicesImage from "../assets/historicMachiya.png";
 import historicMachiyaImage from "../assets/vipServices.png";
+import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
+
+const highlights = [
+  {
+    icon: Mountain,
+    title: "Private Ryokan Suites",
+    description:
+      "Exclusive mountain retreats with centuries-old hospitality traditions",
+    image: ryokanImage,
+    premium: "From ¥180,000/night",
+  },
+  {
+    icon: Building,
+    title: "Luxury City Hotels",
+    description: "Tokyo's most coveted addresses with unparalleled service",
+    image: cityHotelImage,
+    premium: "Michelin Key certified",
+  },
+  {
+    icon: Hotel,
+    title: "Historic Machiya",
+    description:
+      "Restored cultural treasures in Kyoto's most exclusive districts",
+    image: historicMachiyaImage,
+    premium: "UNESCO Heritage properties",
+  },
+  {
+    icon: Users,
+    title: "VIP Concierge Services",
+    description: "Discreet arrangements preferred by diplomatic missions",
+    image: vipServicesImage,
+    premium: "24/7 dedicated service",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Curated Consultation",
+    description:
+      "Share your vision through our secure, personalized assessment. Every detail matters in crafting your perfect Japanese sanctuary.",
+    icon: MapPin,
+    timeframe: "Within 2 hours",
+  },
+  {
+    step: "02",
+    title: "Exclusive Property Selection",
+    description:
+      "Access our private collection of properties, many unavailable through traditional channels, each personally vetted by our cultural experts.",
+    icon: Star,
+    timeframe: "Within 24 hours",
+  },
+  {
+    step: "03",
+    title: "Seamless Arrival Experience",
+    description:
+      "From private transfers to personalized welcome ceremonies, every moment is orchestrated for your absolute comfort and cultural immersion.",
+    icon: CheckCircle,
+    timeframe: "Upon confirmation",
+  },
+];
 
 export default function AccommodationReservations() {
-  const highlights = [
-    {
-      icon: Mountain,
-      title: "Private Ryokan Suites",
-      description:
-        "Exclusive mountain retreats with centuries-old hospitality traditions",
-      image: ryokanImage,
-      premium: "From ¥180,000/night",
-    },
-    {
-      icon: Building,
-      title: "Luxury City Hotels",
-      description: "Tokyo's most coveted addresses with unparalleled service",
-      image: cityHotelImage,
-      premium: "Michelin Key certified",
-    },
-    {
-      icon: Hotel,
-      title: "Historic Machiya",
-      description:
-        "Restored cultural treasures in Kyoto's most exclusive districts",
-      image: historicMachiyaImage,
-      premium: "UNESCO Heritage properties",
-    },
-    {
-      icon: Users,
-      title: "VIP Concierge Services",
-      description: "Discreet arrangements preferred by diplomatic missions",
-      image: vipServicesImage,
-      premium: "24/7 dedicated service",
-    },
-  ];
+  const dispatch = useDispatch();
 
-  const processSteps = [
-    {
-      step: "01",
-      title: "Curated Consultation",
-      description:
-        "Share your vision through our secure, personalized assessment. Every detail matters in crafting your perfect Japanese sanctuary.",
-      icon: MapPin,
-      timeframe: "Within 2 hours",
-    },
-    {
-      step: "02",
-      title: "Exclusive Property Selection",
-      description:
-        "Access our private collection of properties, many unavailable through traditional channels, each personally vetted by our cultural experts.",
-      icon: Star,
-      timeframe: "Within 24 hours",
-    },
-    {
-      step: "03",
-      title: "Seamless Arrival Experience",
-      description:
-        "From private transfers to personalized welcome ceremonies, every moment is orchestrated for your absolute comfort and cultural immersion.",
-      icon: CheckCircle,
-      timeframe: "Upon confirmation",
-    },
-  ];
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+  const [numberOfGuest, setNumberOfGuest] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
+  const [preferred, setPreferred] = useState("");
+  const [desiredLocations, setDesiredLocations] = useState("");
+
+  // useEffect(() => {
+
+  // });
+
+  const handleOrder = () => {
+    if (
+      name &&
+      email &&
+      notes &&
+      numberOfGuest &&
+      phoneNumber &&
+      checkInDate &&
+      checkOutDate
+    ) {
+      const accommodationData = {
+        fullName: name,
+        email: email,
+        additionalNotes: notes,
+        numberOfGuests: Number(numberOfGuest),
+        phoneNumber: phoneNumber,
+        checkInDate: checkInDate,
+        checkOutDate: checkOutDate,
+        preferredStayType: "string",
+        desiredLocations: "string",
+      };
+      dispatch(postAccommodationAsync(accommodationData))
+        .unwrap()
+        .then(() => {
+          console.log("successful");
+        })
+        .catch((error) => alert(error));
+    }
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -476,9 +530,11 @@ export default function AccommodationReservations() {
                   <Input
                     id="name"
                     type="text"
+                    value={name}
                     required
                     className="luxury-input"
                     placeholder="Your full name"
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
@@ -492,9 +548,11 @@ export default function AccommodationReservations() {
                   <Input
                     id="email"
                     type="email"
+                    value={email}
                     required
                     className="luxury-input"
                     placeholder="your@email.com"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -510,8 +568,10 @@ export default function AccommodationReservations() {
                   <Input
                     id="phone"
                     type="tel"
+                    value={phoneNumber}
                     className="luxury-input"
                     placeholder="+1 (555) 123-4567"
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
 
@@ -525,10 +585,12 @@ export default function AccommodationReservations() {
                   <Input
                     id="guests"
                     type="number"
+                    value={numberOfGuest}
                     min="1"
                     required
                     className="luxury-input"
                     placeholder="2"
+                    onChange={(e) => setNumberOfGuest(e.target.value)}
                   />
                 </div>
               </div>
@@ -544,8 +606,10 @@ export default function AccommodationReservations() {
                   <Input
                     id="checkin"
                     type="date"
+                    value={checkInDate}
                     required
                     className="luxury-input"
+                    onChange={(e) => setCheckInDate(e.target.value)}
                   />
                 </div>
 
@@ -559,8 +623,10 @@ export default function AccommodationReservations() {
                   <Input
                     id="checkout"
                     type="date"
+                    value={checkOutDate}
                     required
                     className="luxury-input"
+                    onChange={(e) => setCheckOutDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -574,13 +640,16 @@ export default function AccommodationReservations() {
                 </Label>
                 <Textarea
                   id="requests"
+                  value={notes}
                   className="luxury-input min-h-[120px] resize-none"
-                  placeholder="Tell us about your ideal accommodation style, preferred locations, amenities, dietary requirements, or any special arrangements we should know about..."
+                  placeholder="Tell us about your ideal accommodation..."
+                  onChange={(e) => setNotes(e.target.value)}
                 />
               </div>
 
               <div className="pt-6">
                 <Button
+                  onClick={handleOrder}
                   type="submit"
                   className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
                 >
