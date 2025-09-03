@@ -29,6 +29,7 @@ const ACCOMMODATION_API_PREFIX = "/api/concierge/accommodation";
 const RESTAURANT_API_PREFIX = "/api/concierge/restaurant";
 const LUXURY_TRANSPORT_API_PREFIX = "/api/concierge/luxury-transport";
 const CURATED_DAY_API_PREFIX = "/api/concierge/curated-day";
+const EXCLUSIVE_EXPERIENCE = "/api/concierge/exclusive-experiences";
 
 // ===== Payments API =====
 export const paymentsApi = {
@@ -81,4 +82,15 @@ export const curatedDayApi = {
     axios.get(`${CURATED_DAY_API_PREFIX}/${requestId}`),
   putCuratedDay: (requestId) =>
     axios.put(`${CURATED_DAY_API_PREFIX}/${requestId}/quote`),
+};
+
+// ===== Exclusive Experience Api =====
+export const exclusiveExperienceApi = {
+  getExclusiveExperienceList: () => axios.get(`${EXCLUSIVE_EXPERIENCE}`),
+  postExclusiveExperience: (data) =>
+    axios.post(`${EXCLUSIVE_EXPERIENCE}`, data),
+  getExclusiveExperienceById: (requestId) =>
+    axios.get(`${EXCLUSIVE_EXPERIENCE}/${requestId}`),
+  putExclusiveExperience: (requestId) =>
+    axios.put(`${EXCLUSIVE_EXPERIENCE}/${requestId}/quote`),
 };

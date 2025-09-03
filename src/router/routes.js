@@ -14,6 +14,7 @@ const ROUTES = {
   TRAVEL: "/concierge/travel-consultation",
 
   // Services
+  PRIVATE_CHAUFFEUR: "/services/private-chauffeur",
   AIRPORT_TRANSFERS: "/services/airport-transfers",
   SIGNATURE_TOURS: "/services/signature-multi-day-tours",
   ESCAPE: "/services/mt-fuji-escape",

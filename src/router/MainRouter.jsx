@@ -19,6 +19,8 @@ import CuratedDay from "../pages/conciergeServices/curatedDay/CuratedDay";
 import TravelConsultationPage from "../pages/conciergeServices/travelConsultation/TravelConsultationPage";
 
 // Services
+// import PrivateChauffeurServices from "../pages/servicesPage/components/PrivateChauffeurServices";
+import PrivateChauffeurServicesPage from "../pages/Services/privateChauffeur/PrivateChauffeurPage";
 import AirportTransfersPage from "../pages/Services/airportTransfers/AirportTransfersPage";
 import MtFujiEscapePage from "../pages/Services/mtFujiEscape/MtFujiEscapePage";
 import SignatureMultiDayToursPage from "../pages/Services/signatureMultiDayTours/SignatureMultiDayToursPage";
@@ -55,6 +57,7 @@ const MainRouter = () => {
       <Route path={ROUTES.SERVICES} element={<PrivateChauffeurPage />} />
 
       {/*  */}
+      <Route path={ROUTES.PRIVATE_CHAUFFEUR} element={<PrivateChauffeurServicesPage />} />
       <Route
         path={ROUTES.AIRPORT_TRANSFERS}
         element={<AirportTransfersPage />}

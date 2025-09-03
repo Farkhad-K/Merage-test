@@ -1,4 +1,6 @@
+// Libraries
 import React from "react";
+import { useNavigate } from "react-router";
 import {
   Car,
   MapPin,
@@ -8,53 +10,63 @@ import {
   ArrowRight,
   Users,
 } from "lucide-react";
+
+// Components
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Images
 import airportTransferImage from "../assets/image.png";
 import luxuryChauffeurHeroImage from "../assets/home.png";
 import privateChauffeurImage from "../assets/card1.png";
 
+const coreServices = [
+  {
+    key: "private-chauffeur",
+    icon: Car,
+    title: "Private Chauffeur Services",
+    description:
+      "Travel Japan in elegance with a professional driver and luxury vehicle — available by the hour or for full-day hire.",
+    image: privateChauffeurImage,
+    culturalNote: "Tokyo to Kyoto in elegance",
+    path: "/services/private-chauffeur",
+  },
+  {
+    key: "airport-transfers",
+    icon: Plane,
+    title: "Airport Transfers",
+    description:
+      "Seamless VIP pickups and drop-offs with meet & greet, flight tracking, and discreet service between airport and hotel.",
+    image: airportTransferImage,
+    culturalNote: "Arrival perfected",
+    path: "/services/airport-transfers",
+  },
+  {
+    key: "day-escapes",
+    icon: MapPin,
+    title: "Signature Day Escapes",
+    description:
+      "One-day private tours to Mt. Fuji, Hakone, Nikko, and more — guided, customizable, and beautifully paced.",
+    image:
+      "https://images.unsplash.com/photo-1713001206325-fa191927c2a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    culturalNote: "Cultural immersion awaits",
+    path: "/services/private-day-tours",
+  },
+  {
+    key: "multi-day-tours",
+    icon: Calendar,
+    title: "Signature Multi-Day Tours",
+    description:
+      "Curated multi-day journeys through Japan's iconic regions — including transport, accommodation, and cultural experiences.",
+    image:
+      "https://images.unsplash.com/photo-1551560231-c37681ebbd77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    culturalNote: "Japan, completely unveiled",
+    path: "/services/signature-multi-day-tours",
+  },
+];
+
 export default function Services({ onNavigateToService }) {
-  const coreServices = [
-    {
-      key: "private-chauffeur",
-      icon: Car,
-      title: "Private Chauffeur Services",
-      description:
-        "Travel Japan in elegance with a professional driver and luxury vehicle — available by the hour or for full-day hire.",
-      image: privateChauffeurImage,
-      culturalNote: "Tokyo to Kyoto in elegance",
-    },
-    {
-      key: "airport-transfers",
-      icon: Plane,
-      title: "Airport Transfers",
-      description:
-        "Seamless VIP pickups and drop-offs with meet & greet, flight tracking, and discreet service between airport and hotel.",
-      image: airportTransferImage,
-      culturalNote: "Arrival perfected",
-    },
-    {
-      key: "day-escapes",
-      icon: MapPin,
-      title: "Signature Day Escapes",
-      description:
-        "One-day private tours to Mt. Fuji, Hakone, Nikko, and more — guided, customizable, and beautifully paced.",
-      image:
-        "https://images.unsplash.com/photo-1713001206325-fa191927c2a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      culturalNote: "Cultural immersion awaits",
-    },
-    {
-      key: "multi-day-tours",
-      icon: Calendar,
-      title: "Signature Multi-Day Tours",
-      description:
-        "Curated multi-day journeys through Japan's iconic regions — including transport, accommodation, and cultural experiences.",
-      image:
-        "https://images.unsplash.com/photo-1551560231-c37681ebbd77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      culturalNote: "Japan, completely unveiled",
-    },
-  ];
+  const navigate = useNavigate();
 
   const trustIndicators = {
     journeys: "800+",
@@ -241,14 +253,12 @@ export default function Services({ onNavigateToService }) {
                   </p>
                   <Button
                     onClick={() =>
-                      handleServiceInquiry(service.key, service.title)
+                      navigate(service.path)
                     }
                     className="group relative overflow-hidden bg-transparent border border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-6 py-4 transition-all duration-500 transform hover:-translate-y-1 hover:shadow-md"
                   >
                     <span className="relative flex items-center justify-center">
-                      {service.key === "private-chauffeur"
-                        ? "View Details"
-                        : "Learn More"}
+                       Learn More
                       <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
                     </span>
                   </Button>
