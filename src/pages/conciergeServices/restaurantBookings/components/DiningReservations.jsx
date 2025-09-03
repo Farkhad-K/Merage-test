@@ -1,5 +1,7 @@
 // Libraries
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { postRestaurantAsync } from "../../../../untils/redux/restaurantSlice";
 import {
   Utensils,
   CheckCircle,
@@ -25,87 +27,108 @@ import tokyoNightDiningImage from "../assets/1.png";
 import michelinRestaurantImage from "../assets/2.png";
 import omakaseSushiImage from "../assets/3.png";
 
+const highlights = [
+  {
+    icon: Star,
+    title: "Legendary Sushi Masters",
+    description:
+      "Private access to Japan's most revered sushi artisans and their intimate dining sanctuaries",
+    image: michelinRestaurantImage,
+    badge: "Michelin",
+  },
+  {
+    icon: Wine,
+    title: "Hidden Nightlife Temples",
+    description:
+      "Exclusive entry to Japan's secretive cocktail havens and rooftop sanctuaries",
+    image:
+      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
+    badge: "Private Access",
+  },
+  {
+    icon: ChefHat,
+    title: "Kaiseki & Omakase",
+    description:
+      "Seasonal artistry from Japan's most celebrated culinary masters",
+    image: omakaseSushiImage,
+    badge: "Artisan",
+  },
+  {
+    icon: MapPin,
+    title: "Complete Cultural Coordination",
+    description:
+      "Transportation, etiquette guidance, and seamless cultural immersion",
+    image:
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
+    badge: "Full Service",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Share Your Preferences",
+    description: "Cuisine style, ambiance, occasion, and preferred location.",
+    icon: MapPin,
+  },
+  {
+    step: "02",
+    title: "Curated Recommendations",
+    description:
+      "We present carefully chosen options, each vetted for quality, privacy, and authenticity.",
+    icon: Star,
+  },
+  {
+    step: "03",
+    title: "Enjoy With Ease",
+    description:
+      "Your table, time, and any special arrangements are confirmed — all you need to do is arrive.",
+    icon: CheckCircle,
+  },
+];
+
 export default function DiningReservations() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: "",
-    time: "",
-    guests: "",
-    preferences: "",
-    specialRequests: "",
-  });
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+  const [numberOfGuest, setNumberOfGuest] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [date, setDate] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
+  const [cuisine, setCuisine] = useState("");
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleOrder = () => {
+    if (
+      name &&
+      email &&
+      phoneNumber &&
+      numberOfGuest &&
+      date &&
+      preferredTime
+    ) {
+      const restaurantDate = {
+        fullName: name,
+        email: email,
+        additionalNotes: notes,
+        numberOfGuests: Number(numberOfGuest),
+        phoneNumber: phoneNumber,
+        reservationDate: date,
+        preferredTime: preferredTime + ":00",
+        cuisine: cuisine,
+        occasion: "string",
+      };
+      dispatch(postRestaurantAsync(restaurantDate))
+        .unwrap()
+        .then(() => {
+          console.log("successful");
+        })
+        .catch((error) => alert(error));
+    }
   };
-
-  const highlights = [
-    {
-      icon: Star,
-      title: "Legendary Sushi Masters",
-      description:
-        "Private access to Japan's most revered sushi artisans and their intimate dining sanctuaries",
-      image: michelinRestaurantImage,
-      badge: "Michelin",
-    },
-    {
-      icon: Wine,
-      title: "Hidden Nightlife Temples",
-      description:
-        "Exclusive entry to Japan's secretive cocktail havens and rooftop sanctuaries",
-      image:
-        "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
-      badge: "Private Access",
-    },
-    {
-      icon: ChefHat,
-      title: "Kaiseki & Omakase",
-      description:
-        "Seasonal artistry from Japan's most celebrated culinary masters",
-      image: omakaseSushiImage,
-      badge: "Artisan",
-    },
-    {
-      icon: MapPin,
-      title: "Complete Cultural Coordination",
-      description:
-        "Transportation, etiquette guidance, and seamless cultural immersion",
-      image:
-        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
-      badge: "Full Service",
-    },
-  ];
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Share Your Preferences",
-      description: "Cuisine style, ambiance, occasion, and preferred location.",
-      icon: MapPin,
-    },
-    {
-      step: "02",
-      title: "Curated Recommendations",
-      description:
-        "We present carefully chosen options, each vetted for quality, privacy, and authenticity.",
-      icon: Star,
-    },
-    {
-      step: "03",
-      title: "Enjoy With Ease",
-      description:
-        "Your table, time, and any special arrangements are confirmed — all you need to do is arrive.",
-      icon: CheckCircle,
-    },
-  ];
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -114,16 +137,6 @@ export default function DiningReservations() {
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        date: "",
-        time: "",
-        guests: "",
-        preferences: "",
-        specialRequests: "",
-      });
     }, 3000);
   };
 
@@ -523,8 +536,8 @@ export default function DiningReservations() {
                       id="name"
                       name="name"
                       type="text"
-                      value={formData.name}
-                      onChange={handleInputChange}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       required
                       className="luxury-input"
                       placeholder="Your full name"
@@ -542,8 +555,8 @@ export default function DiningReservations() {
                       id="email"
                       name="email"
                       type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                       className="luxury-input"
                       placeholder="your@email.com"
@@ -563,8 +576,8 @@ export default function DiningReservations() {
                       id="phone"
                       name="phone"
                       type="tel"
-                      value={formData.phone}
-                      onChange={handleInputChange}
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                       className="luxury-input"
                       placeholder="+81 (optional)"
                     />
@@ -583,8 +596,8 @@ export default function DiningReservations() {
                       type="number"
                       min="1"
                       max="20"
-                      value={formData.guests}
-                      onChange={handleInputChange}
+                      value={numberOfGuest}
+                      onChange={(e) => setNumberOfGuest(e.target.value)}
                       required
                       className="luxury-input"
                       placeholder="2"
@@ -604,8 +617,8 @@ export default function DiningReservations() {
                       id="date"
                       name="date"
                       type="date"
-                      value={formData.date}
-                      onChange={handleInputChange}
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
                       required
                       className="luxury-input"
                     />
@@ -622,8 +635,8 @@ export default function DiningReservations() {
                       id="time"
                       name="time"
                       type="time"
-                      value={formData.time}
-                      onChange={handleInputChange}
+                      value={preferredTime}
+                      onChange={(e) => setPreferredTime(e.target.value)}
                       required
                       className="luxury-input"
                     />
@@ -640,8 +653,8 @@ export default function DiningReservations() {
                   <Textarea
                     id="preferences"
                     name="preferences"
-                    value={formData.preferences}
-                    onChange={handleInputChange}
+                    value={cuisine}
+                    onChange={(e) => setCuisine(e.target.value)}
                     className="luxury-input min-h-[120px] resize-none"
                     placeholder="Omakase sushi, kaiseki, modern fusion, rooftop bar, traditional ryotei, Michelin-starred venues..."
                   />
@@ -657,8 +670,8 @@ export default function DiningReservations() {
                   <Textarea
                     id="specialRequests"
                     name="specialRequests"
-                    value={formData.specialRequests}
-                    onChange={handleInputChange}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
                     className="luxury-input min-h-[120px] resize-none"
                     placeholder="Dietary restrictions, celebration details, seating preferences, transportation needs, wine pairings..."
                   />
@@ -667,6 +680,7 @@ export default function DiningReservations() {
                 <div className="pt-6">
                   <Button
                     type="submit"
+                    onClick={handleOrder}
                     className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover-gold-hover transform hover:-translate-y-2 hover-nippon-gold luxury-button-gold"
                   >
                     <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover-x-100 transition-transform duration-500 origin-left"></span>

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
 
 // Components
 import { Button } from "./ui/button";
@@ -27,7 +28,6 @@ import ryokanImage from "../assets/Ryokan.png";
 import cityHotelImage from "../assets/cityHotel.png";
 import vipServicesImage from "../assets/historicMachiya.png";
 import historicMachiyaImage from "../assets/vipServices.png";
-import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
 
 const highlights = [
   {
@@ -102,15 +102,10 @@ export default function AccommodationReservations() {
   const [preferred, setPreferred] = useState("");
   const [desiredLocations, setDesiredLocations] = useState("");
 
-  // useEffect(() => {
-
-  // });
-
   const handleOrder = () => {
     if (
       name &&
       email &&
-      notes &&
       numberOfGuest &&
       phoneNumber &&
       checkInDate &&
@@ -127,6 +122,7 @@ export default function AccommodationReservations() {
         preferredStayType: "string",
         desiredLocations: "string",
       };
+
       dispatch(postAccommodationAsync(accommodationData))
         .unwrap()
         .then(() => {

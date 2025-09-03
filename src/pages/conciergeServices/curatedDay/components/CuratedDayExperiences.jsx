@@ -1,3 +1,6 @@
+// Libraries
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   MapPin,
   CheckCircle,
@@ -10,6 +13,8 @@ import {
   Flower2,
   Building2,
 } from "lucide-react";
+
+// Components
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -22,74 +27,114 @@ import {
   SelectValue,
 } from "./ui/select";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Images
 import cherryBlossomImage from "../assets/1.png";
 import heroBackgroundImage from "../assets/2.png";
+import { postCuratedDayAsync } from "../../../../untils/redux/curatedDaySlice";
+
+const highlights = [
+  {
+    icon: Flower2,
+    title: "Cherry Blossom Private Tours",
+    description:
+      "Intimate ceremonies and exclusive viewing spots away from crowds",
+    image: cherryBlossomImage,
+    premium: "Seasonal exclusivity",
+  },
+  {
+    icon: TreePine,
+    title: "Autumn Foliage Experiences",
+    description:
+      "Sacred temple grounds and mountain sanctuaries in peak autumn",
+    image:
+      "https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    premium: "Private temple access",
+  },
+  {
+    icon: Building2,
+    title: "Temple & Shrine Rituals",
+    description:
+      "Participate in traditional ceremonies with cultural significance",
+    image:
+      "https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    premium: "Monk-guided ceremonies",
+  },
+  {
+    icon: Calendar,
+    title: "Heritage Town Explorations",
+    description: "Artisan districts and cultural treasures with local masters",
+    image:
+      "https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    premium: "Master artisan access",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Share Your Vision",
+    description:
+      "Tell us your season and what inspires you. Nature, culture, or heritage—every season reveals Japan's soul.",
+    icon: MapPin,
+    timeframe: "Personalized consultation",
+  },
+  {
+    step: "02",
+    title: "We Curate Excellence",
+    description:
+      "Your concierge designs exclusive experiences with insider access, honoring Japan's traditions and natural rhythms.",
+    icon: Star,
+    timeframe: "Within 24 hours",
+  },
+  {
+    step: "03",
+    title: "Experience Imperial Service",
+    description:
+      "Travel in elegance while every detail is handled discreetly. Discover Japan's heritage through intimate encounters.",
+    icon: CheckCircle,
+    timeframe: "On your journey",
+  },
+];
 
 export default function CuratedDayExperiences() {
-  const highlights = [
-    {
-      icon: Flower2,
-      title: "Cherry Blossom Private Tours",
-      description:
-        "Intimate ceremonies and exclusive viewing spots away from crowds",
-      image: cherryBlossomImage,
-      premium: "Seasonal exclusivity",
-    },
-    {
-      icon: TreePine,
-      title: "Autumn Foliage Experiences",
-      description:
-        "Sacred temple grounds and mountain sanctuaries in peak autumn",
-      image:
-        "https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-      premium: "Private temple access",
-    },
-    {
-      icon: Building2,
-      title: "Temple & Shrine Rituals",
-      description:
-        "Participate in traditional ceremonies with cultural significance",
-      image:
-        "https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      premium: "Monk-guided ceremonies",
-    },
-    {
-      icon: Calendar,
-      title: "Heritage Town Explorations",
-      description:
-        "Artisan districts and cultural treasures with local masters",
-      image:
-        "https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      premium: "Master artisan access",
-    },
-  ];
+  const dispatch = useDispatch();
 
-  const processSteps = [
-    {
-      step: "01",
-      title: "Share Your Vision",
-      description:
-        "Tell us your season and what inspires you. Nature, culture, or heritage—every season reveals Japan's soul.",
-      icon: MapPin,
-      timeframe: "Personalized consultation",
-    },
-    {
-      step: "02",
-      title: "We Curate Excellence",
-      description:
-        "Your concierge designs exclusive experiences with insider access, honoring Japan's traditions and natural rhythms.",
-      icon: Star,
-      timeframe: "Within 24 hours",
-    },
-    {
-      step: "03",
-      title: "Experience Imperial Service",
-      description:
-        "Travel in elegance while every detail is handled discreetly. Discover Japan's heritage through intimate encounters.",
-      icon: CheckCircle,
-      timeframe: "On your journey",
-    },
-  ];
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+  const [numberOfGuest, setNumberOfGuest] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
+  const [seasonalInterest, setSeasonalInterest] = useState("");
+
+  const handleOrder = () => {
+    if (
+      name &&
+      email &&
+      phoneNumber &&
+      numberOfGuest &&
+      preferredDate &&
+      seasonalInterest
+    ) {
+      const curatedDayData = {
+        fullName: name,
+        email: email,
+        additionalNotes: notes,
+        numberOfGuests: Number(numberOfGuest),
+        phoneNumber: phoneNumber,
+        preferredDate: preferredDate,
+        seasonalInterest: seasonalInterest,
+      };
+
+      dispatch(postCuratedDayAsync(curatedDayData))
+        .unwrap()
+        .then(() => {
+          console.log("successful");
+        })
+        .catch((error) => alert(error));
+    }
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -488,6 +533,8 @@ export default function CuratedDayExperiences() {
                   <Input
                     id="name"
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="Your full name"
@@ -504,6 +551,8 @@ export default function CuratedDayExperiences() {
                   <Input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="your@email.com"
@@ -522,6 +571,8 @@ export default function CuratedDayExperiences() {
                   <Input
                     id="phone"
                     type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="luxury-input"
                     placeholder="+1 (555) 123-4567"
                   />
@@ -537,6 +588,8 @@ export default function CuratedDayExperiences() {
                   <Input
                     id="guests"
                     type="number"
+                    value={numberOfGuest}
+                    onChange={(e) => setNumberOfGuest(e.target.value)}
                     min="1"
                     required
                     className="luxury-input"
@@ -556,6 +609,8 @@ export default function CuratedDayExperiences() {
                   <Input
                     id="dates"
                     type="date"
+                    value={preferredDate}
+                    onChange={(e) => setPreferredDate(e.target.value)}
                     required
                     className="luxury-input"
                   />
@@ -568,7 +623,11 @@ export default function CuratedDayExperiences() {
                   >
                     Seasonal Interest *
                   </Label>
-                  <Select required>
+                  <Select
+                    required
+                    value={seasonalInterest}
+                    onValueChange={(value) => setSeasonalInterest(value)}
+                  >
                     <SelectTrigger className="luxury-input">
                       <SelectValue placeholder="Select your interest" />
                     </SelectTrigger>
@@ -601,6 +660,8 @@ export default function CuratedDayExperiences() {
                 </Label>
                 <Textarea
                   id="requests"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                   className="luxury-input min-h-[120px] resize-none"
                   placeholder="Tell us about your cultural interests, seasonal preferences, accessibility needs, or any special arrangements we should know about..."
                 />
@@ -609,6 +670,7 @@ export default function CuratedDayExperiences() {
               <div className="pt-6">
                 <Button
                   type="submit"
+                  onClick={handleOrder}
                   className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>

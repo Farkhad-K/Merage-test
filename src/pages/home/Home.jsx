@@ -1,3 +1,4 @@
+// Components
 import SmoothScroll from "./components/SmoothScroll";
 import ScrollReveal from "./components/ScrollReveal";
 import Hero from "./components/Hero";
