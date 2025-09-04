@@ -35,8 +35,12 @@ const highlights = [
   {
     icon: Car,
     title: "Premium Fleet",
-    description:
-      "Mercedes S-Class, V-Class, and Toyota Alphard executive vehicles",
+    description: (
+      <>
+        <br />
+        Mercedes S-Class, V-Class, and Toyota Alphard executive vehicles
+      </>
+    ),
     image: premiumFleetImage,
     premium: "Executive Grade",
   },
@@ -50,14 +54,24 @@ const highlights = [
   {
     icon: Route,
     title: "Custom Routes",
-    description: "Flexible scheduling and personalized journey planning",
+    description: (
+      <>
+        <br />
+        Flexible scheduling and personalized journey planning
+      </>
+    ),
     image: vipExperienceImage,
     premium: "Bespoke Service",
   },
   {
     icon: Crown,
     title: "VIP Experience",
-    description: "Discreet, punctual transport for executives and dignitaries",
+    description: (
+      <>
+        <br />
+        Discreet, punctual transport for executives and dignitaries
+      </>
+    ),
     image: customRoutesImage,
     premium: "Diplomatic Grade",
   },

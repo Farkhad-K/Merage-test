@@ -360,13 +360,13 @@ export default function ExclusiveExperiences() {
 
           {/* Highlights Grid with Images */}
           <div
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch"
             data-scroll-reveal
           >
             {highlights.map((highlight, index) => (
               <div
                 key={index}
-                className="group bg-nippon-white shadow-luxury hover:shadow-luxury-hover transition-all duration-500 transform hover:-translate-y-2 overflow-hidden"
+                className="group bg-nippon-white shadow-luxury hover:shadow-luxury-hover transition-all duration-500 transform hover:-translate-y-2 overflow-hidden flex flex-col h-[530px]"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 {/* Image */}
@@ -389,20 +389,20 @@ export default function ExclusiveExperiences() {
                 </div>
 
                 {/* Content */}
-                <div className="p-8 text-center space-y-4">
+                <div className="p-8 text-center flex flex-col flex-grow">
                   {/* Title */}
                   <h3 className="text-luxury-xl text-nippon-black font-serif leading-tight">
                     {highlight.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-nippon-gray font-sans text-luxury-base leading-relaxed">
+                  <p className="text-nippon-gray font-sans text-luxury-base leading-relaxed mt-4">
                     {highlight.description}
                   </p>
 
-                  {/* Badge */}
+                  {/* Badge - always bottom */}
                   {highlight.badge && (
-                    <div className="text-nippon-gold font-serif text-sm uppercase tracking-wider">
+                    <div className="text-nippon-gold font-serif text-sm uppercase tracking-wider mt-auto">
                       {highlight.badge}
                     </div>
                   )}
@@ -660,7 +660,7 @@ export default function ExclusiveExperiences() {
                     value={desiredExperience}
                     onChange={(e) => setDesiredExperience(e.target.value)}
                     required
-                    className="luxury-input min-h-[120px] resize-none"
+                    className="luxury-input min-h-[120px] resize-none w-full"
                     placeholder="Private geiko evening, Mt. Fuji helicopter tour, yakatabune cruise, cherry blossom festival, shrine proposal, rooftop anniversary dinner..."
                   />
                 </div>
@@ -677,7 +677,7 @@ export default function ExclusiveExperiences() {
                     name="specialNotes"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="luxury-input min-h-[120px] resize-none"
+                    className="luxury-input min-h-[120px] resize-none w-full"
                     placeholder="Celebration details, seasonal preferences, cultural interests, photography requirements, special occasion needs, accessibility requirements..."
                   />
                 </div>

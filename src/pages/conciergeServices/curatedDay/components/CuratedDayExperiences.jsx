@@ -235,7 +235,7 @@ export default function CuratedDayExperiences() {
 
         {/* Content - Hero */}
         <div
-          className="relative z-20 max-w-6xl mx-auto px-8"
+          className="relative z-20 max-w-6xl pt-[70px] mx-auto px-8"
           data-scroll-reveal
         >
           <div className="max-w-4xl text-center">

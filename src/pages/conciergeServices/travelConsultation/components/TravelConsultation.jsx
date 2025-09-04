@@ -1,3 +1,4 @@
+// Libraries
 import {
   MapPin,
   CheckCircle,
@@ -15,80 +16,88 @@ import {
   Calendar,
   Globe2,
 } from "lucide-react";
+
+// Components
 import { Button } from "./ui/button";
 import { Input } from "./ui/input.jsx";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Images
 import consultationImage from "../assets/2b14b7a2c710c0db1e486f8213e0806d30ce9be5.png";
 import heroBackgroundImage from "../assets/f2ca2fb1ca45d2f12114c2812b6a3f4fc87c622c.png";
 import supportImage from "../assets/d9cd84406971ffca0600d80bacbfe0ccd632f794.png";
 
+const serviceHighlights = [
+  {
+    icon: Users,
+    title: "Private Consultation with Certified Japan Travel Specialists",
+    description:
+      "One-on-one planning sessions with experts who understand your unique travel aspirations and preferences",
+    image: consultationImage,
+    premium: "Certified Specialist",
+  },
+  {
+    icon: Compass,
+    title: (
+      <>
+        Completely Customized Multi-City <br /> Travel Itinerary
+      </>
+    ),
+    description:
+      "Bespoke journeys crafted to your interests, pace, and travel style across Japan's most compelling destinations",
+    image:
+      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMG1hcCUyMGl0aW5lcmFyeSUyMHBsYW5uaW5nJTIwdHJhdmVsfGVufDF8fHx8MTc1NTMzMTQwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+    premium: "Bespoke Planning",
+  },
+  {
+    icon: Phone,
+    title: "24/7 Dedicated Support Throughout Your Entire Trip",
+    description:
+      "Real-time assistance, cultural guidance, and seamless coordination from arrival to departure",
+    image: supportImage,
+    premium: "24/7 Concierge",
+  },
+  {
+    icon: Crown,
+    title: "Exclusive Access to Our Network of Premium Partners",
+    description:
+      "Private dining, after-hours temple visits, master craftsman workshops, and experiences unavailable to the public",
+    image:
+      "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMHRlbXBsZSUyMHByaXZhdGUlMjBhY2Nlc3N8ZW58MXx8fHwxNzU1MzMxNDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    premium: "Exclusive Access",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Share Your Vision",
+    description:
+      "Tell us your interests, destinations, and travel style preferences during our private consultation.",
+    icon: Users,
+    timeframe: "60-minute consultation",
+  },
+  {
+    step: "02",
+    title: "Bespoke Planning",
+    description:
+      "Our specialists design your tailored itinerary, integrating accommodations, transport, and exclusive experiences.",
+    icon: Compass,
+    timeframe: "7-14 days development",
+  },
+  {
+    step: "03",
+    title: "Concierge Support",
+    description:
+      "We handle every detail before and during your trip, ensuring a seamless journey from start to finish.",
+    icon: Phone,
+    timeframe: "Throughout your journey",
+  },
+];
+
 export default function TravelConsultation() {
-  const serviceHighlights = [
-    {
-      icon: Users,
-      title: "Private Consultation with Certified Japan Travel Specialists",
-      description:
-        "One-on-one planning sessions with experts who understand your unique travel aspirations and preferences",
-      image: consultationImage,
-      premium: "Certified Specialist",
-    },
-    {
-      icon: Compass,
-      title: "Completely Customized Multi-City Travel Itinerary",
-      description:
-        "Bespoke journeys crafted to your interests, pace, and travel style across Japan's most compelling destinations",
-      image:
-        "https://images.unsplash.com/photo-1528360983277-13d401cdc186?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMG1hcCUyMGl0aW5lcmFyeSUyMHBsYW5uaW5nJTIwdHJhdmVsfGVufDF8fHx8MTc1NTMzMTQwOXww&ixlib=rb-4.1.0&q=80&w=1080",
-      premium: "Bespoke Planning",
-    },
-    {
-      icon: Phone,
-      title: "24/7 Dedicated Support Throughout Your Entire Trip",
-      description:
-        "Real-time assistance, cultural guidance, and seamless coordination from arrival to departure",
-      image: supportImage,
-      premium: "24/7 Concierge",
-    },
-    {
-      icon: Crown,
-      title: "Exclusive Access to Our Network of Premium Partners",
-      description:
-        "Private dining, after-hours temple visits, master craftsman workshops, and experiences unavailable to the public",
-      image:
-        "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMHRlbXBsZSUyMHByaXZhdGUlMjBhY2Nlc3N8ZW58MXx8fHwxNzU1MzMxNDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      premium: "Exclusive Access",
-    },
-  ];
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Share Your Vision",
-      description:
-        "Tell us your interests, destinations, and travel style preferences during our private consultation.",
-      icon: Users,
-      timeframe: "60-minute consultation",
-    },
-    {
-      step: "02",
-      title: "Bespoke Planning",
-      description:
-        "Our specialists design your tailored itinerary, integrating accommodations, transport, and exclusive experiences.",
-      icon: Compass,
-      timeframe: "7-14 days development",
-    },
-    {
-      step: "03",
-      title: "Concierge Support",
-      description:
-        "We handle every detail before and during your trip, ensuring a seamless journey from start to finish.",
-      icon: Phone,
-      timeframe: "Throughout your journey",
-    },
-  ];
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Form submission logic would go here

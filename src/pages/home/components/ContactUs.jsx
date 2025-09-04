@@ -150,7 +150,9 @@ export default function ContactUs() {
                 </div>
 
                 <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-nippon-gold">
+                    Follow Us
+                  </h3>
                   <div className="flex gap-4">
                     <Facebook className="w-6 h-6 cursor-pointer hover:text-nippon-gold" />
                     <Instagram className="w-6 h-6 cursor-pointer hover:text-nippon-gold" />
@@ -200,7 +202,7 @@ export default function ContactUs() {
                       handleInputChange("phoneNumber", e.target.value)
                     }
                     placeholder="Phone Number"
-                    className="h-12 text-luxury-base text-black placeholder-gray-500 border border-gray-300 focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37]"
+                    className="h-12 text-luxury-base text-black border border-gray-300 focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37]"
                     style={{ backgroundColor: "#f9f9f9", color: "#000" }}
                   />
 
@@ -213,7 +215,7 @@ export default function ContactUs() {
                   >
                     <SelectTrigger
                       className="h-12 text-luxury-base text-black border border-gray-300 focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37]"
-                      style={{ backgroundColor: "#f9f9f9", color: "#000" }}
+                      style={{ backgroundColor: "#f9f9f9", color: "#6B7280" }}
                     >
                       <SelectValue
                         placeholder="Subject"

@@ -41,15 +41,24 @@ const highlights = [
   {
     icon: Building,
     title: "Luxury City Hotels",
-    description: "Tokyo's most coveted addresses with unparalleled service",
+    description: (
+      <>
+        <br />
+        Tokyo's most coveted addresses with unparalleled service
+      </>
+    ),
     image: cityHotelImage,
     premium: "Michelin Key certified",
   },
   {
     icon: Hotel,
     title: "Historic Machiya",
-    description:
-      "Restored cultural treasures in Kyoto's most exclusive districts",
+    description: (
+      <>
+        <br />
+        Restored cultural treasures in Kyoto's most exclusive districts
+      </>
+    ),
     image: historicMachiyaImage,
     premium: "UNESCO Heritage properties",
   },

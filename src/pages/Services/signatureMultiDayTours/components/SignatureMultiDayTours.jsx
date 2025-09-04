@@ -1,3 +1,4 @@
+// Libraries
 import { useState, useEffect } from "react";
 import {
   MapPin,
@@ -41,6 +42,8 @@ import {
   Crown,
   Send,
 } from "lucide-react";
+
+// Components
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Input } from "./ui/input";
@@ -63,16 +66,86 @@ import {
   DialogTitle,
 } from "./ui/dialog";
 
-/**
- * SignatureMultiDayTours.jsx
- *
- * Converted from TSX → JSX.
- * - Removed TypeScript-only type annotations.
- * - Fixed variable naming (tours variable used by handlers).
- * - Preserves UI structure and styling classes.
- *
- * Save as: SignatureMultiDayTours.jsx
- */
+const tours = [
+  {
+    id: "golden-route",
+    name: "The 7-Day Golden Route",
+    route: "Tokyo → Hakone → Kyoto",
+    summary:
+      "A week of iconic highlights — temples, tea gardens, and scenic rides on Japan's bullet train. Ideal for first-time luxury travelers.",
+    highlights: [
+      "Bullet Train Experience",
+      "Kyoto Temple Districts",
+      "Hakone Hot Springs",
+      "Tokyo Modern Culture",
+    ],
+    duration: "7 Days / 6 Nights",
+    destinations: "3 Major Cities",
+    image:
+      "https://images.unsplash.com/photo-1681862417657-e5b9bfefea53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUb2t5byUyMEt5b3RvJTIwZ29sZGVuJTIwcm91dGUlMjBKYXBhbiUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3NTM3NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+  {
+    id: "essence-japan",
+    name: "The 10-Day Essence of Japan",
+    route: "Tokyo → Mt. Fuji → Kyoto → Nara",
+    summary:
+      "A deeper immersion into Japan's spiritual sites and artistic heritage — with refined pacing and handpicked cultural experiences.",
+    highlights: [
+      "Mt. Fuji Views",
+      "Nara Deer Park",
+      "Spiritual Temples",
+      "Cultural Workshops",
+    ],
+    duration: "10 Days / 9 Nights",
+    destinations: "4 UNESCO Sites",
+    image:
+      "https://images.unsplash.com/photo-1719239488015-fc29a74ab22c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbiUyMGVzc2VuY2UlMjB0ZW1wbGVzJTIwZ2FyZGVucyUyMGN1bHR1cmFsfGVufDF8fHx8MTc1NTc1Mzc2M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+  {
+    id: "imperial-circle",
+    name: "The 14-Day Imperial Circle",
+    route: "Tokyo → Hakone → Kyoto → Hiroshima → Osaka",
+    summary:
+      "A grand, privately guided voyage through ancient capitals and modern cities, bridging samurai history with Japanese innovation.",
+    highlights: [
+      "Imperial Palaces",
+      "Hiroshima Peace Memorial",
+      "Osaka Culinary Scene",
+      "Private Guide Access",
+    ],
+    duration: "14 Days / 13 Nights",
+    destinations: "5 Imperial Cities",
+    image:
+      "https://images.unsplash.com/photo-1728200697459-b9296ccf9773?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbiUyMGltcGVyaWFsJTIwcGFsYWNlJTIwY3VsdHVyYWwlMjBoZXJpdGFnZXxlbnwxfHx8fDE3NTU3NTM3NTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Catherine Williams",
+    location: "London",
+    rating: 5,
+    text: "The 10-day Essence tour was phenomenal. Every detail was perfectly orchestrated, from the ryokan stays to the private temple visits. Nippon Imperial created memories that will last a lifetime.",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    name: "Robert Chen",
+    location: "New York",
+    rating: 5,
+    text: "Our 14-day Imperial Circle exceeded every expectation. The custom itinerary perfectly balanced our interests in history, culture, and cuisine. Exceptional service from start to finish.",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    name: "Elena Rodriguez",
+    location: "Madrid",
+    rating: 5,
+    text: "The 7-day Golden Route was the perfect introduction to Japan. Every moment was thoughtfully planned, creating an immersive cultural experience that felt both luxurious and authentic.",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+  },
+];
 
 export default function SignatureMultiDayTours() {
   const [showRequestModal, setShowRequestModal] = useState(false);
@@ -105,88 +178,6 @@ export default function SignatureMultiDayTours() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Tours data (renamed to `tours` from original `setTours`)
-  const tours = [
-    {
-      id: "golden-route",
-      name: "The 7-Day Golden Route",
-      route: "Tokyo → Hakone → Kyoto",
-      summary:
-        "A week of iconic highlights — temples, tea gardens, and scenic rides on Japan's bullet train. Ideal for first-time luxury travelers.",
-      highlights: [
-        "Bullet Train Experience",
-        "Kyoto Temple Districts",
-        "Hakone Hot Springs",
-        "Tokyo Modern Culture",
-      ],
-      duration: "7 Days / 6 Nights",
-      destinations: "3 Major Cities",
-      image:
-        "https://images.unsplash.com/photo-1681862417657-e5b9bfefea53?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUb2t5byUyMEt5b3RvJTIwZ29sZGVuJTIwcm91dGUlMjBKYXBhbiUyMHRyYXZlbHxlbnwxfHx8fDE3NTU3NTM3NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    },
-    {
-      id: "essence-japan",
-      name: "The 10-Day Essence of Japan",
-      route: "Tokyo → Mt. Fuji → Kyoto → Nara",
-      summary:
-        "A deeper immersion into Japan's spiritual sites and artistic heritage — with refined pacing and handpicked cultural experiences.",
-      highlights: [
-        "Mt. Fuji Views",
-        "Nara Deer Park",
-        "Spiritual Temples",
-        "Cultural Workshops",
-      ],
-      duration: "10 Days / 9 Nights",
-      destinations: "4 UNESCO Sites",
-      image:
-        "https://images.unsplash.com/photo-1719239488015-fc29a74ab22c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbiUyMGVzc2VuY2UlMjB0ZW1wbGVzJTIwZ2FyZGVucyUyMGN1bHR1cmFsfGVufDF8fHx8MTc1NTc1Mzc2M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    },
-    {
-      id: "imperial-circle",
-      name: "The 14-Day Imperial Circle",
-      route: "Tokyo → Hakone → Kyoto → Hiroshima → Osaka",
-      summary:
-        "A grand, privately guided voyage through ancient capitals and modern cities, bridging samurai history with Japanese innovation.",
-      highlights: [
-        "Imperial Palaces",
-        "Hiroshima Peace Memorial",
-        "Osaka Culinary Scene",
-        "Private Guide Access",
-      ],
-      duration: "14 Days / 13 Nights",
-      destinations: "5 Imperial Cities",
-      image:
-        "https://images.unsplash.com/photo-1728200697459-b9296ccf9773?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbiUyMGltcGVyaWFsJTIwcGFsYWNlJTIwY3VsdHVyYWwlMjBoZXJpdGFnZXxlbnwxfHx8fDE3NTU3NTM3NTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Catherine Williams",
-      location: "London",
-      rating: 5,
-      text: "The 10-day Essence tour was phenomenal. Every detail was perfectly orchestrated, from the ryokan stays to the private temple visits. Nippon Imperial created memories that will last a lifetime.",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=100&h=100&fit=crop&crop=face",
-    },
-    {
-      name: "Robert Chen",
-      location: "New York",
-      rating: 5,
-      text: "Our 14-day Imperial Circle exceeded every expectation. The custom itinerary perfectly balanced our interests in history, culture, and cuisine. Exceptional service from start to finish.",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-    },
-    {
-      name: "Elena Rodriguez",
-      location: "Madrid",
-      rating: 5,
-      text: "The 7-day Golden Route was the perfect introduction to Japan. Every moment was thoughtfully planned, creating an immersive cultural experience that felt both luxurious and authentic.",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
-    },
-  ];
 
   // Handlers
   const handleTourRequest = (tourId) => {
@@ -805,7 +796,7 @@ export default function SignatureMultiDayTours() {
             {tours.map((tour, index) => (
               <Card
                 key={tour.id}
-                className="group relative bg-nippon-warm-white hover:shadow-luxury-hover transition-all duration-500 overflow-hidden border-l-4 border-nippon-gold"
+                className="group relative flex flex-col h-[630px] bg-nippon-warm-white hover:shadow-luxury-hover transition-all duration-500 overflow-hidden border-l-4 border-nippon-gold"
                 data-scroll-reveal
                 style={{ animationDelay: `${index * 200}ms` }}
               >
@@ -829,7 +820,7 @@ export default function SignatureMultiDayTours() {
                   </div>
                 </div>
 
-                <CardContent className="p-6 space-y-4">
+                <CardContent className="p-6 flex flex-col h-full">
                   <CardHeader className="p-0">
                     <CardTitle className="text-luxury-xl text-nippon-black font-serif leading-tight">
                       {tour.name}
@@ -839,11 +830,11 @@ export default function SignatureMultiDayTours() {
                     </p>
                   </CardHeader>
 
-                  <p className="text-luxury-base text-nippon-gray leading-relaxed font-sans">
+                  <p className="text-luxury-base text-nippon-gray leading-relaxed font-sans mt-4">
                     {tour.summary}
                   </p>
 
-                  <div className="space-y-2">
+                  <div className="mt-4 space-y-2">
                     <h4 className="text-luxury-sm text-nippon-black font-serif">
                       Journey Highlights:
                     </h4>
@@ -859,22 +850,25 @@ export default function SignatureMultiDayTours() {
                     </div>
                   </div>
 
-                  <Button
-                    onClick={() => handleTourRequest(tour.id)}
-                    className="group relative overflow-hidden w-full bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-sans text-luxury-sm px-4 py-3 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold"
-                    style={{
-                      backdropFilter: "blur(10px)",
-                      backgroundColor: "rgba(248, 246, 240, 0.1)",
-                    }}
-                  >
-                    <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                    <span className="relative flex items-center justify-center space-x-2 text-nippon-gold group-hover:text-nippon-black">
-                      <span className="tracking-wider font-medium">
-                        Request This Journey
+                  {/* Buttonni pastga yopishtiramiz */}
+                  <div className="mt-auto">
+                    <Button
+                      onClick={() => handleTourRequest(tour.id)}
+                      className="group relative overflow-hidden w-full bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-sans text-luxury-sm px-4 py-3 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold"
+                      style={{
+                        backdropFilter: "blur(10px)",
+                        backgroundColor: "rgba(248, 246, 240, 0.1)",
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+                      <span className="relative flex items-center justify-center space-x-2 text-nippon-gold group-hover:text-nippon-black">
+                        <span className="tracking-wider font-medium">
+                          Request This Journey
+                        </span>
+                        <ArrowRight className="w-4 h-4" />
                       </span>
-                      <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </Button>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -942,24 +936,27 @@ export default function SignatureMultiDayTours() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {testimonials.map((testimonial, index) => (
               <Card
                 key={index}
-                className="bg-nippon-warm-white border-l-4 border-nippon-gold shadow-luxury hover:shadow-luxury-hover transition-all duration-500"
+                className="bg-nippon-warm-white border-l-4 border-nippon-gold shadow-luxury hover:shadow-luxury-hover transition-all duration-500 flex flex-col"
                 data-scroll-reveal
                 style={{ animationDelay: `${index * 200}ms` }}
               >
-                <CardContent className="p-6 space-y-4">
+                <CardContent className="p-6 flex flex-col flex-grow">
+                  {/* Yulduzcha rating */}
                   <div className="flex items-center space-x-2 mb-4">
                     <RatingStars value={testimonial.rating} />
                   </div>
 
+                  {/* Matn */}
                   <p className="text-luxury-base text-nippon-gray font-sans leading-relaxed italic">
                     "{testimonial.text}"
                   </p>
 
-                  <div className="flex items-center space-x-3 pt-4 border-t border-nippon-border">
+                  {/* Avatar + ism + joylashuv (pastga yopishtirilgan) */}
+                  <div className="flex items-center space-x-3 pt-4 border-t border-nippon-border mt-auto">
                     <ImageWithFallback
                       src={testimonial.avatar}
                       alt={testimonial.name}
