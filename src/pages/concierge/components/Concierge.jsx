@@ -25,86 +25,86 @@ import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 // Images
-import consultationImage from "../assets/Hotel.png";
-import guideImage from "../assets/User.png";
-import luxuryCarImage from "../assets/car.png";
-import conciergeWelcomeImage from "../assets/Concierge Services Leviticus Lifestyle.jpg";
+import conciergeWelcomeImage from "../assets/conciergeWelcomeImage.jpg";
+import accommodationsImage from "../assets/accommodationsImage.png";
+import dinerImage from "../assets/dinerImage.png";
+import luxuryCarImage from "../assets/luxuryCarImage.png";
+import curatedImage from "../assets/curatedImage.png";
+import exclusiveImage from "../assets/exclusiveImage.png";
+import guideImage from "../assets/guideImage.png";
+import consultationImage from "../assets/consultationImage.png";
+
+const services = [
+  {
+    icon: MapPin,
+    title: "Luxury Accommodations",
+    subtitle: "Ryokan & Premium Hotels",
+    description:
+      "Exceptional stays in Japan's finest traditional ryokan and contemporary luxury hotels, each selected for their unparalleled service and cultural authenticity.",
+    image: accommodationsImage,
+    cta: "Book Your Stay",
+    culturalNote: "Omotenashi hospitality awaits",
+    route: `${ROUTES.ACCOMMODATION}`,
+  },
+  {
+    icon: Crown,
+    title: "Fine Dining Reservations",
+    subtitle: "Michelin Stars & Hidden Gems",
+    description:
+      "Exclusive access to Japan's most coveted restaurants, from intimate sushi counters to centuries-old kaiseki masters and innovative culinary artists.",
+    image: dinerImage,
+    cta: "Reserve Your Table",
+    culturalNote: "Seasonal omakase experiences",
+    route: `${ROUTES.RESTAURANT}`,
+  },
+  {
+    icon: Car,
+    title: "Private Transportation",
+    subtitle: "Chauffeur & Luxury Vehicles",
+    description:
+      "Premium chauffeur services in luxury vehicles with English-speaking drivers, ensuring seamless travel between cities and destinations throughout Japan.",
+    image: luxuryCarImage,
+    cta: "Arrange Transport",
+    culturalNote: "Tokyo to Kyoto in comfort",
+    route: `${ROUTES.LUXURY}`,
+  },
+  {
+    icon: Calendar,
+    title: "Curated Day Experiences",
+    subtitle: "Cultural Tours & Seasonal Activities",
+    description:
+      "Thoughtfully designed day tours and seasonal experiences, from cherry blossom ceremonies to private temple visits, timed to Japan's natural rhythms.",
+    image: curatedImage,
+    cta: "Meet Your Guide",
+    culturalNote: "Seasonal beauty & traditions",
+    route: `${ROUTES.CURATED}`,
+  },
+  {
+    icon: Sparkles,
+    title: "Exclusive Experiences",
+    subtitle: "Private Access & VIP Services",
+    description:
+      "Once-in-a-lifetime experiences including private Mount Fuji helicopter tours, exclusive tea ceremonies with grand masters, and VIP cultural encounters.",
+    image: exclusiveImage,
+    cta: "Create Your Moment",
+    culturalNote: "Unforgettable encounters",
+    route: `${ROUTES.EXCLUSIVE}`,
+  },
+  {
+    icon: Users,
+    title: "Private Tour Guides",
+    subtitle: "Expert Cultural Specialists",
+    description:
+      "Licensed private guides fluent in your language and passionate about Japanese culture, providing insider access and deep cultural insights throughout your journey.",
+    image: guideImage,
+    cta: "Meet Your Guide",
+    culturalNote: "Cultural fluency guaranteed",
+    route: `${ROUTES.TRAVEL}`,
+  },
+];
 
 export default function Concierge() {
   const navigate = useNavigate();
-
-  const services = [
-    {
-      icon: MapPin,
-      title: "Luxury Accommodations",
-      subtitle: "Ryokan & Premium Hotels",
-      description:
-        "Exceptional stays in Japan's finest traditional ryokan and contemporary luxury hotels, each selected for their unparalleled service and cultural authenticity.",
-      image:
-        "https://images.unsplash.com/photo-1706058358041-19f10e95a89a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBKYXBhbmVzZSUyMHJ5b2thbiUyMGludGVyaW9yJTIwdHJhZGl0aW9uYWx8ZW58MXx8fHwxNzU1MjQ4Mzk2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      cta: "Book Your Stay",
-      culturalNote: "Omotenashi hospitality awaits",
-      route: `${ROUTES.ACCOMMODATION}`,
-    },
-    {
-      icon: Crown,
-      title: "Fine Dining Reservations",
-      subtitle: "Michelin Stars & Hidden Gems",
-      description:
-        "Exclusive access to Japan's most coveted restaurants, from intimate sushi counters to centuries-old kaiseki masters and innovative culinary artists.",
-      image:
-        "https://images.unsplash.com/photo-1678129456271-f37da2c63e56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBKYXBhbmVzZSUyMHNha2UlMjB0YXN0aW5nJTIwcHJpdmF0ZXxlbnwxfHx8fDE3NTUyNDg0MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      cta: "Reserve Your Table",
-      culturalNote: "Seasonal omakase experiences",
-      route: `${ROUTES.RESTAURANT}`,
-    },
-    {
-      icon: Car,
-      title: "Private Transportation",
-      subtitle: "Chauffeur & Luxury Vehicles",
-      description:
-        "Premium chauffeur services in luxury vehicles with English-speaking drivers, ensuring seamless travel between cities and destinations throughout Japan.",
-      image: luxuryCarImage,
-      cta: "Arrange Transport",
-      culturalNote: "Tokyo to Kyoto in comfort",
-      route: `${ROUTES.LUXURY}`,
-    },
-    {
-      icon: Calendar,
-      title: "Curated Day Experiences",
-      subtitle: "Cultural Tours & Seasonal Activities",
-      description:
-        "Thoughtfully designed day tours and seasonal experiences, from cherry blossom ceremonies to private temple visits, timed to Japan's natural rhythms.",
-      image:
-        "https://images.unsplash.com/photo-1705990775020-ec23afbba2e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxKYXBhbmVzZSUyMGdhcmRlbiUyMHRlbXBsZSUyMGx1eHVyeXxlbnwxfHx8fDE3NTUyNDg0MDl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      cta: "Meet Your Guide",
-      culturalNote: "Seasonal beauty & traditions",
-      route: `${ROUTES.CURATED}`,
-    },
-    {
-      icon: Sparkles,
-      title: "Exclusive Experiences",
-      subtitle: "Private Access & VIP Services",
-      description:
-        "Once-in-a-lifetime experiences including private Mount Fuji helicopter tours, exclusive tea ceremonies with grand masters, and VIP cultural encounters.",
-      image:
-        "https://images.unsplash.com/photo-1495554698253-681539e9ea84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNb250JTIwRnVqaSUyMGx1eHVyeSUyMHZpZXclMjBoZWxpY29wdGVyJTIwcHJpdmF0ZXxlbnwxfHx8fDE3NTUyNDg0MTV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      cta: "Create Your Moment",
-      culturalNote: "Unforgettable encounters",
-      route: `${ROUTES.EXCLUSIVE}`,
-    },
-    {
-      icon: Users,
-      title: "Private Tour Guides",
-      subtitle: "Expert Cultural Specialists",
-      description:
-        "Licensed private guides fluent in your language and passionate about Japanese culture, providing insider access and deep cultural insights throughout your journey.",
-      image: guideImage,
-      cta: "Meet Your Guide",
-      culturalNote: "Cultural fluency guaranteed",
-      route: `${ROUTES.TRAVEL}`,
-    },
-  ];
 
   // Enhanced flagship service with more depth and authenticity
   const flagshipService = {

@@ -1,7 +1,6 @@
 // Libraries
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { postRestaurantAsync } from "../../../../untils/redux/restaurantSlice";
 import {
   Utensils,
   CheckCircle,
@@ -21,11 +20,14 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { postRestaurantAsync } from "../../../../untils/redux/restaurantSlice";
 
 // Images
-import tokyoNightDiningImage from "../assets/1.png";
-import michelinRestaurantImage from "../assets/2.png";
-import omakaseSushiImage from "../assets/3.png";
+import tokyoNightDiningImage from "../assets/tokyoNightDiningImage.png";
+import michelinRestaurantImage from "../assets/michelinRestaurantImage.png";
+import nightlifeTemplesImage from "../assets/nightlifeTemplesImage.png";
+import omakaseSushiImage from "../assets/omakaseSushiImage.png";
+import completeCulturalImage from "../assets/completeCulturalImage.png";
 
 const highlights = [
   {
@@ -41,26 +43,46 @@ const highlights = [
     title: "Hidden Nightlife Temples",
     description:
       "Exclusive entry to Japan's secretive cocktail havens and rooftop sanctuaries",
-    image:
-      "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
-    badge: "Private Access",
+    image: nightlifeTemplesImage,
+    badge: (
+      <>
+        <br />
+        <br />
+        Private Access
+      </>
+    ),
   },
   {
     icon: ChefHat,
     title: "Kaiseki & Omakase",
-    description:
-      "Seasonal artistry from Japan's most celebrated culinary masters",
+    description: (
+      <>
+        <br />
+        Seasonal artistry from Japan's most celebrated culinary masters
+      </>
+    ),
     image: omakaseSushiImage,
-    badge: "Artisan",
+    badge: (
+      <>
+        <br />
+        <br />
+        Artisan
+      </>
+    ),
   },
   {
     icon: MapPin,
     title: "Complete Cultural Coordination",
     description:
       "Transportation, etiquette guidance, and seamless cultural immersion",
-    image:
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
-    badge: "Full Service",
+    image: completeCulturalImage,
+    badge: (
+      <>
+        <br />
+        <br />
+        Full Service
+      </>
+    ),
   },
 ];
 

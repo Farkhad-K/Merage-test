@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
 
 // Components
 import { Button } from "./ui/button";
@@ -21,13 +20,14 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
 
 // Images
-import luxuryPenthouseImage from "../assets/house.png";
-import ryokanImage from "../assets/Ryokan.png";
-import cityHotelImage from "../assets/cityHotel.png";
-import vipServicesImage from "../assets/historicMachiya.png";
-import historicMachiyaImage from "../assets/vipServices.png";
+import luxuryPenthouseImage from "../assets/luxuryPenthouseImage.png";
+import ryokanImage from "../assets/ryokanImage.png";
+import cityHotelImage from "../assets/cityHotelImage.png";
+import historicMachiyaImage from "../assets/historicMachiyaImage.png";
+import vipServicesImage from "../assets/vipServicesImage.png";
 
 const highlights = [
   {

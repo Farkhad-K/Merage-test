@@ -1,3 +1,4 @@
+// Image
 import BG from "../assets/homeImage.jpg"
 
 export default function Hero() {

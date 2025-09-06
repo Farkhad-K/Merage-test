@@ -24,7 +24,7 @@ const ROUTES = {
   // PAYMENT_INTENT: "/payment-intent/:requestId",
   // PAYMENT_CANCELED: "/payment-canceled",
   // PAYMENT_SUCCESS: "/payment-success",
-  // BOOKING: "/booking",
+  // BOOKING: "/booking", 
   NOT_FOUND: "*",
 };
 

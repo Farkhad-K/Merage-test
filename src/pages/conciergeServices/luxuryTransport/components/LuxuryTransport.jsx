@@ -25,11 +25,11 @@ import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 // Images
-import mercedesHero from "../assets/BG.jpg";
-import premiumFleetImage from "../assets/mercedes-fleet.jpg";
-import professionalChauffeurImage from "../assets/pexels-pavel-danilyuk-7594130.jpg";
-import vipExperienceImage from "../assets/pexels-mikebirdy-16716125.jpg";
-import customRoutesImage from "../assets/customer.png";
+import mercedesHero from "../assets/mercedesHero.jpg";
+import premiumFleetImage from "../assets/premiumFleetImage.jpg";
+import professionalChauffeurImage from "../assets/professionalChauffeurImage.jpg";
+import vipExperienceImage from "../assets/vipExperienceImage.jpg";
+import customRoutesImage from "../assets/customRoutesImage.png";
 
 const highlights = [
   {

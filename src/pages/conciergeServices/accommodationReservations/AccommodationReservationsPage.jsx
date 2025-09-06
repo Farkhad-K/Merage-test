@@ -1,7 +1,7 @@
-import  SmoothScroll  from './components/SmoothScroll';
-import ScrollReveal from './components/ScrollReveal';
-import AccommodationReservations from './components/AccommodationReservations';
-import Footer from './components/Footer';
+// Components
+import SmoothScroll from "./components/SmoothScroll";
+import ScrollReveal from "./components/ScrollReveal";
+import AccommodationReservations from "./components/AccommodationReservations";
 
 const AccommodationReservationsPage = () => {
   return (
@@ -10,9 +10,6 @@ const AccommodationReservationsPage = () => {
         <div className="relative">
           {/* Accommodation Reservations Subpage - First of 7 Concierge Service Pages */}
           <AccommodationReservations />
-          
-          {/* Footer */}
-          <Footer />
         </div>
       </ScrollReveal>
     </SmoothScroll>

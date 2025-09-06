@@ -1,7 +1,7 @@
+// Components
 import SmoothScroll from './components/SmoothScroll';
 import ScrollReveal from './components/ScrollReveal';
 import SignatureMultiDayTours from './components/SignatureMultiDayTours';
-import Footer from './components/Footer';
 
 export default function SignatureMultiDayToursPage() {
   return (
@@ -10,9 +10,6 @@ export default function SignatureMultiDayToursPage() {
         <div className="relative">
           {/* Signature Multi-Day Tours Page */}
           <SignatureMultiDayTours />
-
-          {/* Footer */}
-          <Footer />
         </div>
       </ScrollReveal>
     </SmoothScroll>

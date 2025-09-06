@@ -1,14 +1,20 @@
+// Libraries
 import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
 import { ChevronDown, Play, Crown, ArrowRight } from "lucide-react";
+
+// components
+import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+// Video
+import BGVideo from "../video/nipponImperial.mov"
 
 export default function Hero() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     // Auto-play video background after 3 seconds
-    const timer = setTimeout(() => {
+    const timer = setTimeout(() => { 
       setIsVideoPlaying(true);
     }, 3000);
 
@@ -186,19 +192,19 @@ export default function Hero() {
             autoPlay
             muted
             loop
-            className="w-full h-full object-cover opacity-40"
+            className="w-full h-full object-cover opacity-60"
             style={{
-              filter: "brightness(0.3) contrast(1.2) saturate(1.1)",
+              filter: "brightness(0.6) contrast(1.1) saturate(1.05)", // avvalgidan yorug‘roq
             }}
           >
             <source
-              src="https://videos.pexels.com/video-files/3209828/3209828-uhd_2560_1440_25fps.mp4"
+              src={BGVideo}
               type="video/mp4"
             />
           </video>
 
-          {/* Enhanced video overlay */}
-          <div className="absolute inset-0 luxury-overlay opacity-80"></div>
+          {/* Overlayni ham yengillashtiramiz */}
+          <div className="absolute inset-0 luxury-overlay opacity-40"></div>
         </div>
       )}
     </section>

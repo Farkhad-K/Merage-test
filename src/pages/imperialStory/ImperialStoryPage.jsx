@@ -1,3 +1,4 @@
+// Components
 import SmoothScroll from './components/SmoothScroll';
 import TextureBackground from './components/TextureBackground';
 import Hero from './components/Hero';
@@ -6,7 +7,6 @@ import Essence  from './components/Essence';
 import TestimonialsShowcase from './components/TestimonialsShowcase';
 import HowItWorks  from './components/HowItWorks';
 import ContactCTA from './components/ContactCTA';
-import Footer  from './components/Footer';
 
 export default function ImperialStoryPage() {
   return (
@@ -31,7 +31,6 @@ export default function ImperialStoryPage() {
         <div id="contact">
           <ContactCTA />
         </div>
-        <Footer />
       </SmoothScroll>
     </div>
   );

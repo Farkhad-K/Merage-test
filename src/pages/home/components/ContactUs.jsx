@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Checkbox } from "./ui/checkbox";
-import { Footer } from "./Footer";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -285,7 +284,6 @@ export default function ContactUs() {
       <div className="relative z-20 mt-12">
         <div className="w-full h-px black-gold-divider mb-0"></div>
         <div className="bg-nippon-black-light text-nippon-warm-white">
-          <Footer />
         </div>
       </div>
     </div>

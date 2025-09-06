@@ -1,4 +1,8 @@
+// Component
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+// Images
+import Img from "../assets/Flowers.png"
 
 export default function Essence() {
   return (
@@ -77,7 +81,7 @@ export default function Essence() {
               {/* Main cherry blossom image */}
               <div className="aspect-[3/4] relative overflow-hidden">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1522383225653-ed111181a951?ixlib=rb-4.0.3&auto=format&fit=crop&w=2148&q=80"
+                  src={Img}
                   alt="Delicate cherry blossoms in traditional Japanese garden"
                   className="w-full h-full object-cover"
                 />

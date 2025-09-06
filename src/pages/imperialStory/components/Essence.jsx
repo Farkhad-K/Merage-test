@@ -1,31 +1,34 @@
-import React from "react";
+// Components
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
-const Essence = () => {
-  const culturalPrinciples = [
-    {
-      japanese: "おもてなし",
-      romanji: "Omotenashi",
-      english: "Heartfelt Hospitality",
-      description:
-        "The art of anticipating needs without expectation of recognition or reward.",
-    },
-    {
-      japanese: "侘寂",
-      romanji: "Wabi-Sabi",
-      english: "Perfect Imperfection",
-      description:
-        "Finding profound beauty in transience, imperfection, and incomplete things.",
-    },
-    {
-      japanese: "間",
-      romanji: "Ma",
-      english: "Purposeful Space",
-      description:
-        "The powerful use of emptiness and pause to create meaning and depth.",
-    },
-  ];
+// Image
+import cultural from "../assets/culturalImage.png";
 
+const culturalPrinciples = [
+  {
+    japanese: "おもてなし",
+    romanji: "Omotenashi",
+    english: "Heartfelt Hospitality",
+    description:
+      "The art of anticipating needs without expectation of recognition or reward.",
+  },
+  {
+    japanese: "侘寂",
+    romanji: "Wabi-Sabi",
+    english: "Perfect Imperfection",
+    description:
+      "Finding profound beauty in transience, imperfection, and incomplete things.",
+  },
+  {
+    japanese: "間",
+    romanji: "Ma",
+    english: "Purposeful Space",
+    description:
+      "The powerful use of emptiness and pause to create meaning and depth.",
+  },
+];
+
+const Essence = () => {
   return (
     <section className="relative py-24 bg-nippon-black overflow-hidden">
       {/* Background Image */}
@@ -108,7 +111,7 @@ const Essence = () => {
           <div className="relative" data-scroll-reveal>
             <div className="relative overflow-hidden rounded-lg">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3"
+                src={cultural}
                 alt="Traditional Japanese garden representing the meticulous artistry that inspired our founding"
                 className="w-full h-96 object-cover"
               />

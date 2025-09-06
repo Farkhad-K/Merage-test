@@ -1,7 +1,7 @@
+// Components
 import SmoothScroll from './components/SmoothScroll';
 import ScrollReveal from './components/ScrollReveal';
 import Partnership from './components/Partnership';
-import Footer from './components/Footer';
 
 export default function PartnershipPage() {
   return (
@@ -10,9 +10,6 @@ export default function PartnershipPage() {
         <div className="relative">          
           {/* Partnership Page */}
           <Partnership />
-          
-          {/* Footer */}
-          <Footer />
         </div>
       </ScrollReveal>
     </SmoothScroll>

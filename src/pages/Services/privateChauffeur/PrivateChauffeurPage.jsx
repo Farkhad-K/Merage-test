@@ -1,7 +1,7 @@
+// Components
 import SmoothScroll from "./components/SmoothScroll";
 import ScrollReveal from "./components/ScrollReveal";
 import PrivateChauffeurServices from "./components/PrivateChauffeurServices";
-import Footer from "./components/Footer";
 
 export default function PrivateChauffeurServicesPage() {
   return (
@@ -11,9 +11,6 @@ export default function PrivateChauffeurServicesPage() {
           <>
             {/* Private Chauffeur Services Subpage */}
             <PrivateChauffeurServices />
-
-            {/* Footer */}
-            <Footer />
           </>
         </div>
       </ScrollReveal>

@@ -1,40 +1,59 @@
-import { Car, Crown, MapPin, ArrowRight } from 'lucide-react';
-import { Button } from './ui/button';
+// Libraries
+import { Car, Crown, MapPin, ArrowRight } from "lucide-react";
 
-const mercedesImage = "https://i.postimg.cc/CxJMSkYZ/c13215d9-8d12-4e94-8268-50b98fa2c3c6-1030x1287.jpg";
-const mtFujiImage = "https://i.postimg.cc/FKZrFc4d/Car-2-1-1.jpg";
-const conciergeImage = "https://i.postimg.cc/s1dd4DzC/164620635076957708-sm.png";
+// Components
+import { Button } from "./ui/button";
+
+// Images
+import mtFujiImage from "../assets/mtFujiImage.png";
+import mercedesImage from "../assets/mercedesImage.png";
+import conciergeImage from "../assets/conciergeImage.png";
+
+const services = [
+  {
+    icon: Crown,
+    title: "Bespoke Journeys",
+    subtitle: "Curated Experiences",
+    description:
+      "Private access to temples, gardens, and cultural sites unavailable to general visitors.",
+    image: mtFujiImage,
+    features: [
+      "After-hours temple visits",
+      "Master craftsman workshops",
+      "Private cultural performances",
+    ],
+  },
+  {
+    icon: Car,
+    title: "Seamless Transportation",
+    subtitle: "Executive Mobility",
+    description:
+      "Executive vehicles with professional drivers who understand the art of discretion and punctuality.",
+    image: mercedesImage,
+    features: [
+      "Mercedes S-Class & BMW 7 Series",
+      "Bilingual professional drivers",
+      "Real-time journey coordination",
+    ],
+  },
+  {
+    icon: MapPin,
+    title: "Discreet Concierge",
+    subtitle: "24/7 Excellence",
+    description:
+      "Dedicated assistance for reservations, arrangements, and spontaneous requests throughout Japan.",
+    image: conciergeImage,
+    features: [
+      "Michelin restaurant reservations",
+      "Last-minute arrangements",
+      "24/7 multilingual support",
+    ],
+  },
+];
 
 export default function Services() {
-  const services = [
-    {
-      icon: Crown,
-      title: "Bespoke Journeys",
-      subtitle: "Curated Experiences",
-      description: "Private access to temples, gardens, and cultural sites unavailable to general visitors.",
-      image: mtFujiImage,
-      features: ["After-hours temple visits", "Master craftsman workshops", "Private cultural performances"]
-    },
-    {
-      icon: Car,
-      title: "Seamless Transportation",
-      subtitle: "Executive Mobility",
-      description: "Executive vehicles with professional drivers who understand the art of discretion and punctuality.",
-      image: mercedesImage,
-      features: ["Mercedes S-Class & BMW 7 Series", "Bilingual professional drivers", "Real-time journey coordination"]
-    },
-    {
-      icon: MapPin,
-      title: "Discreet Concierge",
-      subtitle: "24/7 Excellence",
-      description: "Dedicated assistance for reservations, arrangements, and spontaneous requests throughout Japan.",
-      image: conciergeImage,
-      features: ["Michelin restaurant reservations", "Last-minute arrangements", "24/7 multilingual support"]
-    }
-  ];
-
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleLearnMore = (serviceTitle) => {
@@ -42,13 +61,16 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="relative bg-nippon-warm-white section-padding overflow-hidden">
+    <section
+      id="services"
+      className="relative bg-nippon-warm-white section-padding overflow-hidden"
+    >
       <div className="absolute inset-0 opacity-2">
-        <div 
+        <div
           className="w-full h-full"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px'
+            backgroundSize: "60px 60px",
           }}
         ></div>
       </div>
@@ -76,8 +98,8 @@ export default function Services() {
               data-scroll-reveal
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              {/* Rasm va icon */}
-              <div className="relative aspect-[4/3] overflow-hidden">
+              {/* Image and icon */}
+              <div className="relative aspect-square overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.title}
@@ -108,9 +130,14 @@ export default function Services() {
 
                 <ul className="space-y-3 mt-4">
                   {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start space-x-3">
+                    <li
+                      key={featureIndex}
+                      className="flex items-start space-x-3"
+                    >
                       <div className="w-1.5 h-1.5 bg-nippon-gold rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-nippon-gray-dark font-sans text-luxury-xs leading-relaxed">{feature}</span>
+                      <span className="text-nippon-gray-dark font-sans text-luxury-xs leading-relaxed">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -123,7 +150,9 @@ export default function Services() {
                   >
                     <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-500 origin-left"></span>
                     <span className="relative flex items-center justify-center space-x-3">
-                      <span className="tracking-wider font-medium uppercase">Learn More</span>
+                      <span className="tracking-wider font-medium uppercase">
+                        Learn More
+                      </span>
                       <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-2 transition-transform duration-300" />
                     </span>
                   </Button>
@@ -140,7 +169,8 @@ export default function Services() {
               Ready to Experience Excellence?
             </h3>
             <p className="text-luxury-base text-nippon-midnight font-sans leading-relaxed">
-              Let our concierge team craft your perfect Japanese journey with the attention to detail and cultural authenticity you deserve.
+              Let our concierge team craft your perfect Japanese journey with
+              the attention to detail and cultural authenticity you deserve.
             </p>
             <div className="pt-4">
               <Button
@@ -149,7 +179,9 @@ export default function Services() {
               >
                 <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                 <span className="relative flex items-center space-x-3">
-                  <span className="tracking-wider font-medium">Begin Your Journey</span>
+                  <span className="tracking-wider font-medium">
+                    Begin Your Journey
+                  </span>
                   <Crown className="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-300" />
                 </span>
               </Button>
