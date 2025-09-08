@@ -9,6 +9,7 @@ const ROUTES = {
   ACCOMMODATION: "/concierge/accommodation-reservations",
   RESTAURANT: "/concierge/restaurant",
   LUXURY: "/concierge/luxury-transportation",
+  ARRANGEMENT: "/concierge/special-arrangements",
   CURATED: "/concierge/curated-day",
   EXCLUSIVE: "/concierge/exclusive-experience",
   TRAVEL: "/concierge/travel-consultation",
