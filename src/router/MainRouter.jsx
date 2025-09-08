@@ -14,6 +14,7 @@ import PartnershipPage from "../pages/partnership/PartnershipPage";
 import AccommodationReservationsPage from "../pages/conciergeServices/accommodationReservations/AccommodationReservationsPage";
 import RestaurantPage from "../pages/conciergeServices/restaurantBookings/RestaurantPage";
 import LuxuryTransportPage from "../pages/conciergeServices/luxuryTransport/LuxuryTransportPage";
+import GuideArrangementsPage from "../pages/conciergeServices/guideArrangements/GuideArrangementsPage";
 import ExclusivePage from "../pages/conciergeServices/ExclusiveExperience/ExclusivePage";
 import CuratedDay from "../pages/conciergeServices/curatedDay/CuratedDay";
 import TravelConsultationPage from "../pages/conciergeServices/travelConsultation/TravelConsultationPage";
@@ -49,6 +50,7 @@ const MainRouter = () => {
       />
       <Route path={ROUTES.RESTAURANT} element={<RestaurantPage />} />
       <Route path={ROUTES.LUXURY} element={<LuxuryTransportPage />} />
+      <Route path={ROUTES.ARRANGEMENT} element={<GuideArrangementsPage />} />
       <Route path={ROUTES.CURATED} element={<CuratedDay />} />
       <Route path={ROUTES.EXCLUSIVE} element={<ExclusivePage />} />
       <Route path={ROUTES.TRAVEL} element={<TravelConsultationPage />} />
