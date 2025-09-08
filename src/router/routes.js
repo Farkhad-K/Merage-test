@@ -16,6 +16,7 @@ const ROUTES = {
   // Services
   PRIVATE_CHAUFFEUR: "/services/private-chauffeur",
   AIRPORT_TRANSFERS: "/services/airport-transfers",
+  PRIVATE_DAY_TOUR: "services/private-day-tours",
   SIGNATURE_TOURS: "/services/signature-multi-day-tours",
   ESCAPE: "/services/mt-fuji-escape",
   KAMAKURA: "/services/kamakura-heritage-trip",

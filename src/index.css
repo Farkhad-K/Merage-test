@@ -13,7 +13,9 @@
 @import "./pages/conciergeServices/restaurantBookings/styles/globals.css";
 
 /* Services */
+@import "./pages/Services/privateChauffeur/styles/globals.css";
 @import "./pages/Services/airportTransfers/styles/globals.css";
+@import "./pages/Services/privateDayTours/styles/globals.css";
 @import "./pages/Services/signatureMultiDayTours/styles/globals.css";
 @import "./pages/Services/mtFujiEscape/styles/globals.css";
 @import "./pages/Services/kamakuraHeritageDayTrip/styles/globals.css";
