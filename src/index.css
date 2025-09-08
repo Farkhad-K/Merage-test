@@ -7,6 +7,7 @@
 /* Concierge Services */
 @import "./pages/conciergeServices/accommodationReservations/styles/globals.css";
 @import "./pages/conciergeServices/luxuryTransport/styles/globals.css";
+@import "./pages/conciergeServices/guideArrangements/styles/globals.css";
 @import "./pages/conciergeServices/ExclusiveExperience/styles/globals.css";
 @import "./pages/conciergeServices/curatedDay/styles/globals.css";
 @import "./pages/conciergeServices/travelConsultation/styles/globals.css";

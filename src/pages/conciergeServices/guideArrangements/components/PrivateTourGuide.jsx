@@ -22,7 +22,7 @@ import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 // Images
-import heroImage from "../assets/HeroImage.png";
+import heroImage from "../assets/heroImage.png";
 import licensedImage from "../assets/licensedImage.png";
 import walkingToursImage from "../assets/walkingToursImage.png";
 import multilingualImage from "../assets/heroImage.png";
