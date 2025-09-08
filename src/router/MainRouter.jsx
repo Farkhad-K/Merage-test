@@ -19,11 +19,11 @@ import CuratedDay from "../pages/conciergeServices/curatedDay/CuratedDay";
 import TravelConsultationPage from "../pages/conciergeServices/travelConsultation/TravelConsultationPage";
 
 // Services
-// import PrivateChauffeurServices from "../pages/servicesPage/components/PrivateChauffeurServices";
 import PrivateChauffeurServicesPage from "../pages/Services/privateChauffeur/PrivateChauffeurPage";
 import AirportTransfersPage from "../pages/Services/airportTransfers/AirportTransfersPage";
-import MtFujiEscapePage from "../pages/Services/mtFujiEscape/MtFujiEscapePage";
+import PrivateDayToursPage from "../pages/Services/privateDayTours/PrivateDayToursPage";
 import SignatureMultiDayToursPage from "../pages/Services/signatureMultiDayTours/SignatureMultiDayToursPage";
+import MtFujiEscapePage from "../pages/Services/mtFujiEscape/MtFujiEscapePage";
 import KamakuraHeritageTripPage from "../pages/Services/kamakuraHeritageDayTrip/KamakuraHeritageTripPage";
 import TokyoCity from "../pages/Services/tokyo/TokyoCity";
 import NikkoPage from "../pages/Services/nikko/NikkoPage";
@@ -57,16 +57,20 @@ const MainRouter = () => {
       <Route path={ROUTES.SERVICES} element={<PrivateChauffeurPage />} />
 
       {/*  */}
-      <Route path={ROUTES.PRIVATE_CHAUFFEUR} element={<PrivateChauffeurServicesPage />} />
+      <Route
+        path={ROUTES.PRIVATE_CHAUFFEUR}
+        element={<PrivateChauffeurServicesPage />}
+      />
       <Route
         path={ROUTES.AIRPORT_TRANSFERS}
         element={<AirportTransfersPage />}
       />
-      <Route path={ROUTES.ESCAPE} element={<MtFujiEscapePage />} />
+      <Route path={ROUTES.PRIVATE_DAY_TOUR} element={<PrivateDayToursPage />} />
       <Route
         path={ROUTES.SIGNATURE_TOURS}
         element={<SignatureMultiDayToursPage />}
       />
+      <Route path={ROUTES.ESCAPE} element={<MtFujiEscapePage />} />
       <Route path={ROUTES.KAMAKURA} element={<KamakuraHeritageTripPage />} />
       <Route path={ROUTES.NIKKO} element={<NikkoPage />} />
       <Route path={ROUTES.TOKYO} element={<TokyoCity />} />
