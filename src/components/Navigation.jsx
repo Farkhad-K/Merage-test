@@ -1,7 +1,8 @@
 // Libraries
 import { useState, useEffect } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Components
 import { Button } from "../pages/home/components/ui/button";
@@ -59,13 +60,13 @@ const services = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [conciergeOpen, setConciergeOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -116,19 +117,28 @@ export default function Navigation() {
                   Concierge
                   <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </button>
-                <div className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform -translate-y-3 group-hover:translate-y-0">
-                  <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
-                    {conciergeServices.map((service, idx) => (
-                      <li
-                        key={idx}
-                        onClick={() => navigate(service.path)}
-                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
-                      >
-                        {service.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible"
+                  >
+                    <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
+                      {conciergeServices.map((service, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => navigate(service.path)}
+                          className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
+                        >
+                          {service.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* Services with dropdown */}
@@ -140,19 +150,28 @@ export default function Navigation() {
                   Services
                   <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
                 </button>
-                <div className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform -translate-y-3 group-hover:translate-y-0">
-                  <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
-                    {services.map((service, idx) => (
-                      <li
-                        key={idx}
-                        onClick={() => navigate(service.path)}
-                        className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
-                      >
-                        {service.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="absolute left-0 mt-2 w-64 bg-black/90 backdrop-blur-md rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible"
+                  >
+                    <ul className="py-3 text-white font-sans font-light tracking-wide space-y-1">
+                      {services.map((service, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => navigate(service.path)}
+                          className="px-5 py-2 cursor-pointer rounded-lg transition-all duration-300 hover:bg-nippon-gold/10 hover:text-nippon-gold"
+                        >
+                          {service.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               <button
@@ -181,7 +200,6 @@ export default function Navigation() {
                 className="luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black px-8 py-3 font-sans text-luxury-sm font-medium tracking-wide relative group"
               >
                 Begin Journey
-                <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
               </Button>
             </div>
 
@@ -200,60 +218,154 @@ export default function Navigation() {
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-nippon-black/98 backdrop-blur-md border-b border-nippon-gold/20">
-            <div className="px-8 py-8 space-y-6">
-              <button
-                onClick={() => scrollToSection("services")}
-                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
-              >
-                Services
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-              </button>
-              <button
-                onClick={() => scrollToSection("essence")}
-                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
-              >
-                Experience
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-              </button>
-              <button
-                onClick={() => scrollToSection("difference")}
-                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
-              >
-                Excellence
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-              </button>
-              <button
-                onClick={() => scrollToSection("how-it-works")}
-                className="group relative block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium tracking-wide transition-colors duration-300"
-              >
-                Process
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-              </button>
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="lg:hidden absolute top-full left-0 right-0 bg-nippon-black/98 backdrop-blur-md border-b border-nippon-gold/20"
+            >
+              <div className="px-8 py-8 space-y-6">
+                {/* Imperial Story */}
+                <button
+                  onClick={() => navigate("/imperial-story")}
+                  className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium transition-colors duration-300"
+                >
+                  Imperial Story
+                </button>
 
-              <div className="pt-6 border-t border-nippon-gold/20">
-                <a
-                  href="tel:+81-3-XXXX-XXXX"
-                  className="group relative flex items-center space-x-3 mb-6 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
+                {/* Concierge with submenu */}
+                <div className="flex flex-col">
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => {
+                        navigate("/concierge");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium transition-colors duration-300"
+                    >
+                      Concierge
+                    </button>
+                    <button
+                      onClick={() => setConciergeOpen(!conciergeOpen)}
+                      className="text-nippon-warm-white hover:text-nippon-gold transition-transform duration-300"
+                    >
+                      <ChevronDown
+                        className={`w-5 h-5 transform transition-transform duration-300 ${
+                          conciergeOpen ? "rotate-180 text-nippon-gold" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <AnimatePresence>
+                    {conciergeOpen && (
+                      <motion.ul
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="overflow-hidden mt-2 ml-4 space-y-2 text-nippon-warm-white"
+                      >
+                        {conciergeServices.map((service, idx) => (
+                          <li
+                            key={idx}
+                            onClick={() => {
+                              navigate(service.path);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="block text-sm py-1 cursor-pointer hover:text-nippon-gold transition-colors"
+                          >
+                            {service.name}
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Services with submenu */}
+                <div className="flex flex-col">
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => {
+                        navigate("/services");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium transition-colors duration-300"
+                    >
+                      Services
+                    </button>
+                    <button
+                      onClick={() => setServicesOpen(!servicesOpen)}
+                      className="text-nippon-warm-white hover:text-nippon-gold transition-transform duration-300"
+                    >
+                      <ChevronDown
+                        className={`w-5 h-5 transform transition-transform duration-300 ${
+                          servicesOpen ? "rotate-180 text-nippon-gold" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <AnimatePresence>
+                    {servicesOpen && (
+                      <motion.ul
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="overflow-hidden mt-2 ml-4 space-y-2 text-nippon-warm-white"
+                      >
+                        {services.map((service, idx) => (
+                          <li
+                            key={idx}
+                            onClick={() => {
+                              navigate(service.path);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="block text-sm py-1 cursor-pointer hover:text-nippon-gold transition-colors"
+                          >
+                            {service.name}
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Partnership */}
+                <button
+                  onClick={() => navigate("/partnership")}
+                  className="block w-full text-left text-nippon-warm-white hover:text-nippon-gold font-sans text-luxury-lg font-medium transition-colors duration-300"
                 >
-                  <Phone className="w-5 h-5" />
-                  <span className="font-sans text-luxury-base font-medium">
-                    +81 3 XXXX XXXX
-                  </span>
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-                </a>
-                <Button
-                  onClick={() => scrollToSection("contact-form")}
-                  className="w-full luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black py-4 font-sans text-luxury-base font-medium tracking-wide relative group"
-                >
-                  Begin Your Journey
-                  <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-nippon-gold transition-all duration-500 group-hover:w-full"></span>
-                </Button>
+                  Partnership
+                </button>
+
+                {/* CTA & Contact */}
+                <div className="pt-6 border-t border-nippon-gold/20">
+                  <a
+                    href="tel:+81-3-XXXX-XXXX"
+                    className="flex items-center space-x-3 mb-6 text-nippon-warm-white hover:text-nippon-gold transition-colors duration-300"
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span className="font-sans text-luxury-base font-medium">
+                      +81 3 XXXX XXXX
+                    </span>
+                  </a>
+                  <Button
+                    onClick={() => scrollToSection("contact-form")}
+                    className="w-full luxury-button-gold bg-transparent border-2 border-nippon-gold text-nippon-gold hover:bg-nippon-gold hover:text-nippon-black py-4 font-sans text-luxury-base font-medium tracking-wide"
+                  >
+                    Begin Your Journey
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
     </>
   );
