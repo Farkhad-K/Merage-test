@@ -7,13 +7,16 @@
 /* Concierge Services */
 @import "./pages/conciergeServices/accommodationReservations/styles/globals.css";
 @import "./pages/conciergeServices/luxuryTransport/styles/globals.css";
+@import "./pages/conciergeServices/guideArrangements/styles/globals.css";
 @import "./pages/conciergeServices/ExclusiveExperience/styles/globals.css";
 @import "./pages/conciergeServices/curatedDay/styles/globals.css";
 @import "./pages/conciergeServices/travelConsultation/styles/globals.css";
 @import "./pages/conciergeServices/restaurantBookings/styles/globals.css";
 
 /* Services */
+@import "./pages/Services/privateChauffeur/styles/globals.css";
 @import "./pages/Services/airportTransfers/styles/globals.css";
+@import "./pages/Services/privateDayTours/styles/globals.css";
 @import "./pages/Services/signatureMultiDayTours/styles/globals.css";
 @import "./pages/Services/mtFujiEscape/styles/globals.css";
 @import "./pages/Services/kamakuraHeritageDayTrip/styles/globals.css";

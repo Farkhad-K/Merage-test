@@ -9,6 +9,7 @@ const ROUTES = {
   ACCOMMODATION: "/concierge/accommodation-reservations",
   RESTAURANT: "/concierge/restaurant",
   LUXURY: "/concierge/luxury-transportation",
+  ARRANGEMENT: "/concierge/special-arrangements",
   CURATED: "/concierge/curated-day",
   EXCLUSIVE: "/concierge/exclusive-experience",
   TRAVEL: "/concierge/travel-consultation",
@@ -16,6 +17,7 @@ const ROUTES = {
   // Services
   PRIVATE_CHAUFFEUR: "/services/private-chauffeur",
   AIRPORT_TRANSFERS: "/services/airport-transfers",
+  PRIVATE_DAY_TOUR: "services/private-day-tours",
   SIGNATURE_TOURS: "/services/signature-multi-day-tours",
   ESCAPE: "/services/mt-fuji-escape",
   KAMAKURA: "/services/kamakura-heritage-trip",
