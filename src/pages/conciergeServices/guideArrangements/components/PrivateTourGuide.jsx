@@ -25,7 +25,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import heroImage from "../assets/heroImage.png";
 import licensedImage from "../assets/licensedImage.png";
 import walkingToursImage from "../assets/walkingToursImage.png";
-import multilingualImage from "../assets/heroImage.png";
+import multilingualImage from "../assets/multilingualImage.png";
 
 export default function PrivateTourGuide() {
   const highlights = [
