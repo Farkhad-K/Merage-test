@@ -1,10 +1,15 @@
+// Libraries
+import { useNavigate } from "react-router";
+
 function Footer() {
+  const navigate = useNavigate();
+
   const navigationLinks = [
-    "The Imperial Story",
-    "Concierge",
-    "Services",
-    "Partnership",
-    "Contact Us",
+    { name: "The Imperial Story", path: "/imperial-story" },
+    { name: "Concierge", path: "/concierge" },
+    { name: "Services", path: "/services" },
+    { name: "Partnership", path: "/partnership" },
+    { name: "Contact Us", path: "/contact" },
   ];
 
   return (
@@ -40,12 +45,12 @@ function Footer() {
               <ul className="space-y-3">
                 {navigationLinks.map((link, index) => (
                   <li key={index}>
-                    <a
-                      href="#"
+                    <button
+                      onClick={() => navigate(link.path)}
                       className="text-nippon-white/70 hover:text-nippon-gold transition-colors duration-200 text-sm"
                     >
-                      {link}
-                    </a>
+                      {link.name}
+                    </button>
                   </li>
                 ))}
               </ul>
