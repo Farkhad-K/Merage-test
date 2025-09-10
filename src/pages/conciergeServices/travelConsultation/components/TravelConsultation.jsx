@@ -1,4 +1,6 @@
 // Libraries
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   MapPin,
   CheckCircle,
@@ -23,6 +25,7 @@ import { Input } from "./ui/input.jsx";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { postTravelConsultationAsync } from "../../../../untils/redux/travelConsultationSlice";
 
 // Images
 import consultationImage from "../assets/2b14b7a2c710c0db1e486f8213e0806d30ce9be5.png";
@@ -98,6 +101,48 @@ const processSteps = [
 ];
 
 export default function TravelConsultation() {
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+  const [numberOfGuest, setNumberOfGuest] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [prefferdTravelDates, setPrefferdTravelDates] = useState("");
+  const [estimatedBudgetRange, setEstimatedBudgetRange] = useState("");
+  const [destinationOfInterest, setDestinationOfInterest] = useState("");
+  const [interestsAndPreferences, setInterestsAndPreferences] = useState("");
+
+  const handleOrder = () => {
+    if (
+      name &&
+      email &&
+      phoneNumber &&
+      prefferdTravelDates &&
+      numberOfGuest &&
+      destinationOfInterest
+    ) {
+      const travelConsultationData = {
+        fullName: name,
+        email: email,
+        additionalNotes: notes,
+        numberOfGuests: Number(numberOfGuest),
+        phoneNumber: phoneNumber,
+        prefferdTravelDates: prefferdTravelDates,
+        estimatedBudgetRange: estimatedBudgetRange,
+        destinationOfInterest: destinationOfInterest,
+        interestsAndPreferences: interestsAndPreferences,
+      };
+
+      dispatch(postTravelConsultationAsync(travelConsultationData))
+        .unwrap()
+        .then(() => {
+          console.log("successful");
+        })
+        .catch((error) => alert(error));
+    }
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // Form submission logic would go here
@@ -544,6 +589,8 @@ export default function TravelConsultation() {
                   <Input
                     id="name"
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="Your full name"
@@ -560,6 +607,8 @@ export default function TravelConsultation() {
                   <Input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="your@email.com"
@@ -578,6 +627,8 @@ export default function TravelConsultation() {
                   <Input
                     id="phone"
                     type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="luxury-input"
                     placeholder="+1 (555) 123-4567"
                   />
@@ -593,6 +644,8 @@ export default function TravelConsultation() {
                   <Input
                     id="travel-dates"
                     type="text"
+                    value={prefferdTravelDates}
+                    onChange={(e) => setPrefferdTravelDates(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="e.g., April 10-25, 2024"
@@ -611,6 +664,8 @@ export default function TravelConsultation() {
                   <Input
                     id="guests"
                     type="text"
+                    value={numberOfGuest}
+                    onChange={(e) => setNumberOfGuest(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="e.g., 2 adults"
@@ -627,6 +682,8 @@ export default function TravelConsultation() {
                   <Input
                     id="budget"
                     type="text"
+                    value={estimatedBudgetRange}
+                    onChange={(e) => setEstimatedBudgetRange(e.target.value)}
                     className="luxury-input"
                     placeholder="e.g., $15,000 - $25,000"
                   />
@@ -643,6 +700,8 @@ export default function TravelConsultation() {
                 <Input
                   id="destinations"
                   type="text"
+                  value={destinationOfInterest}
+                  onChange={(e) => setDestinationOfInterest(e.target.value)}
                   required
                   className="luxury-input"
                   placeholder="e.g., Tokyo, Kyoto, Osaka, Mount Fuji, Hiroshima"
@@ -658,6 +717,8 @@ export default function TravelConsultation() {
                 </Label>
                 <Textarea
                   id="interests"
+                  value={interestsAndPreferences}
+                  onChange={(e) => setInterestsAndPreferences(e.target.value)}
                   className="luxury-input min-h-[100px] resize-none"
                   placeholder="Tell us about your interests: culture, cuisine, history, art, nature, luxury experiences, etc."
                 />
@@ -672,6 +733,8 @@ export default function TravelConsultation() {
                 </Label>
                 <Textarea
                   id="special-requests"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                   className="luxury-input min-h-[120px] resize-none"
                   placeholder="Any specific requirements, accessibility needs, dietary restrictions, celebration occasions, or unique experiences you'd like to include..."
                 />
@@ -680,6 +743,7 @@ export default function TravelConsultation() {
               <div className="pt-6">
                 <Button
                   type="submit"
+                  onClick={handleOrder}
                   className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>

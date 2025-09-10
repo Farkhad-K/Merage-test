@@ -1,4 +1,5 @@
 // Libraries
+import { useNavigate } from "react-router";
 import {
   MapPin,
   Users,
@@ -35,6 +36,7 @@ const tours = [
     image: tokyoTowerAerial,
     icon: Users,
     culturalNote: "Urban elegance meets tradition",
+    path: "/services/private-day-tours/tokyo",
   },
   {
     id: "mt-fuji-escape",
@@ -43,6 +45,7 @@ const tours = [
     image: mtFuJiEscape,
     icon: Mountain,
     culturalNote: "Sacred mountain majesty",
+    path: "/services/private-day-tours/mt-fuji-escape",
   },
   {
     id: "hakone-serenity",
@@ -51,6 +54,7 @@ const tours = [
     image: hakoneSerenityImage,
     icon: Heart,
     culturalNote: "Tranquil hot springs await",
+    path: "/services/private-day-tours/hakone",
   },
   {
     id: "nikko-cultural",
@@ -59,6 +63,7 @@ const tours = [
     image: nikkoRedBridgeImage,
     icon: Star,
     culturalNote: "UNESCO world heritage",
+    path: "/services/private-day-tours/nikko",
   },
   {
     id: "kamakura-heritage",
@@ -67,6 +72,7 @@ const tours = [
     image: kamakuraGreatBuddhaImage,
     icon: Camera,
     culturalNote: "Ancient capital by the sea",
+    path: "/services/private-day-tours/kamakura",
   },
   {
     id: "custom-tour",
@@ -75,6 +81,7 @@ const tours = [
     image: customTourImage,
     icon: Compass,
     culturalNote: "Your journey, your way",
+    path: "/services/private-day-tours/custom-tour",
   },
 ];
 
@@ -101,6 +108,8 @@ const benefits = [
 ];
 
 export default function SignatureDayEscapes() {
+  const navigate = useNavigate();
+
   const handleTourInquiry = (tourId) => {
     // Would navigate to individual tour page in full implementation
     document
@@ -324,7 +333,7 @@ export default function SignatureDayEscapes() {
                 className="group relative bg-nippon-warm-white shadow-luxury hover:shadow-luxury-hover transition-all duration-500 overflow-hidden border-l-4 border-nippon-gold cursor-pointer"
                 data-scroll-reveal
                 style={{ animationDelay: `${index * 150}ms` }}
-                onClick={() => handleTourInquiry(tour.id)}
+                onClick={() => navigate(tour.path)}
               >
                 {/* Tour Image */}
                 <div className="relative aspect-square overflow-hidden">
