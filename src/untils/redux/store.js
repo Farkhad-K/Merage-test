@@ -10,6 +10,7 @@ import restaurantSlice from "./restaurantSlice";
 import luxuryTransportSlice from "./luxuryTransportSlice";
 import curatedDaySlice from "./curatedDaySlice";
 import exclusiveExperienceSlice from "./exclusiveExperienceSlice";
+import travelConsultationSlice from "./travelConsultationSlice";
 
 // All reducers merging
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   luxuryTransport: luxuryTransportSlice,
   curatedDay: curatedDaySlice,
   exclusiveExperience: exclusiveExperienceSlice,
+  travelConsultation: travelConsultationSlice,
 });
 
 // Transform
