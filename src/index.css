@@ -18,7 +18,10 @@
 @import "./pages/Services/airportTransfers/styles/globals.css";
 @import "./pages/Services/privateDayTours/styles/globals.css";
 @import "./pages/Services/signatureMultiDayTours/styles/globals.css";
-@import "./pages/Services/mtFujiEscape/styles/globals.css";
-@import "./pages/Services/kamakuraHeritageDayTrip/styles/globals.css";
-@import "./pages/Services/nikko/styles/globals.css";
-@import "./pages/Services/tokyo/styles/globals.css";
+
+/* Services Private Day Tours Services */
+@import "./pages/Services/privateDayToursServices/tokyo/styles/globals.css";
+@import "./pages/Services/privateDayToursServices/mtFujiEscape/styles/globals.css";
+
+@import "./pages/Services/privateDayToursServices/nikko/styles/globals.css";
+@import "./pages/Services/privateDayToursServices/kamakuraHeritageDayTrip/styles/globals.css";

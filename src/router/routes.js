@@ -19,10 +19,13 @@ const ROUTES = {
   AIRPORT_TRANSFERS: "/services/airport-transfers",
   PRIVATE_DAY_TOUR: "services/private-day-tours",
   SIGNATURE_TOURS: "/services/signature-multi-day-tours",
-  ESCAPE: "/services/mt-fuji-escape",
-  KAMAKURA: "/services/kamakura-heritage-trip",
-  NIKKO: "/services/nikko",
-  TOKYO: "/services/tokyo",
+
+  // Services Private Day Tours Services
+  TOKYO: "/services/private-day-tours/tokyo",
+  ESCAPE: "/services/private-day-tours/mt-fuji-escape",
+  NIKKO: "/services/private-day-tours/nikko",
+  KAMAKURA: "/services/private-day-tours/kamakura",
+
   // PAYMENT_INTENT: "/payment-intent/:requestId",
   // PAYMENT_CANCELED: "/payment-canceled",
   // PAYMENT_SUCCESS: "/payment-success",

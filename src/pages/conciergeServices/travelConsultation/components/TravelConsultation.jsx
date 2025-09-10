@@ -1,4 +1,6 @@
 // Libraries
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   MapPin,
   CheckCircle,
@@ -23,14 +25,12 @@ import { Input } from "./ui/input.jsx";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { postTravelConsultationAsync } from "../../../../untils/redux/travelConsultationSlice";
 
 // Images
 import consultationImage from "../assets/2b14b7a2c710c0db1e486f8213e0806d30ce9be5.png";
 import heroBackgroundImage from "../assets/f2ca2fb1ca45d2f12114c2812b6a3f4fc87c622c.png";
 import supportImage from "../assets/d9cd84406971ffca0600d80bacbfe0ccd632f794.png";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { postTravelConsultationAsync } from "../../../../untils/redux/travelConsultationSlice";
 
 const serviceHighlights = [
   {
