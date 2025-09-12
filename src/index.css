@@ -22,6 +22,6 @@
 /* Services Private Day Tours Services */
 @import "./pages/Services/privateDayToursServices/tokyo/styles/globals.css";
 @import "./pages/Services/privateDayToursServices/mtFujiEscape/styles/globals.css";
-
+@import "./pages/Services/privateDayToursServices/hakone/styles/globals.css";
 @import "./pages/Services/privateDayToursServices/nikko/styles/globals.css";
 @import "./pages/Services/privateDayToursServices/kamakuraHeritageDayTrip/styles/globals.css";
