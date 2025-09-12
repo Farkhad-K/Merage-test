@@ -28,6 +28,7 @@ import SignatureMultiDayToursPage from "../pages/Services/signatureMultiDayTours
 // Services Private Day Tours Services
 import TokyoCity from "../pages/Services/privateDayToursServices/tokyo/TokyoCity";
 import MtFujiEscapePage from "../pages/Services/privateDayToursServices/mtFujiEscape/MtFujiEscapePage";
+import HakonePage from "../pages/Services/privateDayToursServices/hakone/HakonePage";
 import NikkoPage from "../pages/Services/privateDayToursServices/nikko/NikkoPage";
 import KamakuraHeritageTripPage from "../pages/Services/privateDayToursServices/kamakuraHeritageDayTrip/KamakuraHeritageTripPage";
 
@@ -75,6 +76,7 @@ const MainRouter = () => {
       {/* Services Private Day Tours Services */}
       <Route path={ROUTES.TOKYO} element={<TokyoCity />} />
       <Route path={ROUTES.ESCAPE} element={<MtFujiEscapePage />} />
+      <Route path={ROUTES.HAKONE} element={<HakonePage />} />
       <Route path={ROUTES.NIKKO} element={<NikkoPage />} />
       <Route path={ROUTES.KAMAKURA} element={<KamakuraHeritageTripPage />} />
     </Routes>
