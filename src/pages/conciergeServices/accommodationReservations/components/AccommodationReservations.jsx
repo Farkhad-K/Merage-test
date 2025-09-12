@@ -19,13 +19,12 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
 import { postAccommodationAsync } from "../../../../untils/redux/accommodationSlice";
 
 // Images
 import luxuryPenthouseImage from "../assets/luxuryPenthouseImage.png";
 import ryokanImage from "../assets/ryokanImage.png";
-import cityHotelImage from "../assets/cityHotelImage.png";
 import historicMachiyaImage from "../assets/historicMachiyaImage.png";
 import vipServicesImage from "../assets/vipServicesImage.png";
 
@@ -47,7 +46,7 @@ const highlights = [
         Tokyo's most coveted addresses with unparalleled service
       </>
     ),
-    image: cityHotelImage,
+    image: luxuryPenthouseImage,
     premium: "Michelin Key certified",
   },
   {
@@ -166,27 +165,6 @@ export default function AccommodationReservations() {
               backgroundImage: `url('${luxuryPenthouseImage}')`,
               filter: "brightness(0.75) contrast(1.1) saturate(1.2)",
               animation: "cinematicZoom 18s ease-in-out infinite alternate",
-            }}
-          ></div>
-
-          {/* Tokyo luxury hotel layer - modern accommodation option */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-15"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90')`,
-              filter: "brightness(0.4) blur(1px)",
-              animation:
-                "cinematicFloat 22s ease-in-out infinite alternate-reverse",
-            }}
-          ></div>
-
-          {/* Traditional Japanese architecture overlay */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-10"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1590736969955-71cc94901144?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90')`,
-              filter: "brightness(0.3) blur(2px)",
-              animation: "luxuryPulse 20s ease-in-out infinite",
             }}
           ></div>
 

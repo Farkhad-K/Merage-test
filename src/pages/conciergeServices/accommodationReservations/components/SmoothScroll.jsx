@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// Libraries
+import { useEffect } from "react";
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
@@ -23,46 +24,58 @@ export default function SmoothScroll({ children }) {
         updateScrollVelocity();
 
         // Parallax elements
-        const parallaxElements = document.querySelectorAll('[data-scroll-parallax]');
+        const parallaxElements = document.querySelectorAll(
+          "[data-scroll-parallax]"
+        );
         parallaxElements.forEach((element) => {
           const rect = element.getBoundingClientRect();
-          const speed = parseFloat(element.getAttribute('data-scroll-parallax') || '0');
+          const speed = parseFloat(
+            element.getAttribute("data-scroll-parallax") || "0"
+          );
           if (rect.bottom >= -200 && rect.top <= viewportHeight + 200) {
             const yPos = rect.top;
             const parallaxOffset = yPos * speed;
-            element.style.transform = `translate3d(0, ${parallaxOffset.toFixed(2)}px, 0)`;
+            element.style.transform = `translate3d(0, ${parallaxOffset.toFixed(
+              2
+            )}px, 0)`;
           }
         });
 
         // Scroll reveal
-        const revealElements = document.querySelectorAll('[data-scroll-reveal]:not(.revealed)');
+        const revealElements = document.querySelectorAll(
+          "[data-scroll-reveal]:not(.revealed)"
+        );
         revealElements.forEach((element) => {
           const rect = element.getBoundingClientRect();
           const threshold = viewportHeight * 0.8;
           if (rect.top < threshold && rect.bottom > 0) {
-            element.classList.add('revealed');
+            element.classList.add("revealed");
           }
         });
 
         // Fade elements
-        const fadeElements = document.querySelectorAll('[data-scroll-fade]');
+        const fadeElements = document.querySelectorAll("[data-scroll-fade]");
         fadeElements.forEach((element) => {
           const rect = element.getBoundingClientRect();
           const elementCenter = rect.top + rect.height / 2;
-          const distanceFromCenter = Math.abs(elementCenter - viewportHeight / 2);
+          const distanceFromCenter = Math.abs(
+            elementCenter - viewportHeight / 2
+          );
           const maxDistance = viewportHeight;
-          let opacity = 1 - (distanceFromCenter / maxDistance);
+          let opacity = 1 - distanceFromCenter / maxDistance;
           opacity = Math.max(0, Math.min(1, opacity));
           element.style.opacity = opacity.toFixed(3);
         });
 
         // Scale elements
-        const scaleElements = document.querySelectorAll('[data-scroll-scale]');
+        const scaleElements = document.querySelectorAll("[data-scroll-scale]");
         scaleElements.forEach((element) => {
           const rect = element.getBoundingClientRect();
           if (rect.bottom >= 0 && rect.top <= viewportHeight) {
             const elementCenter = rect.top + rect.height / 2;
-            const distanceFromCenter = Math.abs(elementCenter - viewportHeight / 2);
+            const distanceFromCenter = Math.abs(
+              elementCenter - viewportHeight / 2
+            );
             const maxDistance = viewportHeight / 2;
             const scale = 1 - (distanceFromCenter / maxDistance) * 0.02;
             const clampedScale = Math.max(0.98, Math.min(1, scale));
@@ -71,11 +84,18 @@ export default function SmoothScroll({ children }) {
         });
 
         // Rotate elements
-        const rotateElements = document.querySelectorAll('[data-scroll-rotate]');
+        const rotateElements = document.querySelectorAll(
+          "[data-scroll-rotate]"
+        );
         rotateElements.forEach((element) => {
-          const maxRotation = parseFloat(element.getAttribute('data-scroll-rotate') || '0');
+          const maxRotation = parseFloat(
+            element.getAttribute("data-scroll-rotate") || "0"
+          );
           const rotation = scrollVelocity * maxRotation * 0.02;
-          const clampedRotation = Math.max(-maxRotation, Math.min(maxRotation, rotation));
+          const clampedRotation = Math.max(
+            -maxRotation,
+            Math.min(maxRotation, rotation)
+          );
           element.style.transform = `rotate(${clampedRotation.toFixed(2)}deg)`;
         });
 
@@ -91,20 +111,22 @@ export default function SmoothScroll({ children }) {
 
     const observerOptions = {
       root: null,
-      rootMargin: '20% 0px',
-      threshold: 0.1
+      rootMargin: "20% 0px",
+      threshold: 0.1,
     };
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
+          entry.target.classList.add("revealed");
         }
       });
     }, observerOptions);
 
     const initializeElements = () => {
-      const revealElements = document.querySelectorAll('[data-scroll-reveal]:not(.revealed)');
+      const revealElements = document.querySelectorAll(
+        "[data-scroll-reveal]:not(.revealed)"
+      );
       revealElements.forEach((el) => revealObserver.observe(el));
       updateScrollElements();
     };
@@ -116,14 +138,14 @@ export default function SmoothScroll({ children }) {
       }, 150);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     setTimeout(initializeElements, 100);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
       revealObserver.disconnect();
       clearTimeout(resizeTimeout);
     };
