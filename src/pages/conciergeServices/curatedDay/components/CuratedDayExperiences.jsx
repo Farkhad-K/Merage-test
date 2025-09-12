@@ -26,12 +26,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
+import { postCuratedDayAsync } from "../../../../untils/redux/curatedDaySlice";
 
 // Images
-import cherryBlossomImage from "../assets/1.png";
-import heroBackgroundImage from "../assets/2.png";
-import { postCuratedDayAsync } from "../../../../untils/redux/curatedDaySlice";
+import cherryBlossomImage from "../assets/cherryBlossomImage.png";
+import heroBackgroundImage from "../assets/heroBackgroundImage.png";
+import templeImage from "../assets/templeImage.png";
+import heritageTownImage from "../assets/heritageTownImage.png"
 
 const highlights = [
   {
@@ -47,8 +49,7 @@ const highlights = [
     title: "Autumn Foliage Experiences",
     description:
       "Sacred temple grounds and mountain sanctuaries in peak autumn",
-    image:
-      "https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: heroBackgroundImage,
     premium: "Private temple access",
   },
   {
@@ -56,16 +57,14 @@ const highlights = [
     title: "Temple & Shrine Rituals",
     description:
       "Participate in traditional ceremonies with cultural significance",
-    image:
-      "https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: templeImage,
     premium: "Monk-guided ceremonies",
   },
   {
     icon: Calendar,
     title: "Heritage Town Explorations",
     description: "Artisan districts and cultural treasures with local masters",
-    image:
-      "https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: heritageTownImage,
     premium: "Master artisan access",
   },
 ];
@@ -153,32 +152,11 @@ export default function CuratedDayExperiences() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Cinematic Background - Cherry Blossom & Seasonal Theme */}
         <div className="absolute inset-0 z-0">
-          {/* Primary cherry blossom temple scene - properly dimmed */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('${heroBackgroundImage}')`,
-              filter: "brightness(1.0) contrast(1.1) saturate(1.2)",
-              animation: "cinematicZoom 18s ease-in-out infinite alternate",
-            }}
-          ></div>
-
-          {/* Kyoto autumn lantern pathway layer */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-15"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080')`,
-              filter: "brightness(0.4) blur(1px)",
-              animation:
-                "cinematicFloat 22s ease-in-out infinite alternate-reverse",
-            }}
-          ></div>
-
           {/* Traditional festival ceremony overlay */}
           <div
             className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-10"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+              backgroundImage: `url(${templeImage})`,
               filter: "brightness(0.3) blur(2px)",
               animation: "luxuryPulse 20s ease-in-out infinite",
             }}
@@ -191,16 +169,6 @@ export default function CuratedDayExperiences() {
               background:
                 "linear-gradient(45deg, transparent 20%, rgba(212, 175, 55, 0.06) 40%, transparent 60%)",
               animation: "cityLightStreaks 25s ease-in-out infinite",
-            }}
-          ></div>
-
-          {/* Heritage town ambiance overlay - reduced */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-12"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
-              filter: "brightness(0.6) contrast(1.1)",
-              animation: "cinematicFloat 30s ease-in-out infinite alternate",
             }}
           ></div>
 
