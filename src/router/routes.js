@@ -23,6 +23,7 @@ const ROUTES = {
   // Services Private Day Tours Services
   TOKYO: "/services/private-day-tours/tokyo",
   ESCAPE: "/services/private-day-tours/mt-fuji-escape",
+  HAKONE: "/services/private-day-tours/hakone",
   NIKKO: "/services/private-day-tours/nikko",
   KAMAKURA: "/services/private-day-tours/kamakura",
 
