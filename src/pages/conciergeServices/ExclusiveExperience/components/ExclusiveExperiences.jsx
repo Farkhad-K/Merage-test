@@ -1,6 +1,6 @@
 // Libraries
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   Sparkles,
   CheckCircle,
@@ -21,14 +21,15 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
+import { postExclusiveExperienceAsync } from "../../../../untils/redux/exclusiveExperienceSlice";
 
 // Images
-import tokyoBridgeImage from "../assets/city.png";
-import fireworksImage from "../assets/fireworks.png";
-import helicopterFujiImage from "../assets/helicopter.png";
-import coupleRomanticImage from "../assets/boyandgirl.png";
-import { postExclusiveExperienceAsync } from "../../../../untils/redux/exclusiveExperienceSlice";
+import exclusiveHeroImage from "../assets/exclusiveHeroImage.png";
+import tokyoBridgeImage from "../assets/tokyoBridgeImage.png";
+import helicopterFujiImage from "../assets/helicopterFujiImage.png";
+import fireworksImage from "../assets/fireworksImage.png";
+import coupleRomanticImage from "../assets/coupleRomanticImage.png";
 
 const highlights = [
   {
@@ -36,8 +37,7 @@ const highlights = [
     title: "Private Cultural Experiences",
     description:
       "Audience with revered masters and evening encounters with geiko in hidden sanctuaries",
-    image:
-      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90",
+    image: tokyoBridgeImage,
     badge: "Grand Masters",
   },
   {
@@ -93,6 +93,7 @@ const processSteps = [
 export default function ExclusiveExperiences() {
   const dispatch = useDispatch();
 
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -102,46 +103,66 @@ export default function ExclusiveExperiences() {
   const [location, setLocation] = useState("");
   const [desiredExperience, setDesiredExperience] = useState("");
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setPreferredDates("");
+    setLocation("");
+    setDesiredExperience("");
+  };
 
   const handleOrder = () => {
     if (
-      name &&
-      email &&
-      phoneNumber &&
-      numberOfGuest &&
-      preferredDates &&
-      location &&
-      desiredExperience
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !numberOfGuest ||
+      !preferredDates ||
+      !location ||
+      !desiredExperience
     ) {
-      const exclusiveExperiencesData = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        preferredDates: preferredDates,
-        location: location,
-        desiredExperience: desiredExperience,
-      };
-
-      dispatch(postExclusiveExperienceAsync(exclusiveExperiencesData))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
+      alert("Please fill in all required fields.");
+      return;
     }
-  };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
+    const exclusiveExperiencesData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      preferredDates: preferredDates,
+      location: location,
+      desiredExperience: desiredExperience,
+    };
 
-    // Form yuborilishini simulyatsiya qilish
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
+    setIsPending(true);
+
+    dispatch(postExclusiveExperienceAsync(exclusiveExperiencesData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -160,20 +181,9 @@ export default function ExclusiveExperiences() {
           <div
             className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('${tokyoBridgeImage}')`,
+              backgroundImage: `url('${exclusiveHeroImage}')`,
               filter: "brightness(0.8) contrast(1.05) saturate(1.1)",
               animation: "cinematicZoom 20s ease-in-out infinite alternate",
-            }}
-          ></div>
-
-          {/* Subtle helicopter overlay for depth */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-8"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90')`,
-              filter: "brightness(0.3) blur(2px)",
-              animation:
-                "cinematicFloat 25s ease-in-out infinite alternate-reverse",
             }}
           ></div>
 
@@ -511,215 +521,219 @@ export default function ExclusiveExperiences() {
             className="bg-nippon-white shadow-luxury p-12"
             data-scroll-reveal
           >
-            {isSubmitted ? (
-              <div className="text-center py-12">
-                <CheckCircle className="w-16 h-16 text-nippon-gold mx-auto mb-6" />
-                <h3 className="text-luxury-2xl font-serif text-nippon-black mb-4">
-                  Experience Request Received
-                </h3>
-                <p className="text-nippon-gray font-sans leading-relaxed">
-                  Thank you for your exclusive experience request. Our concierge
-                  will contact you within 4 hours to discuss your extraordinary
-                  moment.
-                  <br />
-                  <br />
-                  <strong>Request ID:</strong> EX-
-                  {Math.random().toString(36).substr(2, 9).toUpperCase()}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="name"
-                      className="text-nippon-black font-sans"
-                    >
-                      Name *
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="luxury-input"
-                      placeholder="Your full name"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="email"
-                      className="text-nippon-black font-sans"
-                    >
-                      Email *
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="luxury-input"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="phone"
-                      className="text-nippon-black font-sans"
-                    >
-                      Phone (Optional)
-                    </Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="luxury-input"
-                      placeholder="+81 (optional)"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="guests"
-                      className="text-nippon-black font-sans"
-                    >
-                      Number of Guests
-                    </Label>
-                    <Input
-                      id="guests"
-                      name="guests"
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={numberOfGuest}
-                      onChange={(e) => setNumberOfGuest(e.target.value)}
-                      className="luxury-input"
-                      placeholder="2"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="preferredDate"
-                      className="text-nippon-black font-sans"
-                    >
-                      Preferred Date(s)
-                    </Label>
-                    <Input
-                      id="preferredDate"
-                      name="preferredDate"
-                      type="text"
-                      value={preferredDates}
-                      onChange={(e) => setPreferredDates(e.target.value)}
-                      className="luxury-input"
-                      placeholder="March 2025, flexible dates"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="location"
-                      className="text-nippon-black font-sans"
-                    >
-                      Location Preference
-                    </Label>
-                    <Input
-                      id="location"
-                      name="location"
-                      type="text"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="luxury-input"
-                      placeholder="Tokyo, Kyoto, Mt. Fuji area..."
-                    />
-                  </div>
-                </div>
-
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label
-                    htmlFor="desiredExperience"
-                    className="text-nippon-black font-sans"
-                  >
-                    Desired Experience *
+                  <Label htmlFor="name" className="text-nippon-black font-sans">
+                    Name *
                   </Label>
-                  <Textarea
-                    id="desiredExperience"
-                    name="desiredExperience"
-                    value={desiredExperience}
-                    onChange={(e) => setDesiredExperience(e.target.value)}
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
-                    className="luxury-input min-h-[120px] resize-none w-full"
-                    placeholder="Private geiko evening, Mt. Fuji helicopter tour, yakatabune cruise, cherry blossom festival, shrine proposal, rooftop anniversary dinner..."
+                    className="luxury-input"
+                    placeholder="Your full name"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label
-                    htmlFor="specialNotes"
+                    htmlFor="email"
                     className="text-nippon-black font-sans"
                   >
-                    Special Notes or Requests
+                    Email *
                   </Label>
-                  <Textarea
-                    id="specialNotes"
-                    name="specialNotes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="luxury-input min-h-[120px] resize-none w-full"
-                    placeholder="Celebration details, seasonal preferences, cultural interests, photography requirements, special occasion needs, accessibility requirements..."
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="luxury-input"
+                    placeholder="your@email.com"
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="phone"
+                    className="text-nippon-black font-sans"
+                  >
+                    Phone (Optional)
+                  </Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="luxury-input"
+                    placeholder="+81 (optional)"
                   />
                 </div>
 
-                <div className="pt-6">
-                  <Button
-                    onClick={handleOrder}
-                    type="submit"
-                    className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="guests"
+                    className="text-nippon-black font-sans"
                   >
-                    <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
-                    <span className="relative flex items-center justify-center space-x-3">
-                      <Sparkles className="w-5 h-5" />
-                      <span className="tracking-wider font-medium">
-                        Submit Experience Request
-                      </span>
-                      <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
-                  </Button>
+                    Number of Guests
+                  </Label>
+                  <Input
+                    id="guests"
+                    name="guests"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={numberOfGuest}
+                    onChange={(e) => setNumberOfGuest(e.target.value)}
+                    className="luxury-input"
+                    placeholder="2"
+                  />
                 </div>
-              </form>
-            )}
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="preferredDate"
+                    className="text-nippon-black font-sans"
+                  >
+                    Preferred Date(s)
+                  </Label>
+                  <Input
+                    id="preferredDate"
+                    name="preferredDate"
+                    type="text"
+                    value={preferredDates}
+                    onChange={(e) => setPreferredDates(e.target.value)}
+                    className="luxury-input"
+                    placeholder="March 2025, flexible dates"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="location"
+                    className="text-nippon-black font-sans"
+                  >
+                    Location Preference
+                  </Label>
+                  <Input
+                    id="location"
+                    name="location"
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="luxury-input"
+                    placeholder="Tokyo, Kyoto, Mt. Fuji area..."
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  htmlFor="desiredExperience"
+                  className="text-nippon-black font-sans"
+                >
+                  Desired Experience *
+                </Label>
+                <Textarea
+                  id="desiredExperience"
+                  name="desiredExperience"
+                  value={desiredExperience}
+                  onChange={(e) => setDesiredExperience(e.target.value)}
+                  required
+                  className="luxury-input min-h-[120px] resize-none w-full"
+                  placeholder="Private geiko evening, Mt. Fuji helicopter tour, yakatabune cruise, cherry blossom festival, shrine proposal, rooftop anniversary dinner..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  htmlFor="specialNotes"
+                  className="text-nippon-black font-sans"
+                >
+                  Special Notes or Requests
+                </Label>
+                <Textarea
+                  id="specialNotes"
+                  name="specialNotes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="luxury-input min-h-[120px] resize-none w-full"
+                  placeholder="Celebration details, seasonal preferences, cultural interests, photography requirements, special occasion needs, accessibility requirements..."
+                />
+              </div>
+
+              <div className="pt-6">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
+                  <span className="relative flex items-center justify-center space-x-3">
+                    <Sparkles className="w-5 h-5" />
+                    <span className="tracking-wider font-medium">
+                      {isPending ? "Sending..." : "Submit Experience Request"}
+                    </span>
+                    <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                  </span>
+                </Button>
+              </div>
+            </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Immediate Confirmation:</strong> You'll receive a
-                    personalized response within 4 hours with your request ID
-                    and next steps.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our exclusive experience team will work discreetly to
-                    arrange every detail of your extraordinary moment.
-                  </p>
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Immediate Confirmation:</strong> You'll receive a
+                      personalized response within 4 hours with your request ID
+                      and next steps.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our exclusive experience team will work discreetly to
+                      arrange every detail of your extraordinary moment.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
