@@ -1,4 +1,6 @@
 // Libraries
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   MapPin,
   CheckCircle,
@@ -11,8 +13,6 @@ import {
   Building,
   Users,
 } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { useState, useRef } from "react";
 
 // Components
 import { Button } from "./ui/button";
