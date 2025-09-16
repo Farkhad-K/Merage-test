@@ -12,7 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // Components
 import { Button } from "./ui/button";
@@ -77,7 +77,12 @@ const processSteps = [
     description:
       "Share your vision through our secure, personalized assessment. Every detail matters in crafting your perfect Japanese sanctuary.",
     icon: MapPin,
-    timeframe: "Within 2 hours",
+    timeframe: (
+      <>
+        <br />
+        Within 2 hours
+      </>
+    ),
   },
   {
     step: "02",
@@ -100,6 +105,7 @@ const processSteps = [
 export default function AccommodationReservations() {
   const dispatch = useDispatch();
 
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -110,40 +116,67 @@ export default function AccommodationReservations() {
   const [preferred, setPreferred] = useState("");
   const [desiredLocations, setDesiredLocations] = useState("");
 
-  const handleOrder = () => {
-    if (
-      name &&
-      email &&
-      numberOfGuest &&
-      phoneNumber &&
-      checkInDate &&
-      checkOutDate
-    ) {
-      const accommodationData = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        checkInDate: checkInDate,
-        checkOutDate: checkOutDate,
-        preferredStayType: "string",
-        desiredLocations: "string",
-      };
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const popupTimerRef = useRef(null);
 
-      dispatch(postAccommodationAsync(accommodationData))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
-    }
+  useEffect(() => {
+    return () => {
+      if (popupTimerRef.current) {
+        clearTimeout(popupTimerRef.current);
+        popupTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setCheckInDate("");
+    setCheckOutDate("");
+    setPreferred("");
+    setDesiredLocations("");
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log("Accommodation reservation inquiry submitted");
+  const handleOrder = () => {
+    if (!name || !email || !numberOfGuest || !checkInDate || !checkOutDate) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const accommodationData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate,
+      preferredStayType: preferred || "string",
+      desiredLocations: desiredLocations || "string",
+    };
+
+    setIsPending(true);
+
+    dispatch(postAccommodationAsync(accommodationData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setPopup(true);
+        popupTimerRef.current = setTimeout(() => {
+          setPopup(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -175,16 +208,6 @@ export default function AccommodationReservations() {
               background:
                 "linear-gradient(45deg, transparent 20%, rgba(212, 175, 55, 0.06) 40%, transparent 60%)",
               animation: "cityLightStreaks 25s ease-in-out infinite",
-            }}
-          ></div>
-
-          {/* Luxury accommodation ambiance overlay - reduced */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-12"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90')`,
-              filter: "brightness(0.6) contrast(1.1)",
-              animation: "cinematicFloat 30s ease-in-out infinite alternate",
             }}
           ></div>
 
@@ -472,39 +495,20 @@ export default function AccommodationReservations() {
         </div>
       </section>
 
-      {/* CTA + Inquiry Form Section */}
+      {/* Inquiry Form Section */}
       <section
         id="accommodation-form"
         className="relative bg-nippon-warm-white section-padding overflow-hidden"
       >
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-2">
-          <div
-            className="w-full h-full"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: "60px 60px",
-            }}
-          ></div>
-        </div>
-
         <div className="relative z-10 max-w-4xl mx-auto content-padding">
-          <div className="text-center mb-16" data-scroll-reveal>
-            <h2 className="text-luxury-4xl text-nippon-black font-serif leading-tight mb-8">
-              Let Us Arrange Your Perfect Stay
-            </h2>
-            <p className="text-luxury-lg text-nippon-gray leading-relaxed font-sans max-w-2xl mx-auto">
-              Share your vision and we'll curate accommodation options that
-              perfectly align with your Japanese journey.
-            </p>
-          </div>
-
-          {/* Inquiry Form */}
-          <div
-            className="bg-nippon-white shadow-luxury p-12"
-            data-scroll-reveal
-          >
-            <form onSubmit={handleFormSubmit} className="space-y-8">
+          <div className="bg-nippon-white shadow-luxury p-12">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
@@ -632,41 +636,41 @@ export default function AccommodationReservations() {
 
               <div className="pt-6">
                 <Button
-                  onClick={handleOrder}
                   type="submit"
-                  className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
-                  <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                   <span className="relative flex items-center justify-center space-x-3">
                     <Clock className="w-5 h-5" />
                     <span className="tracking-wider font-medium">
-                      Submit Accommodation Request
+                      {isPending
+                        ? "Sending..."
+                        : "Submit Accommodation Request"}
                     </span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
                 </Button>
               </div>
             </form>
-
-            {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Immediate Confirmation:</strong> You'll receive a
-                    personalized response within 2 hours with your request ID
-                    and next steps.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our concierge team will follow up with curated accommodation
-                    options within 24 hours.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+
+        {/* ==== Popup Modal ==== */}
+        {popup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
