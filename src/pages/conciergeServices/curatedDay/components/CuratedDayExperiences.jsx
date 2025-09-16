@@ -26,12 +26,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
+import { postCuratedDayAsync } from "../../../../untils/redux/curatedDaySlice";
 
 // Images
-import cherryBlossomImage from "../assets/1.png";
-import heroBackgroundImage from "../assets/2.png";
-import { postCuratedDayAsync } from "../../../../untils/redux/curatedDaySlice";
+import cherryBlossomImage from "../assets/cherryBlossomImage.png";
+import heroBackgroundImage from "../assets/heroBackgroundImage.png";
+import templeImage from "../assets/templeImage.png";
+import heritageTownImage from "../assets/heritageTownImage.png";
 
 const highlights = [
   {
@@ -47,8 +49,7 @@ const highlights = [
     title: "Autumn Foliage Experiences",
     description:
       "Sacred temple grounds and mountain sanctuaries in peak autumn",
-    image:
-      "https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: heroBackgroundImage,
     premium: "Private temple access",
   },
   {
@@ -56,16 +57,14 @@ const highlights = [
     title: "Temple & Shrine Rituals",
     description:
       "Participate in traditional ceremonies with cultural significance",
-    image:
-      "https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: templeImage,
     premium: "Monk-guided ceremonies",
   },
   {
     icon: Calendar,
     title: "Heritage Town Explorations",
     description: "Artisan districts and cultural treasures with local masters",
-    image:
-      "https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: heritageTownImage,
     premium: "Master artisan access",
   },
 ];
@@ -100,6 +99,7 @@ const processSteps = [
 export default function CuratedDayExperiences() {
   const dispatch = useDispatch();
 
+  // Form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -108,37 +108,63 @@ export default function CuratedDayExperiences() {
   const [preferredDate, setPreferredDate] = useState("");
   const [seasonalInterest, setSeasonalInterest] = useState("");
 
-  const handleOrder = () => {
-    if (
-      name &&
-      email &&
-      phoneNumber &&
-      numberOfGuest &&
-      preferredDate &&
-      seasonalInterest
-    ) {
-      const curatedDayData = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        preferredDate: preferredDate,
-        seasonalInterest: seasonalInterest,
-      };
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
 
-      dispatch(postCuratedDayAsync(curatedDayData))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
-    }
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setPreferredDate("");
+    setSeasonalInterest("");
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log("Curated day experiences inquiry submitted");
+  const handleOrder = () => {
+    if (
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !numberOfGuest ||
+      !preferredDate ||
+      !seasonalInterest
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const curatedDayData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      preferredDate: preferredDate,
+      seasonalInterest: seasonalInterest,
+    };
+
+    setIsPending(true);
+
+    dispatch(postCuratedDayAsync(curatedDayData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -153,32 +179,11 @@ export default function CuratedDayExperiences() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Cinematic Background - Cherry Blossom & Seasonal Theme */}
         <div className="absolute inset-0 z-0">
-          {/* Primary cherry blossom temple scene - properly dimmed */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('${heroBackgroundImage}')`,
-              filter: "brightness(1.0) contrast(1.1) saturate(1.2)",
-              animation: "cinematicZoom 18s ease-in-out infinite alternate",
-            }}
-          ></div>
-
-          {/* Kyoto autumn lantern pathway layer */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-15"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1602898794854-bc3bd4e96630?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxreW90byUyMGF1dHVtbiUyMGxhbnRlcm4lMjBwYXRod2F5fGVufDF8fHx8MTc1NTMyNTI3Nnww&ixlib=rb-4.1.0&q=80&w=1080')`,
-              filter: "brightness(0.4) blur(1px)",
-              animation:
-                "cinematicFloat 22s ease-in-out infinite alternate-reverse",
-            }}
-          ></div>
-
           {/* Traditional festival ceremony overlay */}
           <div
             className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-10"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1698627152464-8d2627138673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMHRyYWRpdGlvbmFsJTIwZmVzdGl2YWwlMjBjZXJlbW9ueXxlbnwxfHx8fDE3NTUzMjUyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
+              backgroundImage: `url(${templeImage})`,
               filter: "brightness(0.3) blur(2px)",
               animation: "luxuryPulse 20s ease-in-out infinite",
             }}
@@ -191,16 +196,6 @@ export default function CuratedDayExperiences() {
               background:
                 "linear-gradient(45deg, transparent 20%, rgba(212, 175, 55, 0.06) 40%, transparent 60%)",
               animation: "cityLightStreaks 25s ease-in-out infinite",
-            }}
-          ></div>
-
-          {/* Heritage town ambiance overlay - reduced */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-12"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1752089491090-79cfbdad61b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGhlcml0YWdlJTIwdG93biUyMHN0cmVldHxlbnwxfHx8fDE3NTUzMjUyODJ8MA&ixlib=rb-4.1.0&q=80&w=1080')`,
-              filter: "brightness(0.6) contrast(1.1)",
-              animation: "cinematicFloat 30s ease-in-out infinite alternate",
             }}
           ></div>
 
@@ -521,10 +516,16 @@ export default function CuratedDayExperiences() {
 
           {/* Inquiry Form */}
           <div
+            id="experiences-form"
             className="bg-nippon-white shadow-luxury p-12"
-            data-scroll-reveal
           >
-            <form onSubmit={handleFormSubmit} className="space-y-8">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
@@ -670,14 +671,16 @@ export default function CuratedDayExperiences() {
               <div className="pt-6">
                 <Button
                   type="submit"
-                  onClick={handleOrder}
-                  className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                   <span className="relative flex items-center justify-center space-x-3">
                     <Calendar className="w-5 h-5" />
                     <span className="tracking-wider font-medium">
-                      Submit Experience Request
+                      {isPending ? "Sending..." : "Submit Experience Request"}
                     </span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
@@ -686,25 +689,42 @@ export default function CuratedDayExperiences() {
             </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Thank you for your request:</strong> Your Nippon
-                    Imperial concierge will contact you shortly to finalize your
-                    seasonal journey.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our cultural experts will follow up within 24 hours with
-                    curated seasonal experiences perfectly matched to your
-                    interests and travel dates.
-                  </p>
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Thank you for your request:</strong> Your Nippon
+                      Imperial concierge will contact you shortly to finalize
+                      your seasonal journey.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our cultural experts will follow up within 24 hours with
+                      curated seasonal experiences perfectly matched to your
+                      interests and travel dates.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

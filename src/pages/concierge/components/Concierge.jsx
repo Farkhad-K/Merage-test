@@ -22,7 +22,7 @@ import ROUTES from "../../../router/routes";
 
 // Components
 import { Button } from "./ui/button";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../components/figma/ImageWithFallback";
 
 // Images
 import conciergeWelcomeImage from "../assets/conciergeWelcomeImage.jpg";

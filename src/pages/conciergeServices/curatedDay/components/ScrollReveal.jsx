@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+// Libraries
+import { useEffect, useRef } from "react";
 
 export default function ScrollReveal({ children }) {
   const observerRef = useRef(null);
@@ -9,7 +10,7 @@ export default function ScrollReveal({ children }) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
+            entry.target.classList.add("revealed");
             // Unobserve the element once it's been revealed
             observerRef.current?.unobserve(entry.target);
           }
@@ -17,12 +18,12 @@ export default function ScrollReveal({ children }) {
       },
       {
         threshold: 0.1,
-        rootMargin: '50px 0px -50px 0px',
+        rootMargin: "50px 0px -50px 0px",
       }
     );
 
     // Observe all elements with data-scroll-reveal
-    const revealElements = document.querySelectorAll('[data-scroll-reveal]');
+    const revealElements = document.querySelectorAll("[data-scroll-reveal]");
     revealElements.forEach((el) => {
       if (observerRef.current) {
         observerRef.current.observe(el);
@@ -30,13 +31,17 @@ export default function ScrollReveal({ children }) {
     });
 
     // Handle parallax elements
-    const parallaxElements = document.querySelectorAll('[data-scroll-parallax]');
-    
+    const parallaxElements = document.querySelectorAll(
+      "[data-scroll-parallax]"
+    );
+
     const handleScroll = () => {
       const scrolled = window.pageYOffset;
 
       parallaxElements.forEach((element) => {
-        const speed = parseFloat(element.getAttribute('data-scroll-speed') || '0.1');
+        const speed = parseFloat(
+          element.getAttribute("data-scroll-speed") || "0.1"
+        );
         const yPos = -(scrolled * speed);
         element.style.transform = `translate3d(0, ${yPos}px, 0)`;
       });
@@ -54,13 +59,13 @@ export default function ScrollReveal({ children }) {
       }
     };
 
-    window.addEventListener('scroll', throttledScroll, { passive: true });
+    window.addEventListener("scroll", throttledScroll, { passive: true });
 
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
-      window.removeEventListener('scroll', throttledScroll);
+      window.removeEventListener("scroll", throttledScroll);
     };
   }, []);
 
