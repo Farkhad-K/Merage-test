@@ -12,7 +12,7 @@ import {
   Users,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 // Components
 import { Button } from "./ui/button";
@@ -118,17 +118,8 @@ export default function AccommodationReservations() {
 
   // UI states
   const [isPending, setIsPending] = useState(false);
-  const [popup, setPopup] = useState(false);
-  const popupTimerRef = useRef(null);
-
-  useEffect(() => {
-    return () => {
-      if (popupTimerRef.current) {
-        clearTimeout(popupTimerRef.current);
-        popupTimerRef.current = null;
-      }
-    };
-  }, []);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
 
   const clearForm = () => {
     setName("");
@@ -143,7 +134,14 @@ export default function AccommodationReservations() {
   };
 
   const handleOrder = () => {
-    if (!name || !email || !numberOfGuest || !checkInDate || !checkOutDate) {
+    if (
+      !name ||
+      !email ||
+      !numberOfGuest ||
+      !phoneNumber ||
+      !checkInDate ||
+      !checkOutDate
+    ) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -166,9 +164,11 @@ export default function AccommodationReservations() {
       .unwrap()
       .then(() => {
         clearForm();
-        setPopup(true);
-        popupTimerRef.current = setTimeout(() => {
-          setPopup(false);
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
         }, 2000);
       })
       .catch(() => {
@@ -495,7 +495,7 @@ export default function AccommodationReservations() {
         </div>
       </section>
 
-      {/* Inquiry Form Section */}
+      {/* Inquiry Form */}
       <section
         id="accommodation-form"
         className="relative bg-nippon-warm-white section-padding overflow-hidden"
@@ -512,7 +512,7 @@ export default function AccommodationReservations() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
-                    Name *
+                    Full Name *
                   </Label>
                   <Input
                     id="name"
@@ -654,11 +654,31 @@ export default function AccommodationReservations() {
                 </Button>
               </div>
             </form>
+
+            {/* Auto-confirmation note */}
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Immediate Confirmation:</strong> You'll receive a
+                      personalized response within 2 hours with your request ID
+                      and next steps.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our concierge team will follow up with curated
+                      accommodation options within 24 hours.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* ==== Popup Modal ==== */}
-        {popup && (
+        {/* Popup Modal */}
+        {showPopupModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
             <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
               <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
