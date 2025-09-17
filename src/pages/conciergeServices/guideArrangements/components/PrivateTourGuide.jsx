@@ -26,101 +26,175 @@ import heroImage from "../assets/heroImage.png";
 import licensedImage from "../assets/licensedImage.png";
 import walkingToursImage from "../assets/walkingToursImage.png";
 import multilingualImage from "../assets/multilingualImage.png";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { postGuideArrangementsAsync } from "../../../../untils/redux/guideArrangementsSlice";
+
+const highlights = [
+  {
+    icon: Shield,
+    title: "Licensed English-Speaking Guides",
+    description:
+      "Handpicked professionals who contextualize history, art, and culture while tailoring the experience to your interests",
+    image: licensedImage,
+    premium: (
+      <>
+        <br />
+        <br />
+        Certified Professional
+      </>
+    ),
+  },
+  {
+    icon: Award,
+    title: "Specialized Experts",
+    description: (
+      <>
+        <br />
+        From Zen Buddhism and Edo architecture to Japanese gardens, we provide
+        guides with deep subject expertise
+      </>
+    ),
+    image: heroImage,
+    premium: (
+      <>
+        <br />
+        <br />
+        Subject Matter Expert
+      </>
+    ),
+  },
+  {
+    icon: Book,
+    title: "Thematic Walking Tours",
+    description:
+      "Explore Tokyo's post-war alleyways, Kyoto's samurai legacies, or Osaka's street food culture — each tour crafted as a living narrative",
+    image: walkingToursImage,
+    premium: "Curated Experience",
+  },
+  {
+    icon: Globe,
+    title: "Multilingual Options",
+    description: (
+      <>
+        <br />
+        Available in French, Russian, Mandarin, Spanish, and more.
+        Interpretation goes beyond words — and so do we
+      </>
+    ),
+    image: multilingualImage,
+    premium: (
+      <>
+        <br />
+        Global Communication
+      </>
+    ),
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Share Your Preferences",
+    description:
+      "Tell us your interests — culture, history, cuisine, or something off the beaten path.",
+    icon: Users,
+    timeframe: "Immediate response",
+  },
+  {
+    step: "02",
+    title: "Concierge Matching",
+    description:
+      "We assign a guide perfectly suited to your language, style, and curiosity.",
+    icon: Star,
+    timeframe: "Within 2 hours",
+  },
+  {
+    step: "03",
+    title: "Guided Journey",
+    description:
+      "Every step becomes meaningful, with access, context, and insight only locals can provide.",
+    icon: CheckCircle,
+    timeframe: "Your scheduled time",
+  },
+];
 
 export default function PrivateTourGuide() {
-  const highlights = [
-    {
-      icon: Shield,
-      title: "Licensed English-Speaking Guides",
-      description:
-        "Handpicked professionals who contextualize history, art, and culture while tailoring the experience to your interests",
-      image: licensedImage,
-      premium: (
-        <>
-          <br />
-          <br />
-          Certified Professional
-        </>
-      ),
-    },
-    {
-      icon: Award,
-      title: "Specialized Experts",
-      description: (
-        <>
-          <br />
-          From Zen Buddhism and Edo architecture to Japanese gardens, we provide
-          guides with deep subject expertise
-        </>
-      ),
-      image: heroImage,
-      premium: (
-        <>
-          <br />
-          <br />
-          Subject Matter Expert
-        </>
-      ),
-    },
-    {
-      icon: Book,
-      title: "Thematic Walking Tours",
-      description:
-        "Explore Tokyo's post-war alleyways, Kyoto's samurai legacies, or Osaka's street food culture — each tour crafted as a living narrative",
-      image: walkingToursImage,
-      premium: "Curated Experience",
-    },
-    {
-      icon: Globe,
-      title: "Multilingual Options",
-      description: (
-        <>
-          <br />
-          Available in French, Russian, Mandarin, Spanish, and more.
-          Interpretation goes beyond words — and so do we
-        </>
-      ),
-      image: multilingualImage,
-      premium: (
-        <>
-          <br />
-          Global Communication
-        </>
-      ),
-    },
-  ];
+  const dispatch = useDispatch();
 
-  const processSteps = [
-    {
-      step: "01",
-      title: "Share Your Preferences",
-      description:
-        "Tell us your interests — culture, history, cuisine, or something off the beaten path.",
-      icon: Users,
-      timeframe: "Immediate response",
-    },
-    {
-      step: "02",
-      title: "Concierge Matching",
-      description:
-        "We assign a guide perfectly suited to your language, style, and curiosity.",
-      icon: Star,
-      timeframe: "Within 2 hours",
-    },
-    {
-      step: "03",
-      title: "Guided Journey",
-      description:
-        "Every step becomes meaningful, with access, context, and insight only locals can provide.",
-      icon: CheckCircle,
-      timeframe: "Your scheduled time",
-    },
-  ];
+  // Form states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [notes, setNotes] = useState("");
+  const [numberOfGuest, setNumberOfGuest] = useState(0);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [datesOfService, setDatesOfService] = useState("");
+  const [preferredLanguage, setPreferredLanguage] = useState("");
+  const [areaOfInterest, setAreaOfInterest] = useState("");
+  const [destinationsAndRegions, setDestinationsAndRegions] = useState("");
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log("Private tour guide inquiry submitted");
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNotes, setShowConfirmationNotes] = useState(false);
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setDatesOfService("");
+    setPreferredLanguage("");
+    setAreaOfInterest("");
+    setDestinationsAndRegions("");
+  };
+
+  const handleOrder = () => {
+    if (
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !datesOfService ||
+      !preferredLanguage ||
+      !areaOfInterest ||
+      !destinationsAndRegions
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const guideArrangementsData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest) || 1,
+      phoneNumber: phoneNumber,
+      datesOfService: datesOfService,
+      preferredLanguage: preferredLanguage,
+      areaOfInterest: areaOfInterest,
+      destinationsAndRegions: destinationsAndRegions,
+    };
+
+    setIsPending(true);
+
+    dispatch(postGuideArrangementsAsync(guideArrangementsData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNotes(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -139,19 +213,8 @@ export default function PrivateTourGuide() {
           <div
             className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1677061856587-fe557f37a782?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbmVzZSUyMGd1aWRlJTIwa2ltb25vJTIwdGVtcGxlJTIwa3lvdG8lMjB0cmFkaXRpb25hbHxlbnwxfHx8fDE3NTUzMzExNDV8MA&ixlib=rb-4.1.0&q=80&w=1920')`,
+              backgroundImage: `url(${licensedImage})`,
               filter: "brightness(0.75) contrast(1.2) saturate(1.1)",
-            }}
-          ></div>
-
-          {/* Subtle cultural overlay for depth */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-15"
-            style={{
-              backgroundImage: `url(${heroImage})`,
-              filter: "brightness(0.3) blur(3px)",
-              transform: "scale(1.1)",
-              animation: "cinematicFloat 50s ease-in-out infinite alternate",
             }}
           ></div>
 
@@ -503,7 +566,13 @@ export default function PrivateTourGuide() {
             className="bg-nippon-white shadow-luxury p-12"
             data-scroll-reveal
           >
-            <form onSubmit={handleFormSubmit} className="space-y-8">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
@@ -512,6 +581,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="name"
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="Your full name"
@@ -528,6 +599,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="your@email.com"
@@ -546,6 +619,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="phone"
                     type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="luxury-input"
                     placeholder="+1 (555) 123-4567"
                   />
@@ -561,6 +636,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="service-dates"
                     type="text"
+                    value={datesOfService}
+                    onChange={(e) => setDatesOfService(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="e.g., March 15-20, 2024"
@@ -579,6 +656,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="languages"
                     type="text"
+                    value={preferredLanguage}
+                    onChange={(e) => setPreferredLanguage(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="e.g., English, French, Mandarin"
@@ -595,6 +674,8 @@ export default function PrivateTourGuide() {
                   <Input
                     id="interests"
                     type="text"
+                    value={areaOfInterest}
+                    onChange={(e) => setAreaOfInterest(e.target.value)}
                     required
                     className="luxury-input"
                     placeholder="e.g., History, Food, Culture, Architecture"
@@ -612,6 +693,8 @@ export default function PrivateTourGuide() {
                 <Input
                   id="destinations"
                   type="text"
+                  value={destinationsAndRegions}
+                  onChange={(e) => setDestinationsAndRegions(e.target.value)}
                   required
                   className="luxury-input"
                   placeholder="e.g., Kyoto temples, Tokyo neighborhoods, Osaka food scene"
@@ -627,6 +710,8 @@ export default function PrivateTourGuide() {
                 </Label>
                 <Textarea
                   id="special-requests"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                   className="luxury-input min-h-[120px] resize-none"
                   placeholder="Tell us about any specific interests, accessibility needs, group size, or unique experiences you'd like to explore..."
                 />
@@ -635,13 +720,16 @@ export default function PrivateTourGuide() {
               <div className="pt-6">
                 <Button
                   type="submit"
-                  className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                   <span className="relative flex items-center justify-center space-x-3">
                     <Users className="w-5 h-5" />
                     <span className="tracking-wider font-medium">
-                      Submit Guide Request
+                      {isPending ? "Sending" : "Submit Guide Request"}
                     </span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
@@ -650,25 +738,42 @@ export default function PrivateTourGuide() {
             </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Personalized Matching:</strong> You'll receive your
-                    Request ID immediately, with guide options curated to your
-                    interests within 2 hours.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our cultural concierge team will provide 3-5 expert guide
-                    profiles matched to your language, interests, and travel
-                    dates.
-                  </p>
+            {showConfirmationNotes && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Personalized Matching:</strong> You'll receive
+                      your Request ID immediately, with guide options curated to
+                      your interests within 2 hours.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our cultural concierge team will provide 3-5 expert guide
+                      profiles matched to your language, interests, and travel
+                      dates.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
