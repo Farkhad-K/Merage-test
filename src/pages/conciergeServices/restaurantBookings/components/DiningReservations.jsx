@@ -1,6 +1,6 @@
 // Libraries
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   Utensils,
   CheckCircle,
@@ -112,6 +112,7 @@ const processSteps = [
 export default function DiningReservations() {
   const dispatch = useDispatch();
 
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -121,45 +122,65 @@ export default function DiningReservations() {
   const [preferredTime, setPreferredTime] = useState("");
   const [cuisine, setCuisine] = useState("");
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setDate("");
+    setPreferredTime("");
+    setCuisine("");
+  };
 
   const handleOrder = () => {
     if (
-      name &&
-      email &&
-      phoneNumber &&
-      numberOfGuest &&
-      date &&
-      preferredTime
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !numberOfGuest ||
+      !date ||
+      !preferredTime
     ) {
-      const restaurantDate = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        reservationDate: date,
-        preferredTime: preferredTime + ":00",
-        cuisine: cuisine,
-        occasion: "string",
-      };
-      dispatch(postRestaurantAsync(restaurantDate))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
+      alert("Please fill in all required fields.");
+      return;
     }
-  };
+    const restaurantDate = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      reservationDate: date,
+      preferredTime: preferredTime + ":00",
+      cuisine: cuisine,
+      occasion: "string",
+    };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
+    setIsPending(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
+    dispatch(postRestaurantAsync(restaurantDate))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(true);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -181,17 +202,6 @@ export default function DiningReservations() {
               backgroundImage: `url('${tokyoNightDiningImage}')`,
               filter: "brightness(0.8) contrast(1.05) saturate(1.1)",
               animation: "cinematicZoom 20s ease-in-out infinite alternate",
-            }}
-          ></div>
-
-          {/* Subtle fine dining overlay for depth */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-8"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90')`,
-              filter: "brightness(0.3) blur(2px)",
-              animation:
-                "cinematicFloat 25s ease-in-out infinite alternate-reverse",
             }}
           ></div>
 
@@ -528,215 +538,213 @@ export default function DiningReservations() {
             className="bg-nippon-white shadow-luxury p-12"
             data-scroll-reveal
           >
-            {isSubmitted ? (
-              <div className="text-center py-12">
-                <CheckCircle className="w-16 h-16 text-nippon-gold mx-auto mb-6" />
-                <h3 className="text-luxury-2xl font-serif text-nippon-black mb-4">
-                  Dining Request Received
-                </h3>
-                <p className="text-nippon-gray font-sans leading-relaxed">
-                  Thank you for your dining reservation request. Our culinary
-                  concierge will contact you within 2 hours to confirm your
-                  exceptional table.
-                  <br />
-                  <br />
-                  <strong>Request ID:</strong> DR-
-                  {Math.random().toString(36).substr(2, 9).toUpperCase()}
-                </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
+              <div className="grid md-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-nippon-black font-sans">
+                    Name *
+                  </Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="luxury-input"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="email"
+                    className="text-nippon-black font-sans"
+                  >
+                    Email *
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="luxury-input"
+                    placeholder="your@email.com"
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-8">
-                <div className="grid md-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="name"
-                      className="text-nippon-black font-sans"
-                    >
-                      Name *
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                      className="luxury-input"
-                      placeholder="Your full name"
-                    />
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="email"
-                      className="text-nippon-black font-sans"
-                    >
-                      Email *
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="luxury-input"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="phone"
-                      className="text-nippon-black font-sans"
-                    >
-                      Phone (Optional)
-                    </Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="luxury-input"
-                      placeholder="+81 (optional)"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="guests"
-                      className="text-nippon-black font-sans"
-                    >
-                      Number of Guests *
-                    </Label>
-                    <Input
-                      id="guests"
-                      name="guests"
-                      type="number"
-                      min="1"
-                      max="20"
-                      value={numberOfGuest}
-                      onChange={(e) => setNumberOfGuest(e.target.value)}
-                      required
-                      className="luxury-input"
-                      placeholder="2"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="date"
-                      className="text-nippon-black font-sans"
-                    >
-                      Preferred Date *
-                    </Label>
-                    <Input
-                      id="date"
-                      name="date"
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      required
-                      className="luxury-input"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="time"
-                      className="text-nippon-black font-sans"
-                    >
-                      Preferred Time *
-                    </Label>
-                    <Input
-                      id="time"
-                      name="time"
-                      type="time"
-                      value={preferredTime}
-                      onChange={(e) => setPreferredTime(e.target.value)}
-                      required
-                      className="luxury-input"
-                    />
-                  </div>
-                </div>
-
+              <div className="grid md-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label
-                    htmlFor="preferences"
+                    htmlFor="phone"
                     className="text-nippon-black font-sans"
                   >
-                    Cuisine or Venue Preferences
+                    Phone (Optional)
                   </Label>
-                  <Textarea
-                    id="preferences"
-                    name="preferences"
-                    value={cuisine}
-                    onChange={(e) => setCuisine(e.target.value)}
-                    className="luxury-input min-h-[120px] resize-none"
-                    placeholder="Omakase sushi, kaiseki, modern fusion, rooftop bar, traditional ryotei, Michelin-starred venues..."
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="luxury-input"
+                    placeholder="+81 (optional)"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label
-                    htmlFor="specialRequests"
+                    htmlFor="guests"
                     className="text-nippon-black font-sans"
                   >
-                    Special Requests & Preferences
+                    Number of Guests *
                   </Label>
-                  <Textarea
-                    id="specialRequests"
-                    name="specialRequests"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="luxury-input min-h-[120px] resize-none"
-                    placeholder="Dietary restrictions, celebration details, seating preferences, transportation needs, wine pairings..."
+                  <Input
+                    id="guests"
+                    name="guests"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={numberOfGuest}
+                    onChange={(e) => setNumberOfGuest(e.target.value)}
+                    required
+                    className="luxury-input"
+                    placeholder="2"
+                  />
+                </div>
+              </div>
+
+              <div className="grid md-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="date" className="text-nippon-black font-sans">
+                    Preferred Date *
+                  </Label>
+                  <Input
+                    id="date"
+                    name="date"
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="luxury-input"
                   />
                 </div>
 
-                <div className="pt-6">
-                  <Button
-                    type="submit"
-                    onClick={handleOrder}
-                    className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover-gold-hover transform hover:-translate-y-2 hover-nippon-gold luxury-button-gold"
-                  >
-                    <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover-x-100 transition-transform duration-500 origin-left"></span>
-                    <span className="relative flex items-center justify-center space-x-3">
-                      <Utensils className="w-5 h-5" />
-                      <span className="tracking-wider font-medium">
-                        Submit Dining Request
-                      </span>
-                      <ArrowRight className="w-5 h-5 transform group-hover-x-1 transition-transform duration-300" />
+                <div className="space-y-2">
+                  <Label htmlFor="time" className="text-nippon-black font-sans">
+                    Preferred Time *
+                  </Label>
+                  <Input
+                    id="time"
+                    name="time"
+                    type="time"
+                    value={preferredTime}
+                    onChange={(e) => setPreferredTime(e.target.value)}
+                    required
+                    className="luxury-input"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  htmlFor="preferences"
+                  className="text-nippon-black font-sans"
+                >
+                  Cuisine or Venue Preferences
+                </Label>
+                <Textarea
+                  id="preferences"
+                  name="preferences"
+                  value={cuisine}
+                  onChange={(e) => setCuisine(e.target.value)}
+                  className="luxury-input min-h-[120px] resize-none"
+                  placeholder="Omakase sushi, kaiseki, modern fusion, rooftop bar, traditional ryotei, Michelin-starred venues..."
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label
+                  htmlFor="specialRequests"
+                  className="text-nippon-black font-sans"
+                >
+                  Special Requests & Preferences
+                </Label>
+                <Textarea
+                  id="specialRequests"
+                  name="specialRequests"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="luxury-input min-h-[120px] resize-none"
+                  placeholder="Dietary restrictions, celebration details, seating preferences, transportation needs, wine pairings..."
+                />
+              </div>
+
+              <div className="pt-6">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover-gold-hover transform hover:-translate-y-2 hover-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover-x-100 transition-transform duration-500 origin-left"></span>
+                  <span className="relative flex items-center justify-center space-x-3">
+                    <Utensils className="w-5 h-5" />
+                    <span className="tracking-wider font-medium">
+                      {isPending ? "Sending..." : "Submit Dining Request"}
                     </span>
-                  </Button>
-                </div>
-              </form>
-            )}
+                    <ArrowRight className="w-5 h-5 transform group-hover-x-1 transition-transform duration-300" />
+                  </span>
+                </Button>
+              </div>
+            </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Immediate Confirmation:</strong> You'll receive a
-                    personalized response within 2 hours with your request ID
-                    and next steps.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our culinary concierge will follow up with curated dining
-                    options within 24 hours.
-                  </p>
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Immediate Confirmation:</strong> You'll receive a
+                      personalized response within 2 hours with your request ID
+                      and next steps.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our culinary concierge will follow up with curated dining
+                      options within 24 hours.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
