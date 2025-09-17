@@ -8,6 +8,7 @@ import storageSession from "redux-persist/lib/storage/session";
 import accommodationSlice from "./accommodationSlice";
 import restaurantSlice from "./restaurantSlice";
 import luxuryTransportSlice from "./luxuryTransportSlice";
+import guideArrangementsSlice from "./guideArrangementsSlice";
 import curatedDaySlice from "./curatedDaySlice";
 import exclusiveExperienceSlice from "./exclusiveExperienceSlice";
 import travelConsultationSlice from "./travelConsultationSlice";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   accommodation: accommodationSlice,
   restaurant: restaurantSlice,
   luxuryTransport: luxuryTransportSlice,
+  guideArrangements: guideArrangementsSlice,
   curatedDay: curatedDaySlice,
   exclusiveExperience: exclusiveExperienceSlice,
   travelConsultation: travelConsultationSlice,

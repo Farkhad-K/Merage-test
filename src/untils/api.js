@@ -28,6 +28,7 @@ const PAYMENTS_API_PREFIX = "/api";
 const ACCOMMODATION_API_PREFIX = "/api/concierge/accommodation";
 const RESTAURANT_API_PREFIX = "/api/concierge/restaurant";
 const LUXURY_TRANSPORT_API_PREFIX = "/api/concierge/luxury-transport";
+const GUIDE_ARRANGEMENTS_API_PREFIX = "/api/concierge/tour-guide";
 const CURATED_DAY_API_PREFIX = "/api/concierge/curated-day";
 const EXCLUSIVE_EXPERIENCE_API_PREFIX = "/api/concierge/exclusive-experiences";
 const TRAVEL_CONSULTATION_API_PREFIX = "/api/concierge/travel-consultation";
@@ -73,6 +74,17 @@ export const luxuryTransportApi = {
     axios.get(`${LUXURY_TRANSPORT_API_PREFIX}/${requestId}`),
   putLuxuryTransport: (requestId) =>
     axios.put(`${LUXURY_TRANSPORT_API_PREFIX}/${requestId}/quote`),
+};
+
+// ===== Guide Arrangements Api =====
+export const guideArrangementsApi = {
+  getGuideArrangementsList: () => axios.get(`${GUIDE_ARRANGEMENTS_API_PREFIX}`),
+  postGuideArrangements: (data) =>
+    axios.post(`${GUIDE_ARRANGEMENTS_API_PREFIX}`, data),
+  getGuideArrangementsById: (requestId) =>
+    axios.get(`${GUIDE_ARRANGEMENTS_API_PREFIX}/${requestId}`),
+  putGuideArrangements: (requestId) =>
+    axios.put(`${GUIDE_ARRANGEMENTS_API_PREFIX}/${requestId}/quote`),
 };
 
 // ===== Curated Day Api =====
