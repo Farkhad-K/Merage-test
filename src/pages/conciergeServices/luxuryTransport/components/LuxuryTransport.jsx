@@ -1,7 +1,6 @@
 // Libraries
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { postLuxuryTransportAsync } from "../../../../untils/redux/luxuryTransportSlice";
 import {
   MapPin,
   CheckCircle,
@@ -22,7 +21,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
+import { postLuxuryTransportAsync } from "../../../../untils/redux/luxuryTransportSlice";
 
 // Images
 import mercedesHero from "../assets/mercedesHero.jpg";
@@ -107,6 +107,7 @@ const processSteps = [
 export default function LuxuryTransport() {
   const dispatch = useDispatch();
 
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -118,43 +119,71 @@ export default function LuxuryTransport() {
   const [serviceTime, setServiceTime] = useState("");
   const [vehicleType, setVehicleType] = useState("");
 
-  const handleOrder = () => {
-    if (
-      name &&
-      email &&
-      phoneNumber &&
-      numberOfGuest &&
-      pickupLocation &&
-      dropoffLocation &&
-      serviceDate &&
-      serviceTime
-    ) {
-      const luxuryTransportData = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        pickupLocation: pickupLocation,
-        dropoffLocation: dropoffLocation,
-        serviceDate: serviceDate,
-        serviceTime: serviceTime + ":00",
-        vehicleType: vehicleType,
-      };
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
 
-      dispatch(postLuxuryTransportAsync(luxuryTransportData))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
-    }
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setPickupLocation("");
+    setDropoffLocation("");
+    setServiceDate("");
+    setServiceTime("");
+    setVehicleType("");
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log("Luxury transport inquiry submitted");
+  const handleOrder = () => {
+    if (
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !numberOfGuest ||
+      !pickupLocation ||
+      !dropoffLocation ||
+      !serviceDate ||
+      !serviceTime
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const luxuryTransportData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      pickupLocation: pickupLocation,
+      dropoffLocation: dropoffLocation,
+      serviceDate: serviceDate,
+      serviceTime: serviceTime + ":00",
+      vehicleType: vehicleType,
+    };
+
+    setIsPending(true);
+
+    dispatch(postLuxuryTransportAsync(luxuryTransportData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -539,7 +568,13 @@ export default function LuxuryTransport() {
             className="bg-nippon-white shadow-luxury p-12"
             data-scroll-reveal
           >
-            <form onSubmit={handleFormSubmit} className="space-y-8">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
@@ -723,14 +758,16 @@ export default function LuxuryTransport() {
               <div className="pt-6">
                 <Button
                   type="submit"
-                  onClick={handleOrder}
-                  className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                   <span className="relative flex items-center justify-center space-x-3">
                     <Car className="w-5 h-5" />
                     <span className="tracking-wider font-medium">
-                      Submit Transport Request
+                      {isPending ? "Sending..." : "Submit Transport Request"}
                     </span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
@@ -739,24 +776,41 @@ export default function LuxuryTransport() {
             </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Immediate Confirmation:</strong> You'll receive a
-                    response within 15 minutes with your booking reference and
-                    vehicle details.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our transport team will coordinate all logistics and send
-                    chauffeur contact information 1 hour before pickup.
-                  </p>
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Immediate Confirmation:</strong> You'll receive a
+                      response within 15 minutes with your booking reference and
+                      vehicle details.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our transport team will coordinate all logistics and send
+                      chauffeur contact information 1 hour before pickup.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

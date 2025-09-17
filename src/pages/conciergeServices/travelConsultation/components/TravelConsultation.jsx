@@ -24,13 +24,15 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input.jsx";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
 import { postTravelConsultationAsync } from "../../../../untils/redux/travelConsultationSlice";
 
 // Images
-import consultationImage from "../assets/2b14b7a2c710c0db1e486f8213e0806d30ce9be5.png";
-import heroBackgroundImage from "../assets/f2ca2fb1ca45d2f12114c2812b6a3f4fc87c622c.png";
-import supportImage from "../assets/d9cd84406971ffca0600d80bacbfe0ccd632f794.png";
+import heroBackgroundImage from "../assets/heroBackgroundImage.png";
+import consultationImage from "../assets/consultationImage.png";
+import customizedImage from "../assets/customizedImage.png";
+import supportImage from "../assets/supportImage.png";
+import premiumPartnersImage from "../assets/premiumPartnersImage.png";
 
 const serviceHighlights = [
   {
@@ -50,8 +52,7 @@ const serviceHighlights = [
     ),
     description:
       "Bespoke journeys crafted to your interests, pace, and travel style across Japan's most compelling destinations",
-    image:
-      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMG1hcCUyMGl0aW5lcmFyeSUyMHBsYW5uaW5nJTIwdHJhdmVsfGVufDF8fHx8MTc1NTMzMTQwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: customizedImage,
     premium: "Bespoke Planning",
   },
   {
@@ -67,8 +68,7 @@ const serviceHighlights = [
     title: "Exclusive Access to Our Network of Premium Partners",
     description:
       "Private dining, after-hours temple visits, master craftsman workshops, and experiences unavailable to the public",
-    image:
-      "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXBhbiUyMHRlbXBsZSUyMHByaXZhdGUlMjBhY2Nlc3N8ZW58MXx8fHwxNzU1MzMxNDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: premiumPartnersImage,
     premium: "Exclusive Access",
   },
 ];
@@ -103,6 +103,7 @@ const processSteps = [
 export default function TravelConsultation() {
   const dispatch = useDispatch();
 
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -113,40 +114,67 @@ export default function TravelConsultation() {
   const [destinationOfInterest, setDestinationOfInterest] = useState("");
   const [interestsAndPreferences, setInterestsAndPreferences] = useState("");
 
-  const handleOrder = () => {
-    if (
-      name &&
-      email &&
-      phoneNumber &&
-      prefferdTravelDates &&
-      numberOfGuest &&
-      destinationOfInterest
-    ) {
-      const travelConsultationData = {
-        fullName: name,
-        email: email,
-        additionalNotes: notes,
-        numberOfGuests: Number(numberOfGuest),
-        phoneNumber: phoneNumber,
-        prefferdTravelDates: prefferdTravelDates,
-        estimatedBudgetRange: estimatedBudgetRange,
-        destinationOfInterest: destinationOfInterest,
-        interestsAndPreferences: interestsAndPreferences,
-      };
+  // UI states
+  const [isPending, setIsPending] = useState(false);
+  const [showPopupModal, setShowPopupModal] = useState(false);
+  const [showConfirmationNote, setShowConfirmationNote] = useState(false);
 
-      dispatch(postTravelConsultationAsync(travelConsultationData))
-        .unwrap()
-        .then(() => {
-          console.log("successful");
-        })
-        .catch((error) => alert(error));
-    }
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setNotes("");
+    setNumberOfGuest("");
+    setPhoneNumber("");
+    setPrefferdTravelDates("");
+    setEstimatedBudgetRange("");
+    setDestinationOfInterest("");
+    setInterestsAndPreferences("");
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    // Form submission logic would go here
-    console.log("Travel consultation inquiry submitted");
+  const handleOrder = () => {
+    if (
+      !name ||
+      !email ||
+      !phoneNumber ||
+      !prefferdTravelDates ||
+      !numberOfGuest ||
+      !destinationOfInterest
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const travelConsultationData = {
+      fullName: name,
+      email: email,
+      additionalNotes: notes,
+      numberOfGuests: Number(numberOfGuest),
+      phoneNumber: phoneNumber,
+      prefferdTravelDates: prefferdTravelDates,
+      estimatedBudgetRange: estimatedBudgetRange,
+      destinationOfInterest: destinationOfInterest,
+      interestsAndPreferences: interestsAndPreferences,
+    };
+
+    setIsPending(true);
+
+    dispatch(postTravelConsultationAsync(travelConsultationData))
+      .unwrap()
+      .then(() => {
+        clearForm();
+        setShowPopupModal(true);
+        setShowConfirmationNote(true);
+
+        setTimeout(() => {
+          setShowPopupModal(false);
+        }, 2000);
+      })
+      .catch(() => {
+        alert("There was an error sending. Please try again.");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
   };
 
   const scrollToForm = () => {
@@ -167,17 +195,6 @@ export default function TravelConsultation() {
             style={{
               backgroundImage: `url(${heroBackgroundImage})`,
               filter: "brightness(0.9) contrast(1.15) saturate(1.05)",
-            }}
-          ></div>
-
-          {/* Subtle luxury overlay for depth */}
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-15"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHhjb25jaWVyZ2UlMjBzZXJ2aWNlJTIwbHV4dXJ5JTIwaG90ZWx8ZW58MXx8fHwxNzU1MzMxNDEwfDA&ixlib=rb-4.1.0&q=80&w=1080')`,
-              filter: "brightness(0.3) blur(3px)",
-              transform: "scale(1.1)",
-              animation: "cinematicFloat 50s ease-in-out infinite alternate",
             }}
           ></div>
 
@@ -580,7 +597,13 @@ export default function TravelConsultation() {
             className="bg-nippon-warm-white shadow-luxury p-12"
             data-scroll-reveal
           >
-            <form onSubmit={handleFormSubmit} className="space-y-8">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleOrder();
+              }}
+              className="space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-nippon-black font-sans">
@@ -743,14 +766,16 @@ export default function TravelConsultation() {
               <div className="pt-6">
                 <Button
                   type="submit"
-                  onClick={handleOrder}
-                  className="w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold"
+                  disabled={isPending}
+                  className={`w-full group relative overflow-hidden bg-transparent border-2 border-nippon-gold text-nippon-gold hover:text-nippon-black font-serif text-luxury-lg px-8 py-4 transition-all duration-500 shadow-gold hover:shadow-gold-hover transform hover:-translate-y-2 hover:bg-nippon-gold luxury-button-gold ${
+                    isPending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                 >
                   <span className="absolute inset-0 bg-nippon-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                   <span className="relative flex items-center justify-center space-x-3">
                     <Calendar className="w-5 h-5" />
                     <span className="tracking-wider font-medium">
-                      Submit Consultation Request
+                      {isPending ? "Sending..." : "Submit Consultation Request"}
                     </span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
                   </span>
@@ -759,26 +784,43 @@ export default function TravelConsultation() {
             </form>
 
             {/* Auto-confirmation note */}
-            <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
-                <div className="space-y-2">
-                  <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
-                    <strong>Personalized Service:</strong> You'll receive your
-                    Request ID immediately, with your assigned concierge
-                    contacting you within 4 hours to schedule your private
-                    consultation.
-                  </p>
-                  <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
-                    Our bespoke travel specialists will prepare a preliminary
-                    discussion based on your preferences, followed by detailed
-                    itinerary development.
-                  </p>
+            {showConfirmationNote && (
+              <div className="mt-8 p-6 bg-nippon-beige border-l-4 border-nippon-gold">
+                <div className="flex items-start space-x-3">
+                  <CheckCircle className="w-5 h-5 text-nippon-gold mt-0.5 flex-shrink-0" />
+                  <div className="space-y-2">
+                    <p className="text-nippon-black font-sans text-luxury-sm leading-relaxed">
+                      <strong>Personalized Service:</strong> You'll receive your
+                      Request ID immediately, with your assigned concierge
+                      contacting you within 4 hours to schedule your private
+                      consultation.
+                    </p>
+                    <p className="text-nippon-gray font-sans text-luxury-xs leading-relaxed">
+                      Our bespoke travel specialists will prepare a preliminary
+                      discussion based on your preferences, followed by detailed
+                      itinerary development.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Popup Modal */}
+        {showPopupModal && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white p-10 rounded-xl shadow-2xl text-center animate-scaleIn">
+              <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-nippon-black">
+                Successfully submitted!
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Your request has been received.
+              </p>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

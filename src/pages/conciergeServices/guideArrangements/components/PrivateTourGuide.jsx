@@ -1,4 +1,6 @@
 // Libraries
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   MapPin,
   CheckCircle,
@@ -19,16 +21,14 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import ImageWithFallback from "../../../../components/figma/ImageWithFallback";
+import { postGuideArrangementsAsync } from "../../../../untils/redux/guideArrangementsSlice";
 
 // Images
 import heroImage from "../assets/heroImage.png";
 import licensedImage from "../assets/licensedImage.png";
 import walkingToursImage from "../assets/walkingToursImage.png";
 import multilingualImage from "../assets/multilingualImage.png";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { postGuideArrangementsAsync } from "../../../../untils/redux/guideArrangementsSlice";
 
 const highlights = [
   {
